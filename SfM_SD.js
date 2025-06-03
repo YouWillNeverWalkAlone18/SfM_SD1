@@ -67,7 +67,6 @@ let instructions = {
       <div style="margin-bottom: 40px; text-align: center; max-width: 800px;">
         <p>この研究は、□□□□□□□の研究を行うことで○○○○の仕組みを解明することを目的としています。</p>
         <p>実験開始前にこの説明書をお読みいただき、ご協力いただける場合には、任意のキーを入力して、実験を開始します。</p>
-        <p>실험에 참가해주셔서 증말 감사합니다. 이게 잘 되야 내가 먹고 사는데</p>
       </div>
       <img src="https://raw.githubusercontent.com/YouWillNeverWalkAlone18/main/CwCCw2.png" 
            alt="参考画像" 
