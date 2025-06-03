@@ -63,14 +63,15 @@ let sfm_sketch = function (p) {
 let instructions = {
   type: jsPsychHtmlKeyboardResponse,
   stimulus: `
-    <p>この研究は、□□□□□□□の研究を行うことで○○○○の仕組みを解明することを目的としています。</p>
-    <p>実験開始前にこの説明書をお読みいただき、ご協力いただける場合には、任意のキーを入力して、実験を開始します。</p>
-    <div style="display: flex; justify-content: center; gap: 50px; margin-top: 30px;">
-      <div style="text-align: center;">
-        <img src="SfM_SD1/CwCCw2.png" alt="反時計回り" width="200"><br>
-        <span>反時計回り</span>
+     <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh;">
+      <div style="margin-bottom: 40px; text-align: center; max-width: 800px;">
+        <p>この研究は、□□□□□□□の研究を行うことで○○○○の仕組みを解明することを目的としています。</p>
+        <p>実験開始前にこの説明書をお読みいただき、ご協力いただける場合には、任意のキーを入力して、実験を開始します。</p>
       </div>
-    </div>  
+      <img src="https://raw.githubusercontent.com/YouWillNeverWalkAlone18/SfM_SD1/main/CwCCw2.png" 
+           alt="参考画像" 
+           style="width: 300px; height: 200px;">
+    </div>
   `,
 };
 
@@ -86,7 +87,7 @@ let fixation = {
 let sfm_trial = {
   type: jsPsychP5,
   sketch: sfm_sketch,
-  trial_duration: 1500,
+  trial_duration: 2000,
 };
 
 // 反応画面
