@@ -4,10 +4,6 @@ var jsPsych = initJsPsych({
   }           
 });
 
-
-              const subject_id = jsPsych.randomization.randomID(10);
-              const filename = `${subject_id}.csv`;
-
 // sketch.js を jsPsych のスケッチに変換
 let sfm_sketch = function (p) {
   let rects = [];
@@ -101,19 +97,24 @@ let end_message = {
   stimulus: '<p>以上で実験は終わりです。ご協力ありがとうございました。</p>',
 };
 
-// 1試行セット
-let trial_procedure = {
-  timeline: [fixation, sfm_trial, response_trial, iti],
-  repetitions: 10,
-};
 
- const save_data = {
+              const subject_id = jsPsych.randomization.randomID(10);
+              const filename = `${subject_id}.csv`;
+
+
+              const save_data = {
                 type: jsPsychPipe,
                 action: "save",
                 experiment_id: "IZ6AZ6fDV83W",
                 filename: filename,
                 data_string: ()=>jsPsych.data.get().csv()
               };
+
+// 1試行セット
+let trial_procedure = {
+  timeline: [fixation, sfm_trial, response_trial, iti],
+  repetitions: 10,
+};
 
 // 実行タイムライン
 jsPsych.run([instructions, trial_procedure, end_message, save_data]);
