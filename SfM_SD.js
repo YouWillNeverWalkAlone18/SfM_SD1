@@ -1,12 +1,12 @@
 var jsPsych = initJsPsych({
   on_finish: function () {
     jsPsych.data.displayData();
-  }
-  
+  }           
+});
+
+
               const subject_id = jsPsych.randomization.randomID(10);
               const filename = `${subject_id}.csv`;
-            
-});
 
 // sketch.js を jsPsych のスケッチに変換
 let sfm_sketch = function (p) {
