@@ -4,6 +4,9 @@ var jsPsych = initJsPsych({
   }           
 });
 
+const subject_id = jsPsych.randomization.randomID(10);
+const filename = `${subject_id}.csv`;
+
 // sketch.js を jsPsych のスケッチに変換
 let sfm_sketch = function (p) {
   let rects = [];
@@ -103,10 +106,6 @@ let trial_procedure = {
   timeline: [fixation, sfm_trial, response_trial, iti],
   repetitions: 10,
 };
-
-const subject_id = jsPsych.randomization.randomID(10);
-              const filename = `${subject_id}.csv`;
-
 
               const save_data = {
                 type: jsPsychPipe,
