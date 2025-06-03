@@ -68,9 +68,9 @@ let instructions = {
         <p>この研究は、□□□□□□□の研究を行うことで○○○○の仕組みを解明することを目的としています。</p>
         <p>実験開始前にこの説明書をお読みいただき、ご協力いただける場合には、任意のキーを入力して、実験を開始します。</p>
       </div>
-      <img src="https://raw.githubusercontent.com/YouWillNeverWalkAlone18/SfM_SD1/main/CwCCw2.png" 
-           alt="参考画像" 
-           style="width: 400px; margin-top: 30px;">
+      <img src="https://raw.githubusercontent.com/YouWillNeverWalkAlone18/SfM_SD1/main/CwCCw2.png"
+     alt="回転方向の例"
+     style="display:block; margin: 20px auto 0 auto; width: 400px;">
     </div>
   `,
 };
