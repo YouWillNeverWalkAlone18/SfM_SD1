@@ -107,7 +107,6 @@ let end_message = {
   type: jsPsychHtmlKeyboardResponse,
   stimulus: '<p>以上で実験は終わりです。ご協力ありがとうございました。</p>',
 };
-};
 
 // 1試行セット
 let trial_procedure = {
