@@ -2,6 +2,10 @@ var jsPsych = initJsPsych({
   on_finish: function () {
     jsPsych.data.displayData();
   }
+  
+              const subject_id = jsPsych.randomization.randomID(10);
+              const filename = `${subject_id}.csv`;
+            
 });
 
 // sketch.js を jsPsych のスケッチに変換
@@ -103,5 +107,13 @@ let trial_procedure = {
   repetitions: 10,
 };
 
+ const save_data = {
+                type: jsPsychPipe,
+                action: "save",
+                experiment_id: "IZ6AZ6fDV83W",
+                filename: filename,
+                data_string: ()=>jsPsych.data.get().csv()
+              };
+
 // 実行タイムライン
-jsPsych.run([instructions, trial_procedure, end_message]);
+jsPsych.run([instructions, trial_procedure, end_message, save_data]);
