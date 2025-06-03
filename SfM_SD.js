@@ -71,7 +71,7 @@ let instructions = {
       </div>
       <img src="https://raw.githubusercontent.com/YouWillNeverWalkAlone18/main/CwCCw2.png" 
            alt="参考画像" 
-           style="width: 500px; height: 400px; margin-top: 30px;">
+           style="width: 400px; margin-top: 30px;">
     </div>
   `,
 };
