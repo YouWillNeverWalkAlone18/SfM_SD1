@@ -70,7 +70,7 @@ let instructions = {
       </div>
       <img src="https://raw.githubusercontent.com/YouWillNeverWalkAlone18/SfM_SD1/main/CwCCw2.png"
      alt="回転方向の例"
-     style="display:block; margin: 20px auto 0 auto; width: 400px;">
+     style="display:block; margin: 50px; width: 400px;">
     </div>
   `,
 };
