@@ -65,8 +65,10 @@ let instructions = {
   stimulus: `
      <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh;">
       <div style="margin-bottom: 40px; text-align: center; max-width: 800px;">
-        <p>この研究は、□□□□□□□の研究を行うことで○○○○の仕組みを解明することを目的としています。</p>
-        <p>実験開始前にこの説明書をお読みいただき、ご協力いただける場合には、任意のキーを入力して、実験を開始します。</p>
+        <p>これから画面上に複数の小さい四角形が現れ、2秒間、左右に動きます。</p>
+        <p>その動きからシリンダが回転するように見えましたら、見えた回転の方向をボダンで回答してもらいます。</p>
+        <p>回る方向が時計回りでしたら「時計回り」、反時計回りでしたら「反時計回り」ボダンを押してください。</p>
+        <p>ご協力いただける場合には、任意のキーを入力して、実験を開始してください。</p>
       </div>
       <img src="CwCCw2.png" ...
      alt="回転方向の例"
@@ -80,7 +82,7 @@ let fixation = {
   type: jsPsychHtmlKeyboardResponse,
   stimulus: `<div style="font-size:32px;">+</div>`,
   choices: "NO_KEYS",
-  trial_duration: 1000,
+  trial_duration: 1500, // by Fischer & Whitney (2014), 1.5秒
 };
 
 // sfm刺激提示（2秒）
@@ -106,7 +108,7 @@ let iti = {
   type: jsPsychHtmlKeyboardResponse,
   stimulus: '',
   choices: "NO_KEYS",
-  trial_duration: 1000,
+  trial_duration: 1500,
 };
 
 // 終了メッセージ
