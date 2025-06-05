@@ -95,7 +95,7 @@ let sfm_trial = {
 // 反応画面
 let response_trial = {
   type: jsPsychHtmlButtonResponse,
-  stimulus: '<div style="margin-bottom:10px;">回転方向はどちらでしたか？</div>',
+  stimulus: '<div style="margin-bottom:10px;">どちらに回転しているように見えましたか？</div>',
   choices: ['反時計回り', '時計回り'],
   margin_vertical: '15px',
   data: {
