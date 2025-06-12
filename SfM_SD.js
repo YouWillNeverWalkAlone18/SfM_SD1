@@ -41,7 +41,7 @@ let sfm_sketch = function (p) {
     p.noStroke();
   };
 
-  p.draw = function () {
+  p.draw = function () {      
     p.background(100);
     p.translate(p.width / 2, p.height / 2);
     for (let i = 0; i < numRects; i++) {
