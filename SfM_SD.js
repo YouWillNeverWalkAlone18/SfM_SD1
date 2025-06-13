@@ -253,7 +253,7 @@ let sfm_ccw = function (p) {
 // 휴식 화면 (block 끝나면 표시)
 const rest_screen = {
   type: jsPsychHtmlButtonResponse,
-  stimulus: '<p>10試行終了しました。休憩してください。準備ができたらボタンを押してください。</p>',
+  stimulus: '<p>10試行が終了しました。休憩が必要な場合は、ここでお取りください。</p><p> 準備ができたら、ボタンを押して次に進んでください。</p>',
   choices: ['次へ'],
 };
 
