@@ -338,10 +338,10 @@ timeline.push({
   stimulus: `
   <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh;">
     <div style="margin-bottom: 40px; text-align: center; max-width: 800px;">
-      <p>これから画面上に複数の小さい四角形が現れ、2秒間、左右に動きます。</p>
-      <p>その動きからシリンダが回転するように見えましたら、見えた回転の方向をボタンで回答してもらいます。</p>
-      <p>回る方向が時計回りでしたら「時計回り」、反時計回りでしたら「反時計回り」ボタンを押してください。</p>
-      <p>ご協力いただける場合には、任意のキーを入力して、実験を開始してください。</p>
+      <p>これから画面中央に複数の小さな四角形がランダムに配置され、2秒間、左右方向に動きます。</p>
+      <p>動きを見て、シリンダが回転しているように見えた場合は、見えた回転方向をボタンで選択してください。</p>
+      <p>時計回りに見えた場合は「時計回り」、反時計回りに見えた場合は「反時計回り」のボタンを押してください。</p>
+      <p>ご協力いただける場合は、任意のキーを押して実験を開始してください。</p>
     </div>
     <img src="CwCCw2.png" alt="回転方向の例" style="margin: 40px; width: 400px;">
   </div>`,
@@ -355,7 +355,7 @@ for (let i = 0; i < block_order.length; i++) {
 // 종료 메시지
 timeline.push({
   type: jsPsychHtmlKeyboardResponse,
-  stimulus: '<p>以上で実験は終わりです。ご協力ありがとうございました。</p>',
+  stimulus: '<p>以上で実験は終了です。</p><p>任意のキーを押して、データの保存が完了するまでしばらくお待ちください。</p><p>ご協力ありがとうございました。</p>',
 });
 
 // 데이터 저장
