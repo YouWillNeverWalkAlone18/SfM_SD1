@@ -308,31 +308,32 @@ function makeBlock(blockIndex) {
     });
   }
 
-  // 진행 카운터 업데이트 후 휴식 화면 표시
-  
-  let rest_screen = {
-  type: jsPsychHtmlButtonResponse,
-  stimulus: function () {
-    let progressBarWidth = (completedTrials / 80) * 100;
-    return `
-      <p>10試行が終了しました。休憩が必要な場合は、ここでお取りください。</p>
-      <p>準備ができたら、ボタンを押して次に進んでください。</p>
-      <p style="margin-top: 20px;">${completedTrials} / 80 回が完了しました。</p>
-      <div style="width: 80%; height: 20px; border: 1px solid #000; margin: 10px auto; background-color: #eee;">
-        <div style="width: ${progressBarWidth}%; height: 100%; background-color: #4caf50;"></div>
-      </div>
-    `;
-  },
-  choices: ['次へ'],
-  on_finish: function () {
-    completedTrials += 10;
-  }
-};
+  // 휴식 화면 추가
+  trials.push({
+    type: jsPsychHtmlButtonResponse,
+    stimulus: function () {
+      let progressBarWidth = (completedTrials / 80) * 100;
+      return `
+        <p>10試行が終了しました。休憩が必要な場合は、ここでお取りください。</p>
+        <p>準備ができたら、ボタンを押して次に進んでください。</p>
+        <p style="margin-top: 20px;">${completedTrials} / 80 回が完了しました。</p>
+        <div style="width: 80%; height: 20px; border: 1px solid #000; margin: 10px auto; background-color: #eee;">
+          <div style="width: ${progressBarWidth}%; height: 100%; background-color: #4caf50;"></div>
+        </div>
+      `;
+    },
+    choices: ['次へ'],
+    on_finish: function () {
+      completedTrials += 10;
+    }
+  });
 
-// block 순서 무작위
+  return trials;
+}
+
+// ---------------- 타임라인 구성 ----------------
+
 const block_order = jsPsych.randomization.shuffle([0, 1, 2, 3, 4, 5, 6, 7]);
-
-// 타임라인 구성
 let timeline = [];
 
 // 지시문
@@ -350,9 +351,9 @@ timeline.push({
     </div>`,
 });
 
-// block 순서대로 삽입
+// 각 block 삽입
 for (let i = 0; i < block_order.length; i++) {
-  timeline = timeline.concat(makeBlock(block_order[i]));
+  timeline.push(...makeBlock(block_order[i]));
 }
 
 // 종료 메시지
@@ -367,4 +368,5 @@ timeline.push({
 // 데이터 저장
 timeline.push(save_data);
 
+// 실행
 jsPsych.run(timeline);
