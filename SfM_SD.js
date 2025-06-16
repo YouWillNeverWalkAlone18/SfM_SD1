@@ -15,7 +15,7 @@ const save_data = {
   data_string: () => jsPsych.data.get().csv()
 };
 
-let completedTrials = 0;
+let completedTrials = 10;
 
 // ========== sfm_neutral ==========
 let sfm_neutral = function (p) {
