@@ -253,7 +253,6 @@ let sfm_ccw = function (p) {
   };
 };
 
-// --------------ここから実験試行関連---------------------
   
 function makeBlock(blockIndex) {
   let trials = [];
