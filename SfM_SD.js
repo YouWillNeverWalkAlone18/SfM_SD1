@@ -309,25 +309,25 @@ function makeBlock(blockIndex) {
   }
 
   // 진행 카운터 업데이트 후 휴식 화면 표시
-  completedTrials += 10;
-  let progressBarWidth = (completedTrials / 80) * 100;
-
+  
   let rest_screen = {
-    type: jsPsychHtmlButtonResponse,
-    stimulus: `
+  type: jsPsychHtmlButtonResponse,
+  stimulus: function () {
+    let progressBarWidth = (completedTrials / 80) * 100;
+    return `
       <p>10試行が終了しました。休憩が必要な場合は、ここでお取りください。</p>
       <p>準備ができたら、ボタンを押して次に進んでください。</p>
       <p style="margin-top: 20px;">${completedTrials} / 80 回が完了しました。</p>
       <div style="width: 80%; height: 20px; border: 1px solid #000; margin: 10px auto; background-color: #eee;">
         <div style="width: ${progressBarWidth}%; height: 100%; background-color: #4caf50;"></div>
       </div>
-    `,
-    choices: ['次へ'],
-  };
-
-  trials.push(rest_screen);
-  return trials;
-}
+    `;
+  },
+  choices: ['次へ'],
+  on_finish: function () {
+    completedTrials += 10;
+  }
+};
 
 // block 순서 무작위
 const block_order = jsPsych.randomization.shuffle([0, 1, 2, 3, 4, 5, 6, 7]);
