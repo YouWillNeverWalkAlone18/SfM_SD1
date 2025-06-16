@@ -19,7 +19,7 @@ const save_data = {
 let sfm_neutral = function (p) {
   let rects = [];
   let numRects = 400;
-  let R = 200;
+  let R = 170;
   let rectWidth = 8;
   let omega = 0.025;
   let colors = [];
@@ -50,7 +50,7 @@ let sfm_neutral = function (p) {
       let x = R * p.cos(angle);
       let y = r.y - p.height / 2;
       let distanceFromCenter = Math.abs(x);
-      let visibleWidth = p.map(distanceFromCenter, 190, 210, rectWidth, 0);
+      let visibleWidth = p.map(distanceFromCenter, 160, 180, rectWidth, 0);
       visibleWidth = p.constrain(visibleWidth, 0, rectWidth);
       let adjustedX = x > 0 ? x - (rectWidth - visibleWidth) / 2 : x + (rectWidth - visibleWidth) / 2;
       p.fill(colors[i]);
@@ -63,7 +63,7 @@ let sfm_neutral = function (p) {
 let sfm_cw = function (p) {
   let rects = [];
   let numRects = 400;
-  let R = 200;
+  let R = 170;
   let baseSize = 8;
   let omega = 0.025;
   let colors = [];
@@ -123,7 +123,7 @@ let sfm_cw = function (p) {
       let rectSize = baseSize * r.currentScale;
 
       let distanceFromCenter = p.abs(x);
-      let visibleWidth = p.map(distanceFromCenter, 190, 210, rectSize, 0);
+      let visibleWidth = p.map(distanceFromCenter, 160, 180, rectSize, 0);
       visibleWidth = p.constrain(visibleWidth, 0, rectSize);
 
       let adjustedX = x > 0
@@ -161,7 +161,7 @@ let sfm_cw = function (p) {
 let sfm_ccw = function (p) {
   let rects = [];
   let numRects = 400;
-  let R = 200;
+  let R = 170;
   let baseSize = 8;
   let omega = 0.025;
   let colors = [];
@@ -217,7 +217,7 @@ let sfm_ccw = function (p) {
       let rectSize = baseSize * r.currentScale;
 
       let distanceFromCenter = p.abs(x);
-      let visibleWidth = p.map(distanceFromCenter, 190, 210, rectSize, 0);
+      let visibleWidth = p.map(distanceFromCenter, 160, 180, rectSize, 0);
       visibleWidth = p.constrain(visibleWidth, 0, rectSize);
 
       let adjustedX = x > 0
