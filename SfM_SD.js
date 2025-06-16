@@ -15,6 +15,8 @@ const save_data = {
   data_string: () => jsPsych.data.get().csv()
 };
 
+let completedTrials = 0;
+
 // ========== sfm_neutral ==========
 let sfm_neutral = function (p) {
   let rects = [];
@@ -250,34 +252,23 @@ let sfm_ccw = function (p) {
     }
   };
 };
-// 휴식 화면 (block 끝나면 표시)
-const rest_screen = {
-  type: jsPsychHtmlButtonResponse,
-  stimulus: '<p>10試行が終了しました。休憩が必要な場合は、ここでお取りください。</p><p> 準備ができたら、ボタンを押して次に進んでください。</p>',
-  choices: ['次へ'],
-};
 
-// block 8개를 만들고, 각 block마다 10 trial씩, 1번째 trial 조건에 따라 스케치를 지정하는 함수
+--------------ここから実験試行関連---------------------
+  
 function makeBlock(blockIndex) {
-  // 10 trial block
   let trials = [];
 
   for (let i = 0; i < 10; i++) {
     let trial_sketch;
-    // block 0 or 1 첫 trial은 sfm_cw
+
     if ((blockIndex === 0 || blockIndex === 1) && i === 0) {
       trial_sketch = sfm_cw;
-    }
-    // block 2 or 3 첫 trial은 sfm_ccw
-    else if ((blockIndex === 2 || blockIndex === 3) && i === 0) {
+    } else if ((blockIndex === 2 || blockIndex === 3) && i === 0) {
       trial_sketch = sfm_ccw;
-    }
-    // 나머지는 sfm_neutral
-    else {
+    } else {
       trial_sketch = sfm_neutral;
     }
 
-    // fixation
     trials.push({
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<div style="font-size:32px;">+</div>`,
@@ -285,14 +276,12 @@ function makeBlock(blockIndex) {
       trial_duration: 1000,
     });
 
-    // sfm stimulus
     trials.push({
       type: jsPsychP5,
       sketch: trial_sketch,
       trial_duration: 2000,
     });
 
-    // response
     trials.push({
       type: jsPsychHtmlButtonResponse,
       stimulus: '<div style="margin-bottom:10px;">どちらに回転しているように見えましたか？</div>',
@@ -311,7 +300,6 @@ function makeBlock(blockIndex) {
       },
     });
 
-    // ITI
     trials.push({
       type: jsPsychHtmlKeyboardResponse,
       stimulus: '',
@@ -320,34 +308,49 @@ function makeBlock(blockIndex) {
     });
   }
 
-  // block 종료 후 휴식 화면 추가
-  trials.push(rest_screen);
+  // 진행 카운터 업데이트 후 휴식 화면 표시
+  completedTrials += 10;
+  let progressBarWidth = (completedTrials / 80) * 100;
 
+  let rest_screen = {
+    type: jsPsychHtmlButtonResponse,
+    stimulus: `
+      <p>10試行が終了しました。休憩が必要な場合は、ここでお取りください。</p>
+      <p>準備ができたら、ボタンを押して次に進んでください。</p>
+      <p style="margin-top: 20px;">${completedTrials} / 80 回が完了しました。</p>
+      <div style="width: 80%; height: 20px; border: 1px solid #000; margin: 10px auto; background-color: #eee;">
+        <div style="width: ${progressBarWidth}%; height: 100%; background-color: #4caf50;"></div>
+      </div>
+    `,
+    choices: ['次へ'],
+  };
+
+  trials.push(rest_screen);
   return trials;
 }
 
-// block 순서를 랜덤으로 섞음
-const block_order = jsPsych.randomization.shuffle([0,1,2,3,4,5,6,7]);
+// block 순서 무작위
+const block_order = jsPsych.randomization.shuffle([0, 1, 2, 3, 4, 5, 6, 7]);
 
-// 전체 timeline에 block을 순서대로 삽입
+// 타임라인 구성
 let timeline = [];
 
-// instructions (처음 한번)
+// 지시문
 timeline.push({
   type: jsPsychHtmlKeyboardResponse,
   stimulus: `
-  <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh;">
-    <div style="margin-bottom: 40px; text-align: center; max-width: 800px;">
-      <p>これから画面中央に複数の小さな四角形がランダムに配置され、2秒間、左右方向に動きます。</p>
-      <p>動きを見て、シリンダが回転しているように見えた場合は、見えた回転方向をボタンで選択してください。</p>
-      <p>時計回りに見えた場合は「時計回り」、反時計回りに見えた場合は「反時計回り」のボタンを押してください。</p>
-      <p>ご協力いただける場合は、任意のキーを押して実験を開始してください。</p>
-    </div>
-    <img src="CwCCw2.png" alt="回転方向の例" style="margin: 40px; width: 400px;">
-  </div>`,
+    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh;">
+      <div style="margin-bottom: 40px; text-align: center; max-width: 800px;">
+        <p>これから画面中央に複数の小さな四角形がランダムに配置され、2秒間、左右方向に動きます。</p>
+        <p>動きを見て、シリンダが回転しているように見えた場合は、見えた回転方向をボタンで選択してください。</p>
+        <p>時計回りに見えた場合は「時計回り」、反時計回りに見えた場合は「反時計回り」のボタンを押してください。</p>
+        <p>ご協力いただける場合は、任意のキーを押して実験を開始してください。</p>
+      </div>
+      <img src="CwCCw2.png" alt="回転方向の例" style="margin: 40px; width: 400px;">
+    </div>`,
 });
 
-// 각 block을 timeline에 삽입
+// block 순서대로 삽입
 for (let i = 0; i < block_order.length; i++) {
   timeline = timeline.concat(makeBlock(block_order[i]));
 }
@@ -355,7 +358,10 @@ for (let i = 0; i < block_order.length; i++) {
 // 종료 메시지
 timeline.push({
   type: jsPsychHtmlKeyboardResponse,
-  stimulus: '<p>以上で実験は終了です。</p><p>任意のキーを押して、データの保存が完了するまでしばらくお待ちください。</p><p>ご協力ありがとうございました。</p>',
+  stimulus: `
+    <p>以上で実験は終了です。</p>
+    <p>任意のキーを押して、データの保存が完了するまでしばらくお待ちください。</p>
+    <p>ご協力ありがとうございました。</p>`,
 });
 
 // 데이터 저장
