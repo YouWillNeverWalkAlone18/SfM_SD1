@@ -23,14 +23,15 @@ let sfm_neutral = function (p) {
   let numRects = 400;
   let R = 170;
   let rectWidth = 8;
+  let rectHeight = 8;
   let omega = 0.025;
   let colors = [];
 
   p.setup = function () {
-    p.createCanvas(600, 600);
+    p.createCanvas(800, 600);
     for (let i = 0; i < numRects; i++) {
       let angle = p.random(p.TWO_PI);
-      let y = p.random(50, 450);
+      let y = p.random(-200, 200);
       let isBlack = i < numRects / 2;
       colors[i] = isBlack ? p.color(40) : p.color(210);
       rects.push({
@@ -50,13 +51,13 @@ let sfm_neutral = function (p) {
       let r = rects[i];
       let angle = r.angle + p.frameCount * omega;
       let x = R * p.cos(angle);
-      let y = r.y - p.height / 2;
+      let y = r.y;
       let distanceFromCenter = Math.abs(x);
       let visibleWidth = p.map(distanceFromCenter, 160, 180, rectWidth, 0);
       visibleWidth = p.constrain(visibleWidth, 0, rectWidth);
       let adjustedX = x > 0 ? x - (rectWidth - visibleWidth) / 2 : x + (rectWidth - visibleWidth) / 2;
       p.fill(colors[i]);
-      p.rect(adjustedX, y, visibleWidth, 8);
+      p.rect(adjustedX, y - rectHeight / 2, visibleWidth, 8);
     }
   };
 };
@@ -71,10 +72,10 @@ let sfm_cw = function (p) {
   let colors = [];
 
   p.setup = function () {
-    p.createCanvas(600, 600);
+    p.createCanvas(800, 600);
     for (let i = 0; i < numRects; i++) {
       let angle = p.random(p.TWO_PI);
-      let y = p.random(50, 450);
+      let y = p.random(-200, 200);
       let isBlack = i < numRects / 2;
       colors[i] = isBlack ? p.color(40) : p.color(210);
       rects.push({
@@ -103,25 +104,22 @@ let sfm_cw = function (p) {
       let vel = x - r.prevX;
       r.prevX = x;
 
-      let y = r.y - p.height / 2;
+      let y = r.y;
 
       let maxScale = 1.3;
       let minScale = 0.7;
       let distanceRatio = p.abs(x) / R;
 
-      let alpha;
-      if (vel > 0) {
-        let shrink = p.map(distanceRatio, 1, 0, 1.0, 0.7);
-        r.currentScale *= shrink;
-        r.currentScale = p.constrain(r.currentScale, minScale, maxScale);
-        alpha = 150;
-      } else {
-        let grow = p.map(distanceRatio, 1, 0, 1.0, 1.3);
-        r.currentScale *= grow;
-        r.currentScale = p.constrain(r.currentScale, minScale, maxScale);
-        alpha = 255;
-      }
-
+       if (vel < 0) {
+      // 왼쪽 방향 → 전면: 더 커짐
+      r.currentScale = p.map(distanceRatio, 1, 0, minScale, maxScale) * 1.3;
+    } else {
+      // 오른쪽 방향 → 후면: 점점 작아짐
+      let shrink = p.map(distanceRatio, 1, 0, 1.0, 0.7);
+      r.currentScale *= shrink;
+      r.currentScale = p.constrain(r.currentScale, minScale, maxScale);
+    }
+      let alpha = vel < 0 ? 255 : 150; // 
       let rectSize = baseSize * r.currentScale;
 
       let distanceFromCenter = p.abs(x);
@@ -134,25 +132,25 @@ let sfm_cw = function (p) {
 
       let obj = {
         x: adjustedX,
-        y: y,
+        y: y - rectSize / 2,
         size: visibleWidth,
         col: colors[i],
         alpha: alpha
       };
 
       if (vel < 0) {
-        backgroundRects.push(obj);
-      } else {
         foregroundRects.push(obj);
+      } else {
+        backgroundRects.push(obj);
       }
     }
 
-    for (let r of foregroundRects) {
+    for (let r of backgroundRects) {
       p.fill(p.red(r.col), p.green(r.col), p.blue(r.col), r.alpha);
       p.rect(r.x, r.y, r.size, r.size);
     }
 
-    for (let r of backgroundRects) {
+    for (let r of foregroundRects) {
       p.fill(p.red(r.col), p.green(r.col), p.blue(r.col), r.alpha);
       p.rect(r.x, r.y, r.size, r.size);
     }
@@ -169,10 +167,10 @@ let sfm_ccw = function (p) {
   let colors = [];
 
   p.setup = function () {
-    p.createCanvas(600, 600);
+    p.createCanvas(800, 600);
     for (let i = 0; i < numRects; i++) {
       let angle = p.random(p.TWO_PI);
-      let y = p.random(50, 450);
+      let y = p.random(-200, 200);
       let isBlack = i < numRects / 2;
       colors[i] = isBlack ? p.color(40) : p.color(210);
       rects.push({
@@ -201,7 +199,7 @@ let sfm_ccw = function (p) {
       let vel = x - r.prevX;
       r.prevX = x;
 
-      let y = r.y - p.height / 2;
+      let y = r.y;
 
       let maxScale = 1.3;
       let minScale = 0.7;
@@ -228,7 +226,7 @@ let sfm_ccw = function (p) {
 
       let obj = {
         x: adjustedX,
-        y: y,
+        y: y - rectSize / 2,
         size: visibleWidth,
         col: colors[i],
         alpha: alpha
