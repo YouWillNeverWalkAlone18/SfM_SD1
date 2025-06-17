@@ -282,7 +282,8 @@ function makeBlock(blockIndex) {
     trials.push({
       type: jsPsychHtmlButtonResponse,
       stimulus: '<div style="margin-bottom:10px;">どちらに回転しているように見えましたか？</div>',
-      choices: ['反時計回り', '時計回り'],
+      choices: ['<img src="CCW.png" alt="反時計回り" width="80">',
+                '<img src="CW.png" alt="時計回り" width="80">'],
       margin_vertical: '15px',
       data: {
         task: 'response',
