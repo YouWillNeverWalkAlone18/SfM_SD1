@@ -12,6 +12,7 @@ const label_map = {
   "CW": 1,
   "CCW": 0
 };
+console.log("This participant's image order:", image_order); // debuging
 
 const subject_id = jsPsych.randomization.randomID(10);
 const filename = `${subject_id}.csv`;
