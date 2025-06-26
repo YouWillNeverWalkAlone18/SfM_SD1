@@ -296,9 +296,11 @@ function makeBlock(blockIndex) {
        <p>回転方向が途中で変わったり、はっきりとわからない場合は、</p>\
       <p>より強く感じた回転方向を回答してください。</p>\
 　　　</div>',
-      choices: image_order.map(label =>
+      choices: function () {
+        return image_order.map(label =>
     `<img src="${label}.png" alt="${label === 'CW' ? '時計回り' : '反時計回り'}" width="200">`
-      ),
+      );
+    },
       margin_vertical: '15px',
       data: {
         task: 'response',
