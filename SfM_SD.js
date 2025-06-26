@@ -358,7 +358,8 @@ let timeline = [];
 // 지시문
 timeline.push({
   type: jsPsychHtmlKeyboardResponse,
-  stimulus: `
+  stimulus: function () {
+  return `
     <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh;">
       <div style="margin-bottom: 40px; text-align: center; max-width: 800px;">
         <p>これから画面中央に複数の小さな四角形がランダムに配置され、2秒間、左右方向に動きます。</p>
@@ -367,12 +368,14 @@ timeline.push({
         <p>ご協力いただける場合は、任意のキーを押して実験を開始してください。</p>
       </div>
       <div style="display: flex; flex-direction: row; gap: 40px; justify-content: center;">
-        <img src="CW.png" alt="時計回りの例" width="200">
-        <img src="CCW.png" alt="反時計回りの例" width="200">
+        <img src="${image_order[0]}.png" alt="${image_order[0]}" width="200">
+        <img src="${image_order[1]}.png" alt="${image_order[1]}" width="200">
       </div>
     </div>
-  `,
+  `;
+},
 });
+
 
 
 // 각 block 삽입
