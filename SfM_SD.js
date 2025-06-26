@@ -16,9 +16,6 @@ const label_map = {
 const subject_id = jsPsych.randomization.randomID(10);
 const filename = `${subject_id}.csv`;
 
-const subject_id = jsPsych.randomization.randomID(10);
-const filename = `${subject_id}.csv`;
-
 const save_data = {
   type: jsPsychPipe,
   action: "save",
