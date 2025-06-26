@@ -281,7 +281,11 @@ function makeBlock(blockIndex) {
 
     trials.push({
       type: jsPsychHtmlButtonResponse,
-      stimulus: '<div style="margin-bottom:10px;">どちらに回転しているように見えましたか？</div>',
+      stimulus: '<div style="margin-bottom:10px;">\
+       <p>どちらに回転しているように見えましたか？</p>\
+       <p>回転方向が途中で変わったり、はっきりとわからない場合は、</p>\
+      <p>より強く感じた回転方向を回答してください。</p>\
+　　　</div>',
       choices: ['<img src="CCW.png" alt="反時計回り" width="200">',
                 '<img src="CW.png" alt="時計回り" width="200">'],
       margin_vertical: '15px',
@@ -297,6 +301,7 @@ function makeBlock(blockIndex) {
             : 'sfm_neutral',
       },
     });
+
 
     trials.push({
       type: jsPsychHtmlKeyboardResponse,
