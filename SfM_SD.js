@@ -350,8 +350,9 @@ timeline.push({
         <p>時計回りに見えた場合は「時計回り」、反時計回りに見えた場合は「反時計回り」のボタンを押してください。</p>
         <p>ご協力いただける場合は、任意のキーを押して実験を開始してください。</p>
       </div>
-      <img src="CW.png" alt="回転方向の例" width: 200px;">',
-      <img src="CCW.png" alt="回転方向の例" width: 200px;">,
+       <img src="CW.png" alt="回転方向の例" width: 200px;">',
+      <img src="CCW.png" alt="回転方向の例" width: 200px;">',
+      margin_bottom: 10px',
       margin_vertical: '15px',
     </div>`,
 });
