@@ -4,6 +4,18 @@ var jsPsych = initJsPsych({
   }
 });
 
+// CW, CCW 이미지의 좌우 위치를 무작위로 정하고, 해당 순서를 저장
+const image_order = jsPsych.randomization.shuffle(["CW", "CCW"]);
+
+// 각 이미지에 대해 대응되는 값 부여: CW = 1, CCW = 0
+const label_map = {
+  "CW": 1,
+  "CCW": 0
+};
+
+const subject_id = jsPsych.randomization.randomID(10);
+const filename = `${subject_id}.csv`;
+
 const subject_id = jsPsych.randomization.randomID(10);
 const filename = `${subject_id}.csv`;
 
@@ -286,8 +298,9 @@ function makeBlock(blockIndex) {
        <p>回転方向が途中で変わったり、はっきりとわからない場合は、</p>\
       <p>より強く感じた回転方向を回答してください。</p>\
 　　　</div>',
-      choices: ['<img src="CCW.png" alt="反時計回り" width="200">',
-                '<img src="CW.png" alt="時計回り" width="200">'],
+      choices: image_order.map(label =>
+    `<img src="${label}.png" alt="${label === 'CW' ? '時計回り' : '反時計回り'}" width="200">`
+      ),
       margin_vertical: '15px',
       data: {
         task: 'response',
@@ -300,7 +313,12 @@ function makeBlock(blockIndex) {
             ? 'sfm_ccw'
             : 'sfm_neutral',
       },
-    });
+      on_finish: function(data) {
+    const chosen_label = image_order[data.response]; // index → 'CW' or 'CCW'
+    data.chosen_label = chosen_label;
+    data.chosen_value = label_map[chosen_label];     // 1 or 0
+    }
+  });
 
 
     trials.push({
