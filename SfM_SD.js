@@ -314,10 +314,30 @@ function makeBlock(blockIndex) {
             : 'sfm_neutral',
       },
       on_finish: function(data) {
-    const chosen_label = image_order[data.response]; // index → 'CW' or 'CCW'
-    data.chosen_label = chosen_label;
-    data.chosen_value = label_map[chosen_label];     // 1 or 0
+  const chosen_label = image_order[data.response];
+  const chosen_value = label_map[chosen_label];
+
+  data.chosen_label = chosen_label;
+  data.chosen_value = chosen_value;
+
+  // block 내 이전 trial에서 chosen_value 가져오기
+  if (data.trial_in_block > 0) {
+    const previous_trial = jsPsych.data.get().filter({
+      task: 'response',
+      block: data.block,
+      trial_in_block: data.trial_in_block - 1
+    }).values()[0]; // 첫 번째 결과만
+
+    if (previous_trial) {
+      const prev_value = previous_trial.chosen_value;
+      data.Continue = (prev_value === chosen_value) ? 1 : 0;
+    } else {
+      data.Continue = null;
     }
+  } else {
+    data.Continue = null; // 첫 trial은 비교 불가
+  }
+}
   });
 
 
