@@ -350,12 +350,14 @@ timeline.push({
         <p>時計回りに見えた場合は「時計回り」、反時計回りに見えた場合は「反時計回り」のボタンを押してください。</p>
         <p>ご協力いただける場合は、任意のキーを押して実験を開始してください。</p>
       </div>
-       <img src="CW.png" alt="回転方向の例" width: 200px;">',
-      <img src="CCW.png" alt="回転方向の例" width: 200px;">',
-      margin_bottom: 10px',
-      margin_vertical: '15px',
-    </div>`,
+      <div style="display: flex; flex-direction: row; gap: 40px; justify-content: center;">
+        <img src="CW.png" alt="時計回りの例" width="200">
+        <img src="CCW.png" alt="反時計回りの例" width="200">
+      </div>
+    </div>
+  `,
 });
+
 
 // 각 block 삽입
 for (let i = 0; i < block_order.length; i++) {
