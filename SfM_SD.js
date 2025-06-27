@@ -386,10 +386,10 @@ let timeline = [];
 
 // 지시문
 timeline.push({
-  type: jsPsychHtmlKeyboardResponse,
+  type: jsPsychHtmlButtonResponse,
   stimulus: function () {
   return `
-    <div style="max-width: 800px; margin: 0 auto; font-size: 16px; line-height: 1.6;">
+    <div style="max-width: 800px; margin: 0 auto; font-size: 16px; line-height: 1.6; text-align: left;">
       <h3>研究に関するご説明</h3>
       <p>
         本研究は、立命館大学総合心理学部のCHANG GIJOONGが実施する卒業研究です。<br>
@@ -401,8 +401,8 @@ timeline.push({
 
       <hr style="margin: 30px 0;">
 
-      <!-- 하나의 스크롤 박스로 통합된 부분 -->
-      <div style="border: 1px solid #aaa; padding: 10px; height: 250px; overflow-y: auto; margin-bottom: 20px;">
+       <!-- 하나의 스크롤 박스로 통합된 부분 -->
+      <div style="border: 1px solid #aaa; padding: 10px; height: 250px; overflow-y: auto; margin-bottom: 20px; text-align: left;">
         <p><strong>調査の内容について</strong><br>
         この調査では、画面上に文や画像が提示されます。表示に従って、キーボードやマウスを使って所定の反応をしていただきます。</p>
 
@@ -425,7 +425,7 @@ timeline.push({
         これまでの説明を読んだうえで、実験への参加を見合わせたり、開始後に中止したりすることも可能です。
       </p>
 
-      <p style="text-align:center; font-weight:bold; margin-top: 30px;">
+      <p style="text-align:left; font-weight:bold; margin-top: 30px;">
         実験への参加に同意いただける場合には、下の「次へ」ボタンを押してください。
       </p>
     </div>
@@ -444,7 +444,7 @@ timeline.push({
       </div>`;
 
     return `
-      <div style="max-width: 800px; margin: 0 auto; font-size: 16px; line-height: 1.6; text-align: center;">
+      <div style="max-width: 800px; margin: 0 auto; font-size: 16px; line-height: 1.6; text-align: center; text-align: left;">
         <p>実験に使われる回転方向のボタンは、以下のように出来ています。</p>
         <p>実験への参加に同意いただける場合は、下の「次へ」ボタンを押してください。</p>
         ${image_html}
