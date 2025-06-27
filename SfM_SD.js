@@ -294,7 +294,7 @@ function makeBlock(blockIndex) {
       stimulus: '<div style="margin-bottom:10px;">\
        <p>どちらに回転しているように見えましたか？</p>\
        <p>回転方向が途中で変わったり、はっきりとわからない場合は、</p>\
-      <p>より強く感じた回転方向を回答してください。</p>\
+       <p>より強く感じた回転方向を回答してください。</p>\
 　　　</div>',
       choices: function () {
         return image_order.map(label =>
@@ -331,11 +331,18 @@ function makeBlock(blockIndex) {
     if (previous_trial) {
       const prev_value = previous_trial.chosen_value;
       data.Continue = (prev_value === chosen_value) ? 1 : 0;
+
+      // ★ 콘솔 로그 출력
+      console.log(`block ${data.block} trial ${data.trial_in_block}`);
+      console.log(`→ 이전 chosen_value: ${prev_value}, 현재 chosen_value: ${chosen_value}`);
+      console.log(`→ Continue: ${data.Continue}`);
     } else {
       data.Continue = null;
+      console.log("이전 trial 없음");
     }
   } else {
     data.Continue = null; // 첫 trial은 비교 불가
+    console.log("첫 trial: 비교 불가 (Continue=null)");
   }
 }
   });
@@ -382,22 +389,73 @@ timeline.push({
   type: jsPsychHtmlKeyboardResponse,
   stimulus: function () {
   return `
-    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh;">
-      <div style="margin-bottom: 40px; text-align: center; max-width: 800px;">
-        <p>これから画面中央に複数の小さな四角形がランダムに配置され、2秒間、左右方向に動きます。</p>
-        <p>動きを見て、シリンダが回転しているように見えた場合は、見えた回転方向をボタンで選択してください。</p>
-        <p>時計回りに見えた場合は「時計回り」、反時計回りに見えた場合は「反時計回り」のボタンを押してください。</p>
-        <p>ご協力いただける場合は、任意のキーを押して実験を開始してください。</p>
+    <div style="max-width: 800px; margin: 0 auto; font-size: 16px; line-height: 1.6;">
+      <h3>研究プロジェクトに関するご説明</h3>
+      <p>
+        本研究は、立命館大学総合心理学部のCHANG GIJOONGが実施する卒業研究です。<br>
+        研究の概要は
+        <a href="https://youwillneverwalkalone18.github.io/SfM_SD1" target="_blank">こちら</a> からご覧いただけます。<br>
+        本研究に関するお問い合わせ先は
+        <a href="cp0175ii@ed.ritsumei.ac.jp">cp0175ii@ed.ritsumei.ac.jp</a> までメールにてお願いします。
+      </p>
+
+      <hr style="margin: 30px 0;">
+
+      <div style="border: 1px solid #aaa; padding: 10px; margin-bottom: 20px; height: 150px; overflow-y: auto;">
+        <strong>調査の内容について</strong><br>
+        この調査では、画面上に文や画像が提示されます。表示に従って、キーボードやマウスを使って所定の反応をしていただきます。
       </div>
-      <div style="display: flex; flex-direction: row; gap: 40px; justify-content: center;">
-        <img src="${image_order[0]}.png" alt="${image_order[0]}" width="200">
-        <img src="${image_order[1]}.png" alt="${image_order[1]}" width="200">
+
+      <div style="border: 1px solid #aaa; padding: 10px; margin-bottom: 20px; height: 150px; overflow-y: auto;">
+        <strong>得られたデータの取り扱いについて</strong><br>
+        ご提供いただくデータは、匿名化された形で厳重に管理し、研究目的以外には使用しません。
       </div>
+
+      <div style="border: 1px solid #aaa; padding: 10px; margin-bottom: 20px; height: 150px; overflow-y: auto;">
+        <strong>参加の自由について</strong><br>
+        参加は任意であり、途中で中止しても一切不利益はありません。
+      </div>
+
+      <hr style="margin: 30px 0;">
+
+      <h3>この実験に関するご説明</h3>
+      <p>
+        実験に興味を持っていただきありがとうございます。<br>
+        今回、錯視や錯覚を研究する知覚心理学という分野の実験を実施しています。<br>
+        実験では、画面中央に複数の小さな四角形がランダムに配置され、2秒間、左右方向に動きます。<br>
+        動きを見て、円筒が回転しているように見えた場合は、見えた回転方向をボタンで選択してください。<br>
+        時計回りに見えた場合は「時計回り」、反時計回りに見えた場合は「反時計回り」のボタンを押してください。<br><br>
+        これまでの説明を読んだうえで、実験への参加を見合わせたり、開始後に中止したりすることも可能です。
+      </p>
+
+      <p style="text-align:center; font-weight:bold; margin-top: 30px;">
+        実験への参加に同意いただける場合には、下の「次へ」ボタンを押してください。
+      </p>
     </div>
   `;
 },
+ choices: ['次へ'],
 });
 
+// === 두 번째 페이지: CW/CCW 버튼 예시 ===
+timeline.push({
+  type: jsPsychHtmlButtonResponse,
+  stimulus: function () {
+    const image_html = `
+      <div style="display: flex; justify-content: center; gap: 40px; margin-top: 20px; margin-bottom: 20px;">
+        ${image_order.map(label => `<img src="${label}.png" alt="${label}" width="200">`).join('')}
+      </div>`;
+
+    return `
+      <div style="max-width: 800px; margin: 0 auto; font-size: 16px; line-height: 1.6; text-align: center;">
+        <p>実験に使われる回転方向のボタンは、以下のように出来ています。</p>
+        <p>実験への参加に同意いただける場合は、下の「次へ」ボタンを押してください。</p>
+        ${image_html}
+      </div>
+    `;
+  },
+  choices: ['次へ']
+});
 
 
 // 각 block 삽입
@@ -410,7 +468,7 @@ timeline.push({
   type: jsPsychHtmlKeyboardResponse,
   stimulus: `
     <p>以上で実験は終了です。</p>
-    <p>任意のキーを押して、データの保存が完了するまでしばらくお待ちください。</p>
+    <p><strong>任意のキーを押して、データの保存が完了するまでしばらくお待ちください。</strong></p>
     <p>ご協力ありがとうございました。</p>`,
 });
 
