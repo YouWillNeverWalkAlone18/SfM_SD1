@@ -444,9 +444,10 @@ timeline.push({
       </div>`;
 
     return `
-      <div style="max-width: 800px; margin: 0 auto; font-size: 16px; line-height: 1.6; text-align: center; text-align: left;">
+      <div style="max-width: 800px; margin: 0 auto; font-size: 16px; line-height: 1.6; text-align: center;">
         <p>実験に使われる回転方向のボタンは、以下のように出来ています。</p>
-        <p>実験への参加に同意いただける場合は、下の「次へ」ボタンを押してください。</p>
+        <p>実験への参加に同意いただける場合は、下の「次へ」ボタンを押したら、</p>
+        <p>実験がはじまります。</p>
         ${image_html}
       </div>
     `;
