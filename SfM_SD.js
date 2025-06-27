@@ -390,7 +390,7 @@ timeline.push({
   stimulus: function () {
   return `
     <div style="max-width: 800px; margin: 0 auto; font-size: 16px; line-height: 1.6;">
-      <h3>研究プロジェクトに関するご説明</h3>
+      <h3>研究に関するご説明</h3>
       <p>
         本研究は、立命館大学総合心理学部のCHANG GIJOONGが実施する卒業研究です。<br>
         研究の概要は
@@ -401,19 +401,16 @@ timeline.push({
 
       <hr style="margin: 30px 0;">
 
-      <div style="border: 1px solid #aaa; padding: 10px; margin-bottom: 20px; height: 150px; overflow-y: auto;">
-        <strong>調査の内容について</strong><br>
-        この調査では、画面上に文や画像が提示されます。表示に従って、キーボードやマウスを使って所定の反応をしていただきます。
-      </div>
+      <!-- 하나의 스크롤 박스로 통합된 부분 -->
+      <div style="border: 1px solid #aaa; padding: 10px; height: 250px; overflow-y: auto; margin-bottom: 20px;">
+        <p><strong>調査の内容について</strong><br>
+        この調査では、画面上に文や画像が提示されます。表示に従って、キーボードやマウスを使って所定の反応をしていただきます。</p>
 
-      <div style="border: 1px solid #aaa; padding: 10px; margin-bottom: 20px; height: 150px; overflow-y: auto;">
-        <strong>得られたデータの取り扱いについて</strong><br>
-        ご提供いただくデータは、匿名化された形で厳重に管理し、研究目的以外には使用しません。
-      </div>
+        <p><strong>得られたデータの取り扱いについて</strong><br>
+        ご提供いただくデータは、匿名化された形で厳重に管理し、研究目的以外には使用しません。</p>
 
-      <div style="border: 1px solid #aaa; padding: 10px; margin-bottom: 20px; height: 150px; overflow-y: auto;">
-        <strong>参加の自由について</strong><br>
-        参加は任意であり、途中で中止しても一切不利益はありません。
+        <p><strong>参加の自由について</strong><br>
+        参加は任意であり、途中で中止しても一切不利益はありません。</p>
       </div>
 
       <hr style="margin: 30px 0;">
