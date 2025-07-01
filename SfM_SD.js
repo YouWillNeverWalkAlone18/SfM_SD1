@@ -392,7 +392,7 @@ timeline.push({
     <div style="max-width: 800px; margin: 0 auto; font-size: 16px; line-height: 1.6; text-align: left;">
       <h3>研究に関するご説明</h3>
       <p>
-        本研究は、立命館大学総合心理学部のCHANG GIJOONGが実施する卒業研究です。<br>
+        本研究は、立命館大学総合心理学部・高橋康介ゼミのCHANG GIJOONGが実施する卒業研究です。<br>
         研究の概要は
         <a href="https://youwillneverwalkalone18.github.io/SfM_SD1" target="_blank">こちら</a> からご覧いただけます。<br>
         本研究に関するお問い合わせ先は
