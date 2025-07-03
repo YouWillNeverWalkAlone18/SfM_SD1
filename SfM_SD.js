@@ -1,3 +1,23 @@
+// 다크모드 스타일을 시각 피로 경감을 위해 전체에 적용
+<style>
+  body {
+    background-color: #2c2c2c;
+    color: #e0e0e0;
+  }
+  .jspsych-content {
+    color: #e0e0e0;
+    font-family: 'Arial', sans-serif;
+  }
+  .jspsych-btn {
+    background-color: #444;
+    color: #fff;
+    border: 1px solid #aaa;
+  }
+  h3, p {
+    color: #e0e0e0 !important;
+  }
+</style>
+
 var jsPsych = initJsPsych({
   on_finish: function () {
     jsPsych.data.displayData();
@@ -53,7 +73,7 @@ let sfm_neutral = function (p) {
   };
 
   p.draw = function () {      
-    p.background(100);
+    p.background('#2c2c2c');
     p.translate(p.width / 2, p.height / 2);
     for (let i = 0; i < numRects; i++) {
       let r = rects[i];
@@ -99,7 +119,7 @@ let sfm_cw = function (p) {
   };
 
   p.draw = function () {
-    p.background(100);
+    p.background('#2c2c2c');
     p.translate(p.width / 2, p.height / 2);
 
     let backgroundRects = [];
@@ -194,7 +214,7 @@ let sfm_ccw = function (p) {
   };
 
   p.draw = function () {
-    p.background(100);
+    p.background('#2c2c2c');
     p.translate(p.width / 2, p.height / 2);
 
     let backgroundRects = [];
@@ -276,7 +296,7 @@ function makeBlock(blockIndex) {
 
     trials.push({
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<div style="font-size:32px;">+</div>`,
+      stimulus: `<div style="font-size:32px; color: #e0e0e0;">+</div>`,
       choices: "NO_KEYS",
       trial_duration: 1000,
     });
@@ -289,7 +309,7 @@ function makeBlock(blockIndex) {
 
     trials.push({
       type: jsPsychHtmlButtonResponse,
-      stimulus: '<div style="margin-bottom:10px;">\
+      stimulus: '<div style="margin-bottom:10px; color: #e0e0e0;">\
        <p>どちらに回転しているように見えましたか？</p>\
        <p>回転方向が途中で変わったり、はっきりとわからない場合は、</p>\
        <p>より強く感じた回転方向を回答してください。</p>\
@@ -346,7 +366,7 @@ function makeBlock(blockIndex) {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: '',
       choices: "NO_KEYS",
-      trial_duration: 500,
+      trial_duration: 1000,
     });
   }
 
@@ -356,6 +376,7 @@ function makeBlock(blockIndex) {
     stimulus: function () {
       let progressBarWidth = (completedTrials / 80) * 100;
       return `
+        <div style="color: #e0e0e0;">
         <p>5試行が終了しました。休憩が必要な場合は、ここでお取りください。</p>
         <p>準備ができたら、ボタンを押して次に進んでください。</p>
         <p style="margin-top: 20px;">${completedTrials} / 80 回が完了しました。</p>
@@ -383,7 +404,7 @@ timeline.push({
   type: jsPsychHtmlButtonResponse,
   stimulus: function () {
   return `
-    <div style="max-width: 800px; margin: 0 auto; font-size: 16px; line-height: 1.6; text-align: left;">
+    <div style="max-width: 800px; margin: 0 auto; font-size: 16px; line-height: 1.6; text-align: left; color: #e0e0e0;">
       <h3>研究に関するご説明</h3>
       <p>
         本研究は、立命館大学総合心理学部・高橋康介ゼミのCHANG GIJOONGが実施する卒業研究です。<br>
@@ -401,8 +422,8 @@ timeline.push({
         実験では、画面上に提示される視覚刺激に対して反応していただきます。</p>
         
         <p><strong>実験の手続き</strong><br>
-        所要時間は普通に実施した場合には長くて10分程度の見込みです <br>
-       （ゆっくりやっていただいた場合には、もう少し時間がかかる可能性もあります）。<br>
+        所要時間は普通に実施した場合には長くて10分程度の見込みです。 <br>
+       （ゆっくりやっていただいた場合には、もう少し時間がかかる可能性もあります）<br>
         画面上に画像や動画が提示され、それに対する反応を求めます。一部の試行では曖昧な刺激が表示され、判断が難しいことがあります。</p> 
 
         <p><strong>危険性・不快感について</strong><br>
@@ -455,7 +476,7 @@ timeline.push({
       </div>`;
 
     return `
-      <div style="max-width: 800px; margin: 0 auto; font-size: 16px; line-height: 1.6; text-align: left;">
+      <div style="max-width: 800px; margin: 0 auto; font-size: 16px; line-height: 1.6; text-align: left; color: #e0e0e0;">
         <p>回転方向を選択するためのボタンは、以下のように画面に表示されます。</p>
         <p>実験への参加に同意される場合は、下の「次へ」ボタンを押してください。</p>
         <p>ボタンを押すと、ただちに実験が始まります。</p>
@@ -475,6 +496,7 @@ for (let i = 0; i < block_order.length; i++) {
 timeline.push({
   type: jsPsychHtmlKeyboardResponse,
   stimulus: `
+    <div style="color: #e0e0e0;">
     <p>以上で実験は終了です。</p>
     <p><strong>任意のキーを押して、データの保存が完了するまでしばらくお待ちください。</strong></p>
     <p>ご協力ありがとうございました。</p>`,
