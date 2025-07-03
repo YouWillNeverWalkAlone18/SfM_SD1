@@ -1,23 +1,3 @@
-// 다크모드 스타일을 시각 피로 경감을 위해 전체에 적용
-<style>
-  body {
-    background-color: #2c2c2c;
-    color: #e0e0e0;
-  }
-  .jspsych-content {
-    color: #e0e0e0;
-    font-family: 'Arial', sans-serif;
-  }
-  .jspsych-btn {
-    background-color: #444;
-    color: #fff;
-    border: 1px solid #aaa;
-  }
-  h3, p {
-    color: #e0e0e0 !important;
-  }
-</style>
-
 var jsPsych = initJsPsych({
   on_finish: function () {
     jsPsych.data.displayData();
