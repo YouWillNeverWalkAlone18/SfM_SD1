@@ -53,7 +53,7 @@ let sfm_neutral = function (p) {
   };
 
   p.draw = function () {      
-    p.background('#444444');
+    p.background('#555555');
     p.translate(p.width / 2, p.height / 2);
     for (let i = 0; i < numRects; i++) {
       let r = rects[i];
@@ -99,7 +99,7 @@ let sfm_cw = function (p) {
   };
 
   p.draw = function () {
-    p.background('#444444');
+    p.background('#555555');
     p.translate(p.width / 2, p.height / 2);
 
     let backgroundRects = [];
@@ -194,7 +194,7 @@ let sfm_ccw = function (p) {
   };
 
   p.draw = function () {
-    p.background('#444444');
+    p.background('#555555');
     p.translate(p.width / 2, p.height / 2);
 
     let backgroundRects = [];
