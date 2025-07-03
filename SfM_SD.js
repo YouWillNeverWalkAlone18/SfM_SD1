@@ -41,7 +41,7 @@ let sfm_neutral = function (p) {
       let angle = p.random(p.TWO_PI);
       let y = p.random(-200, 200);
       let isBlack = i < numRects / 2;
-      colors[i] = isBlack ? p.color(40) : p.color(210);
+      colors[i] = isBlack ? p.color('#1a1a1a') : p.color('#f0f0f0');
       rects.push({
         angle: angle,
         y: y,
@@ -85,7 +85,7 @@ let sfm_cw = function (p) {
       let angle = p.random(p.TWO_PI);
       let y = p.random(-200, 200);
       let isBlack = i < numRects / 2;
-      colors[i] = isBlack ? p.color(40) : p.color(210);
+      colors[i] = isBlack ? p.color('#1a1a1a') : p.color('#f0f0f0');
       rects.push({
         angle: angle,
         y: y,
@@ -180,7 +180,7 @@ let sfm_ccw = function (p) {
       let angle = p.random(p.TWO_PI);
       let y = p.random(-200, 200);
       let isBlack = i < numRects / 2;
-      colors[i] = isBlack ? p.color(40) : p.color(210);
+      colors[i] = isBlack ? p.color('#1a1a1a') : p.color('#f0f0f0');
       rects.push({
         angle: angle,
         y: y,
