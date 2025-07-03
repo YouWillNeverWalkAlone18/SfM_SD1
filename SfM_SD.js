@@ -289,7 +289,7 @@ function makeBlock(blockIndex) {
 
     trials.push({
       type: jsPsychHtmlButtonResponse,
-      stimulus: '<div style="margin-bottom:10px; color: #e0e0e0;">\
+      stimulus: '<div style="margin-bottom:10px; font-size: 24px; color: #e0e0e0;">\
        <p>どちらに回転しているように見えましたか？</p>\
        <p>回転方向が途中で変わったり、はっきりとわからない場合は、</p>\
        <p>より強く感じた回転方向を回答してください。</p>\
