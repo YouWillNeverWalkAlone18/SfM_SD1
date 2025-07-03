@@ -278,7 +278,7 @@ function makeBlock(blockIndex) {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<div style="font-size:32px;">+</div>`,
       choices: "NO_KEYS",
-      trial_duration: 500,
+      trial_duration: 1000,
     });
 
     trials.push({
