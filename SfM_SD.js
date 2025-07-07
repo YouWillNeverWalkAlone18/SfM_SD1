@@ -29,17 +29,17 @@ let completedTrials = 5; // 初期値を5に設定
 let sfm_neutral = function (p) {
   let rects = [];
   let numRects = 400;
-  let R = 170 * 1.5;
-  let rectWidth = 8 * 1.5;
-  let rectHeight = 8 * 1.5;
+  let R = 170 * 1.2;
+  let rectWidth = 8 * 1.2;
+  let rectHeight = 8 * 1.2;
   let omega = 0.025;
   let colors = [];
 
   p.setup = function () {
-    p.createCanvas(800 * 1.5, 600 * 1.5);
+    p.createCanvas(800 * 1.2, 600 * 1.2);
     for (let i = 0; i < numRects; i++) {
       let angle = p.random(p.TWO_PI);
-      let y = p.random(-200 * 1.5, 200 * 1.5);
+      let y = p.random(-200 * 1.2, 200 * 1.2);
       let isBlack = i < numRects / 2;
       colors[i] = isBlack ? p.color('#1a1a1a') : p.color('#f0f0f0');
       rects.push({
@@ -61,7 +61,7 @@ let sfm_neutral = function (p) {
       let x = R * p.cos(angle);
       let y = r.y;
       let distanceFromCenter = Math.abs(x);
-      let visibleWidth = p.map(distanceFromCenter, 160 * 1.5, 180 * 1.5, rectWidth, 0);
+      let visibleWidth = p.map(distanceFromCenter, 160 * 1.2, 180 * 1.2, rectWidth, 0);
       visibleWidth = p.constrain(visibleWidth, 0, rectWidth);
       let adjustedX = x > 0 ? x - (rectWidth - visibleWidth) / 2 : x + (rectWidth - visibleWidth) / 2;
       p.fill(colors[i]);
