@@ -39,7 +39,7 @@ let sfm_neutral = function (p) {
     p.createCanvas(800 * 1.5, 600 * 1.5);
     for (let i = 0; i < numRects; i++) {
       let angle = p.random(p.TWO_PI);
-      let y = p.random(-200, 200);
+      let y = p.random(-200 * 1.5, 200 * 1.5);
       let isBlack = i < numRects / 2;
       colors[i] = isBlack ? p.color('#1a1a1a') : p.color('#f0f0f0');
       rects.push({
