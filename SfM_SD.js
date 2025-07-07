@@ -478,6 +478,7 @@ timeline.push({
   stimulus: `
     <div style="color: #e0e0e0;">
     <p>以上で実験は終了です。</p>
+    <p><strong>まだ終わっていません~~！</strong></p>
     <p><strong>任意のキーを押して、データの保存が完了するまでしばらくお待ちください。</strong></p>
     <p>ご協力ありがとうございました。</p>`,
 });
