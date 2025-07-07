@@ -32,7 +32,7 @@ let sfm_neutral = function (p) {
   let R = 170 * 1.2;
   let rectWidth = 8 * 1.2;
   let rectHeight = 8 * 1.2;
-  let omega = 0.025;
+  let omega = 0.033;
   let colors = [];
 
   p.setup = function () {
@@ -74,16 +74,16 @@ let sfm_neutral = function (p) {
 let sfm_cw = function (p) {
   let rects = [];
   let numRects = 400;
-  let R = 170;
-  let baseSize = 8;
-  let omega = 0.025;
+  let R = 170 * 1.2;
+  let baseSize = 8 * 1.2;
+  let omega = 0.033;
   let colors = [];
 
   p.setup = function () {
-    p.createCanvas(800, 600);
+    p.createCanvas(800 * 1.2, 600 * 1.2);
     for (let i = 0; i < numRects; i++) {
       let angle = p.random(p.TWO_PI);
-      let y = p.random(-200, 200);
+      let y = p.random(-200 * 1.2, 200 * 1.2);
       let isBlack = i < numRects / 2;
       colors[i] = isBlack ? p.color('#1a1a1a') : p.color('#f0f0f0');
       rects.push({
@@ -131,7 +131,7 @@ let sfm_cw = function (p) {
       let rectSize = baseSize * r.currentScale;
 
       let distanceFromCenter = p.abs(x);
-      let visibleWidth = p.map(distanceFromCenter, 160, 180, rectSize, 0);
+      let visibleWidth = p.map(distanceFromCenter, 160 * 1.2, 180 * 1.2, rectSize, 0);
       visibleWidth = p.constrain(visibleWidth, 0, rectSize);
 
       let adjustedX = x > 0
@@ -169,16 +169,16 @@ let sfm_cw = function (p) {
 let sfm_ccw = function (p) {
   let rects = [];
   let numRects = 400;
-  let R = 170;
-  let baseSize = 8;
-  let omega = 0.025;
+  let R = 170 * 1.2;
+  let baseSize = 8 * 1.2;
+  let omega = 0.033;
   let colors = [];
 
   p.setup = function () {
-    p.createCanvas(800, 600);
+    p.createCanvas(800 * 1.2, 600 * 1.2);
     for (let i = 0; i < numRects; i++) {
       let angle = p.random(p.TWO_PI);
-      let y = p.random(-200, 200);
+      let y = p.random(-200 * 1.2, 200 * 1.2);
       let isBlack = i < numRects / 2;
       colors[i] = isBlack ? p.color('#1a1a1a') : p.color('#f0f0f0');
       rects.push({
@@ -225,7 +225,7 @@ let sfm_ccw = function (p) {
       let rectSize = baseSize * r.currentScale;
 
       let distanceFromCenter = p.abs(x);
-      let visibleWidth = p.map(distanceFromCenter, 160, 180, rectSize, 0);
+      let visibleWidth = p.map(distanceFromCenter, 160 * 1.2, 180 * 1.2, rectSize, 0);
       visibleWidth = p.constrain(visibleWidth, 0, rectSize);
 
       let adjustedX = x > 0
