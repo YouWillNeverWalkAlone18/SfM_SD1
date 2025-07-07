@@ -32,7 +32,7 @@ let sfm_neutral = function (p) {
   let R = 170 * 1.2;
   let rectWidth = 8 * 1.2;
   let rectHeight = 8 * 1.2;
-  let omega = 0.033;
+  let omega = 0.03;
   let colors = [];
 
   p.setup = function () {
@@ -76,7 +76,7 @@ let sfm_cw = function (p) {
   let numRects = 400;
   let R = 170 * 1.2;
   let baseSize = 8 * 1.2;
-  let omega = 0.033;
+  let omega = 0.03;
   let colors = [];
 
   p.setup = function () {
@@ -171,7 +171,7 @@ let sfm_ccw = function (p) {
   let numRects = 400;
   let R = 170 * 1.2;
   let baseSize = 8 * 1.2;
-  let omega = 0.033;
+  let omega = 0.03;
   let colors = [];
 
   p.setup = function () {
