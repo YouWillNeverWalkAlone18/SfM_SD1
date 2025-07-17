@@ -64,7 +64,7 @@ p.calcOmegaFromCos = function(normX) {
 }
 
 p.draw = function() {
-  p.background(100);
+  p.background('#555555');
   p.translate(p.width / 2, p.height / 2);
 
   let renderedRects = [];
