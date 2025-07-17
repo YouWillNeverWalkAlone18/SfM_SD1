@@ -57,7 +57,7 @@ p.setup = function() {
 
 // 三角関数基盤の速度関数 (cosine from 2π to 3π)
 p.calcOmegaFromCos = function(normX) {
-  let phase = normX * PI + 2 * PI; // normX = -1→2π, normX = +1→3π
+  let phase = normX * p.PI + 2 * p.PI; // normX = -1→2π, normX = +1→3π
   let cosVal = p.cos(phase);         // cos(2π) = 1 → 中心で最大
   let normalized = (cosVal + 1) / 2; // 1 → 0 との間で正規化
   return 0.6 + 0.4 * normalized;   // 最小 0.6, 最大 1.0
@@ -84,7 +84,7 @@ p.draw = function() {
 
     // 각도 업데이트
     r.angle += baseOmega * omegaFactor;
-    r.angle %= TWO_PI;
+    r.angle %= p.TWO_PI;
 
     // 다시 위치 계산
     x = R * p.cos(r.angle);
