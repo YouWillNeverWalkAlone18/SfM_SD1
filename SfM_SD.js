@@ -40,7 +40,7 @@ p.setup = function() {
   p.createCanvas(800 * 1.2, 600 * 1.2);
 
   for (let i = 0; i < numRects; i++) {
-    let angle = p.random(TWO_PI);
+    let angle = p.random(p.TWO_PI);
     let y = p.random(-200 * 1.2, 200 * 1.2);
     let isBlack = i < numRects / 2;
     colors[i] = isBlack ? p.color(40) : p.color(210);
