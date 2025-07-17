@@ -27,47 +27,105 @@ let completedTrials = 5; // 初期値を5に設定
 
 // ========== sfm_neutral ==========
 let sfm_neutral = function (p) {
-  let rects = [];
-  let numRects = 400;
-  let R = 170 * 1.2;
-  let rectWidth = 8 * 1.2;
-  let rectHeight = 8 * 1.2;
-  let omega = 0.03;
-  let colors = [];
 
-  p.setup = function () {
-    p.createCanvas(800 * 1.2, 600 * 1.2);
-    for (let i = 0; i < numRects; i++) {
-      let angle = p.random(p.TWO_PI);
-      let y = p.random(-200 * 1.2, 200 * 1.2);
-      let isBlack = i < numRects / 2;
-      colors[i] = isBlack ? p.color('#1a1a1a') : p.color('#f0f0f0');
-      rects.push({
-        angle: angle,
-        y: y,
-        phase: p.random(p.TWO_PI)
-      });
-    }
-    p.shuffle(colors, true);
-    p.noStroke();
-  };
+let rects = [];
+let numRects = 420;
+let R = 200 * 1.2;
+let rectWidth = 8 * 1.2;
+let rectHeight = 8 * 1.2;
+let baseOmega = 0.032;
+let colors = [];
 
-  p.draw = function () {      
-    p.background('#555555');
-    p.translate(p.width / 2, p.height / 2);
-    for (let i = 0; i < numRects; i++) {
-      let r = rects[i];
-      let angle = r.angle + p.frameCount * omega;
-      let x = R * p.cos(angle);
-      let y = r.y;
-      let distanceFromCenter = Math.abs(x);
-      let visibleWidth = p.map(distanceFromCenter, 160 * 1.2, 180 * 1.2, rectWidth, 0);
-      visibleWidth = p.constrain(visibleWidth, 0, rectWidth);
-      let adjustedX = x > 0 ? x - (rectWidth - visibleWidth) / 2 : x + (rectWidth - visibleWidth) / 2;
-      p.fill(colors[i]);
-      p.rect(adjustedX, y - rectHeight / 2, visibleWidth, 8);
+p.setup = function() {
+  p.createCanvas(800 * 1.2, 600 * 1.2);
+
+  for (let i = 0; i < numRects; i++) {
+    let angle = p.random(TWO_PI);
+    let y = p.random(-200 * 1.2, 200 * 1.2);
+    let isBlack = i < numRects / 2;
+    colors[i] = isBlack ? p.color(40) : p.color(210);
+
+    rects.push({
+      angle: angle,
+      y: y
+    });
+  }
+
+  p.shuffle(colors, true);
+  p.noStroke();
+}
+
+// 三角関数基盤の速度関数 (cosine from 2π to 3π)
+p.calcOmegaFromCos = function(normX) {
+  let phase = normX * PI + 2 * PI; // normX = -1→2π, normX = +1→3π
+  let cosVal = p.cos(phase);         // cos(2π) = 1 → 中心で最大
+  let normalized = (cosVal + 1) / 2; // 1 → 0 との間で正規化
+  return 0.6 + 0.4 * normalized;   // 最小 0.6, 最大 1.0
+}
+
+p.draw = function() {
+  p.background(100);
+  p.translate(p.width / 2, p.height / 2);
+
+  let renderedRects = [];
+
+  for (let i = 0; i < numRects; i++) {
+    let r = rects[i];
+
+    // 현재 위치 기반 x 계산
+    let x = R * p.cos(r.angle);
+
+    // 정규화된 x 위치 (-1~1)
+    let normX = x / R;
+    normX = p.constrain(normX, -1, 1);
+
+    // 삼각함수 기반 속도 보정
+    let omegaFactor = p.calcOmegaFromCos(normX);
+
+    // 각도 업데이트
+    r.angle += baseOmega * omegaFactor;
+    r.angle %= TWO_PI;
+
+    // 다시 위치 계산
+    x = R * p.cos(r.angle);
+    let y = r.y;
+
+    // 정면 가까이에서 얇아짐
+    let distanceFromCenter = p.abs(x);
+    let visibleWidth = p.map(distanceFromCenter, 190 * 1.2, 210 * 1.2, rectWidth, 0);
+    visibleWidth = p.constrain(visibleWidth, 0, rectWidth);
+
+    let adjustedX = x;
+    if (x > 0) {
+      adjustedX = x - (rectWidth - visibleWidth) / 2;
+    } else {
+      adjustedX = x + (rectWidth - visibleWidth) / 2;
     }
-  };
+
+    renderedRects.push({
+      x: adjustedX,
+      y: y - rectHeight / 2,
+      w: visibleWidth,
+      h: rectHeight,
+      col: colors[i],
+      isFront: p.red(colors[i]) < 100
+    });
+  }
+
+  // 어두운 것 먼저 그리기
+  renderedRects.sort((a, b) => {
+    if (p.abs(a.x - b.x) < 5) {
+      return b.isFront - a.isFront;
+    }
+    return a.x - b.x;
+  });
+
+  for (let i = renderedRects.length - 1; i >= 0; i--) {
+    let r = renderedRects[i];
+    p.fill(r.col);
+    p.rect(r.x, r.y, r.w, r.h);
+  }
+}
 };
 
 // ========== sfm_cw ==========
