@@ -334,7 +334,7 @@ function makeBlock(blockIndex) {
 
     trials.push({
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<div style="font-size:32px; color: #e0e0e0;">+</div>`,
+      stimulus: `<div style="font-size:32px; color:#e0e0e0; position:relative; top:-10px;">+</div>`,
       choices: "NO_KEYS",
       trial_duration: 1000,
     });
