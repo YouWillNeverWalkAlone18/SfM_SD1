@@ -64,7 +64,7 @@ p.calcOmegaFromCos = function(normX) {
 }
 
 p.draw = function() {
-  p.background('#787878');
+  p.background('#646464');
   p.translate(p.width / 2, p.height / 2);
 
   let renderedRects = [];
@@ -157,7 +157,7 @@ let sfm_cw = function (p) {
   };
 
   p.draw = function () {
-    p.background('#787878');
+    p.background('#646464');
     p.translate(p.width / 2, p.height / 2);
 
     let backgroundRects = [];
@@ -252,7 +252,7 @@ let sfm_ccw = function (p) {
   };
 
   p.draw = function () {
-    p.background('#787878');
+    p.background('#646464');
     p.translate(p.width / 2, p.height / 2);
 
     let backgroundRects = [];
