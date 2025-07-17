@@ -132,7 +132,7 @@ p.draw = function() {
 let sfm_cw = function (p) {
   let rects = [];
   let numRects = 400;
-  let R = 170 * 1.2;
+  let R = 200 * 1.2;
   let baseSize = 8 * 1.2;
   let omega = 0.03;
   let colors = [];
@@ -189,7 +189,7 @@ let sfm_cw = function (p) {
       let rectSize = baseSize * r.currentScale;
 
       let distanceFromCenter = p.abs(x);
-      let visibleWidth = p.map(distanceFromCenter, 160 * 1.2, 180 * 1.2, rectSize, 0);
+      let visibleWidth = p.map(distanceFromCenter, 190 * 1.2, 210 * 1.2, rectSize, 0);
       visibleWidth = p.constrain(visibleWidth, 0, rectSize);
 
       let adjustedX = x > 0
@@ -227,7 +227,7 @@ let sfm_cw = function (p) {
 let sfm_ccw = function (p) {
   let rects = [];
   let numRects = 400;
-  let R = 170 * 1.2;
+  let R = 200 * 1.2;
   let baseSize = 8 * 1.2;
   let omega = 0.03;
   let colors = [];
@@ -283,7 +283,7 @@ let sfm_ccw = function (p) {
       let rectSize = baseSize * r.currentScale;
 
       let distanceFromCenter = p.abs(x);
-      let visibleWidth = p.map(distanceFromCenter, 160 * 1.2, 180 * 1.2, rectSize, 0);
+      let visibleWidth = p.map(distanceFromCenter, 190 * 1.2, 210 * 1.2, rectSize, 0);
       visibleWidth = p.constrain(visibleWidth, 0, rectSize);
 
       let adjustedX = x > 0
