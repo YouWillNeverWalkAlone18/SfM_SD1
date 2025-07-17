@@ -342,7 +342,7 @@ function makeBlock(blockIndex) {
     trials.push({
       type: jsPsychP5,
       sketch: trial_sketch,
-      trial_duration: 3000,
+      trial_duration: 2000,
     });
 
     trials.push({
