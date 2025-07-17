@@ -350,7 +350,8 @@ function makeBlock(blockIndex) {
       stimulus: '<div style="margin-bottom:10px; font-size: 24px; color: #e0e0e0;">\
        <p>どちらに回転しているように見えましたか？</p>\
        <p>回転方向が途中で変わったり、はっきりとわからない場合は、</p>\
-       <p>より強く感じた回転方向を回答してください。</p>\
+       <p>より強く感じた回転方向を選んでください。</p>\
+       <p>直感的な判断で構いません。</p>\
 　　　</div>',
       choices: function () {
   return image_order.map(label =>
