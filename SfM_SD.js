@@ -29,11 +29,11 @@ let completedTrials = 5; // 初期値を5に設定
 let sfm_neutral = function (p) {
 
 let rects = [];
-let numRects = 420;
+let numRects = 450;
 let R = 200 * 1.2;
 let rectWidth = 8 * 1.2;
 let rectHeight = 8 * 1.2;
-let baseOmega = 0.032;
+let baseOmega = 0.028;
 let colors = [];
 
 p.setup = function() {
@@ -342,7 +342,7 @@ function makeBlock(blockIndex) {
     trials.push({
       type: jsPsychP5,
       sketch: trial_sketch,
-      trial_duration: 3000,
+      trial_duration: 2000,
     });
 
     trials.push({
