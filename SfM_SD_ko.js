@@ -416,9 +416,9 @@ function makeBlock(blockIndex) {
       let progressBarWidth = (completedTrials / 80) * 100;
       return `
         <div style="color: #e0e0e0;">
-        <p>5시행이 종료되었습니다。넘어가시기 전에 휴식하셔도 됩니다.</p>
-        <p>준비되셨다면、버튼을 눌러 실험을 진행해주세요.</p>
-        <p style="margin-top: 20px;">${completedTrials} / 80 回が完了しました。</p>
+        <p>5시행이 종료되었습니다. 넘어가시기 전에 휴식하셔도 됩니다.</p>
+        <p>준비되셨다면, 버튼을 눌러 실험을 진행해주세요.</p>
+        <p style="margin-top: 20px;">${completedTrials} / 80 회 진행되었습니다.</p>
         <div style="width: 80%; height: 20px; border: 1px solid #000; margin: 10px auto; background-color: #eee;">
           <div style="width: ${progressBarWidth}%; height: 100%; background-color: #4caf50;"></div>
         </div>
@@ -549,4 +549,5 @@ timeline.push(save_data);
 
 
 jsPsych.run(timeline);
+
 
