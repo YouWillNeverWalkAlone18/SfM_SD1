@@ -500,7 +500,7 @@ timeline.push({
       </p>
 
       <p style="text-align:left; font-weight:bold; margin-top: 30px;">
-        실험에 참가해주신다면, 아래의 「계속」버튼을 클릭해주세요.
+        실험 참가에 동의하신다면, 아래의 「계속」버튼을 클릭해주세요.
       </p>
     </div>
   `;
@@ -549,5 +549,6 @@ timeline.push(save_data);
 
 
 jsPsych.run(timeline);
+
 
 
