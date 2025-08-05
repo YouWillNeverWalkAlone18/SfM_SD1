@@ -350,7 +350,7 @@ function makeBlock(blockIndex) {
       stimulus: '<div style="margin-bottom:10px; font-size: 24px; color: #e0e0e0;">\
        <p>어느 쪽으로 회전하는 것처럼 보였나요?</p>\
        <p>회전방향이 도중에 바뀌었거나 헷갈릴 때는,</p>\
-       <p>느낌상 이쪽, 으로 응답하시면 됩니다.</p>\
+       <p>느낌상 더 그럴듯한 방향으로 응답하시면 됩니다.</p>\
        <p>( 정답은 없습니다. )</p>\
 　　　</div>',
       choices: function () {
@@ -549,3 +549,4 @@ timeline.push(save_data);
 
 
 jsPsych.run(timeline);
+
