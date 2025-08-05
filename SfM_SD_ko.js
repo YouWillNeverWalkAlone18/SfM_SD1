@@ -446,7 +446,7 @@ timeline.push({
     <div style="max-width: 800px; margin: 0 auto; font-size: 16px; line-height: 1.6; text-align: left; color: #e0e0e0;">
       <h3>연구에 관한 설명</h3>
       <p>
-        본 연구는、리츠메이칸대학 종합심리학부・Takahashi lab 장기중이 실시하는 연구입니다.<br>
+        본 연구는、리츠메이칸대학 종합심리학부・Takahashi koskhe lab 장기중이 실시하는 연구입니다.<br>
         연구의 개요는
         <a href="https://youwillneverwalkalone18.github.io/SfM_SD1" target="_blank">여기</a> 서 확인하실 수 있습니다.<br>
         본 연구에 관한 문의사항은
@@ -457,7 +457,7 @@ timeline.push({
       <div style="border: 1px solid #aaa; padding: 10px; height: 250px; overflow-y: auto; margin-bottom: 20px; text-align: left;">
 
         <p><strong>연구의 목적</strong><br>
-        본 연구의 목적은、과거에 관찰한 지각/판단 정보가 현재의 지각/판단에 미치는 영향을, <br>
+        본 연구의 목적은, 과거에 관찰한 지각/판단 정보가 현재의 지각/판단에 미치는 영향을, <br>
         안정된 지각/판단이 불가능한 자극을 이용한 실험 결과를 통해 이해하는 것입니다.</p>
         
         <p><strong>실험 개요</strong><br>
@@ -489,7 +489,7 @@ timeline.push({
 
       <hr style="margin: 30px 0;">
 
-      <h3>この実験に関するご説明</h3>
+      <h3>실험에 관한 설명</h3>
       <p>
         실험에 관심을 가져주신 점 감사합니다.<br>
         실험에서는, 화면 중앙에 복수의 작은 사각형이 넓게 배치되어, 2초간, 좌우 방향으로 움직입니다.<br>
@@ -546,5 +546,6 @@ timeline.push({
 });
 
 timeline.push(save_data);
+
 
 jsPsych.run(timeline);
