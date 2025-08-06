@@ -134,8 +134,9 @@ let sfm_cw = function (p) {
   let numRects = 400;
   let R = 200 * 1.2;
   let baseSize = 8 * 1.2;
-  let omega = 0.0225; // 0.3から変更
+  let baseOmega = 0.028;
   let colors = [];
+  let direction = 1; // 시계 방향
 
   p.setup = function () {
     p.createCanvas(800 * 1.2, 600 * 1.2);
@@ -147,13 +148,19 @@ let sfm_cw = function (p) {
       rects.push({
         angle: angle,
         y: y,
-        phase: p.random(p.TWO_PI),
         prevX: R * p.cos(angle),
         currentScale: 1.0
       });
     }
     p.shuffle(colors, true);
     p.noStroke();
+  };
+
+  p.calcOmegaFromCos = function (normX) {
+    let phase = normX * p.PI + 2 * p.PI;
+    let cosVal = p.cos(phase);
+    let normalized = (cosVal + 1) / 2;
+    return 0.6 + 0.4 * normalized;
   };
 
   p.draw = function () {
@@ -165,27 +172,31 @@ let sfm_cw = function (p) {
 
     for (let i = 0; i < numRects; i++) {
       let r = rects[i];
-      let angle = r.angle + p.frameCount * omega;
-      let x = R * p.cos(angle);
+      let xCurrent = R * p.cos(r.angle);
+      let normX = p.constrain(xCurrent / R, -1, 1);
+      let omegaFactor = p.calcOmegaFromCos(normX);
+
+      r.angle += direction * baseOmega * omegaFactor;
+      r.angle %= p.TWO_PI;
+
+      let x = R * p.cos(r.angle);
       let vel = x - r.prevX;
       r.prevX = x;
 
       let y = r.y;
-
       let maxScale = 1.3;
       let minScale = 0.7;
       let distanceRatio = p.abs(x) / R;
 
-       if (vel < 0) {
-      // 왼쪽 방향 → 전면: 더 커짐
-      r.currentScale = p.map(distanceRatio, 1, 0, minScale, maxScale) * 1.3;
-    } else {
-      // 오른쪽 방향 → 후면: 점점 작아짐
-      let shrink = p.map(distanceRatio, 1, 0, 1.0, 0.7);
-      r.currentScale *= shrink;
-      r.currentScale = p.constrain(r.currentScale, minScale, maxScale);
-    }
-      let alpha = vel < 0 ? 255 : 150; // 
+      if (vel < 0) {
+        r.currentScale = p.map(distanceRatio, 1, 0, minScale, maxScale) * 1.3;
+      } else {
+        let shrink = p.map(distanceRatio, 1, 0, 1.0, 0.7);
+        r.currentScale *= shrink;
+        r.currentScale = p.constrain(r.currentScale, minScale, maxScale);
+      }
+
+      let alpha = vel < 0 ? 255 : 150;
       let rectSize = baseSize * r.currentScale;
 
       let distanceFromCenter = p.abs(x);
@@ -223,14 +234,16 @@ let sfm_cw = function (p) {
   };
 };
 
+
 // ========== sfm_ccw ==========
 let sfm_ccw = function (p) {
   let rects = [];
   let numRects = 400;
   let R = 200 * 1.2;
   let baseSize = 8 * 1.2;
-  let omega = 0.0225; // 0.3から変更
+  let baseOmega = 0.028;
   let colors = [];
+  let direction = -1; // 반시계 방향
 
   p.setup = function () {
     p.createCanvas(800 * 1.2, 600 * 1.2);
@@ -242,13 +255,19 @@ let sfm_ccw = function (p) {
       rects.push({
         angle: angle,
         y: y,
-        phase: p.random(p.TWO_PI),
         prevX: R * p.cos(angle),
         currentScale: 1.0
       });
     }
     p.shuffle(colors, true);
     p.noStroke();
+  };
+
+  p.calcOmegaFromCos = function (normX) {
+    let phase = normX * p.PI + 2 * p.PI;
+    let cosVal = p.cos(phase);
+    let normalized = (cosVal + 1) / 2;
+    return 0.6 + 0.4 * normalized;
   };
 
   p.draw = function () {
@@ -260,18 +279,23 @@ let sfm_ccw = function (p) {
 
     for (let i = 0; i < numRects; i++) {
       let r = rects[i];
-      let angle = r.angle + p.frameCount * omega;
-      let x = R * p.cos(angle);
+      let xCurrent = R * p.cos(r.angle);
+      let normX = p.constrain(xCurrent / R, -1, 1);
+      let omegaFactor = p.calcOmegaFromCos(normX);
+
+      r.angle += direction * baseOmega * omegaFactor;
+      r.angle %= p.TWO_PI;
+
+      let x = R * p.cos(r.angle);
       let vel = x - r.prevX;
       r.prevX = x;
 
       let y = r.y;
-
       let maxScale = 1.3;
       let minScale = 0.7;
       let distanceRatio = p.abs(x) / R;
 
-      if (vel > 0) {
+      if (vel < 0) {
         r.currentScale = p.map(distanceRatio, 1, 0, minScale, maxScale) * 1.3;
       } else {
         let shrink = p.map(distanceRatio, 1, 0, 1.0, 0.7);
@@ -279,7 +303,7 @@ let sfm_ccw = function (p) {
         r.currentScale = p.constrain(r.currentScale, minScale, maxScale);
       }
 
-      let alpha = vel > 0 ? 255 : 150;
+      let alpha = vel < 0 ? 255 : 150;
       let rectSize = baseSize * r.currentScale;
 
       let distanceFromCenter = p.abs(x);
@@ -298,7 +322,7 @@ let sfm_ccw = function (p) {
         alpha: alpha
       };
 
-      if (vel > 0) {
+      if (vel < 0) {
         foregroundRects.push(obj);
       } else {
         backgroundRects.push(obj);
@@ -317,6 +341,7 @@ let sfm_ccw = function (p) {
   };
 };
 
+// ブロック・試行設定
   
 function makeBlock(blockIndex) {
   let trials = [];
