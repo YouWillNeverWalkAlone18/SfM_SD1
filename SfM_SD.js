@@ -361,11 +361,12 @@ function makePracticeBlock() {
 
     practiceTrials.push({
       type: jsPsychHtmlButtonResponse,
-      stimulus: `
-        <div style="font-size:24px; color:#e0e0e0;">
-          どちらに回転しているように見えましたか？<br>
-          （曖昧な場合は強く感じた方を選んでください）
-        </div>`,
+      stimulus: '<div style="margin-bottom:10px; font-size: 24px; color: #e0e0e0;">\
+       <p>どちらに回転しているように見えましたか？</p>\
+       <p>回転方向が途中で変わったり、はっきりとわからない場合は、</p>\
+       <p>より強く感じた回転方向を選んでください。</p>\
+       <p>直感的な判断で構いません。</p>\
+　　　</div>',
       choices: image_order.map(label =>
         `<img src="${label}.png" width="200">`
       ),
@@ -387,7 +388,8 @@ function makePracticeBlock() {
   // 練習終了メッセージ
   practiceTrials.push({
     type: jsPsychHtmlButtonResponse,
-    stimulus: `<p style="color:#e0e0e0;">練習が終了しました。<br>「次へ」を押すと本試行を開始します。</p>`,
+    stimulus: `<div style="margin-bottom:10px; font-size: 24px; color: #e0e0e0;">/
+    練習が終了しました。<br>「次へ」を押すと本試行を開始します。</p>`,
     choices: ['次へ']
   });
 
@@ -597,7 +599,7 @@ timeline.push({
       <div style="max-width: 800px; margin: 0 auto; font-size: 16px; line-height: 1.6; text-align: left; color: #e0e0e0;">
         <p>回転方向を選択するためのボタンは、以下のように画面に表示されます。</p>
         <p>実験への参加に同意される場合は、下の「次へ」ボタンを押してください。</p>
-        <p>ボタンを押すと、ただちに実験が始まります。</p>
+        <p>ボタンを押すと、10回の練習試行が始まります。</p>
         ${image_html}
       </div>
     `;
