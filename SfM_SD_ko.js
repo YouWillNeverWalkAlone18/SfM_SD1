@@ -341,6 +341,64 @@ let sfm_ccw = function (p) {
   };
 };
 
+// Practice block
+
+function makePracticeBlock() {
+  let practiceTrials = [];
+  for (let i = 0; i < 10; i++) {
+    practiceTrials.push({
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<div style="font-size:32px; color:#e0e0e0;">+</div>`,
+      choices: "NO_KEYS",
+      trial_duration: 1000
+    });
+
+    practiceTrials.push({
+      type: jsPsychP5,
+      sketch: sfm_neutral,
+      trial_duration: 2000
+    });
+
+    practiceTrials.push({
+      type: jsPsychHtmlButtonResponse,
+      stimulus: '<div style="margin-bottom:10px; font-size: 24px; color: #e0e0e0;">\
+       <p>どちらに回転しているように見えましたか？</p>\
+       <p>回転方向が途中で変わったり、はっきりとわからない場合は、</p>\
+       <p>より強く感じた回転方向を選んでください。</p>\
+       <p>直感的な判断で構いません。</p>\
+　　　</div>',
+      choices: image_order.map(label =>
+        `<img src="${label}.png" width="200">`
+      ),
+      data: { task: 'practice' },
+      on_finish: function(data){
+        data.chosen_label = image_order[data.response];
+        data.chosen_value = label_map[data.chosen_label];
+
+        // 🔹 デバッグ用ログ
+  console.log(`[Practice] Trial ${jsPsych.data.get().filter({task: 'practice'}).count()} → ${data.chosen_label} (${data.chosen_value})`);
+      }
+    });
+
+    practiceTrials.push({
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: '',
+      choices: "NO_KEYS",
+      trial_duration: 1000
+    });
+  }
+
+  // 練習終了メッセージ
+  practiceTrials.push({
+    type: jsPsychHtmlButtonResponse,
+    stimulus: `<div style="margin-bottom:10px; font-size: 24px; color: #e0e0e0;">/
+    練習が終了しました。<br>「次へ」を押すと本試行を開始します。</p>`,
+    choices: ['次へ']
+  });
+
+  return practiceTrials;
+}
+
 // 블록,시행 설정
   
 function makeBlock(blockIndex) {
@@ -545,14 +603,16 @@ timeline.push({
     return `
       <div style="max-width: 800px; margin: 0 auto; font-size: 16px; line-height: 1.6; text-align: left; color: #e0e0e0;">
         <p>회전 방향을 선택하는 버튼은, 아래와 같이 화면에 표시됩니다.</p>
-        <p>실험 참가에 동의하시는 경우,「계속」버튼을 클릭해주세요.</p>
-        <p>버튼을 누르시면, 실험이 시작됩니다.</p>
+        <p>본 실험에 앞서 10회의 연습이 시작됩니다.</p>
+        <p>실험 참가에 동의하시는 경우,「계속」버튼을 눌러 연습을 진행해주세요.</p>
         ${image_html}
       </div>
     `;
   },
   choices: ['계속']
 });
+
+timeline.push(...makePracticeBlock());
 
 // making block
 for (let i = 0; i < block_order.length; i++) {
@@ -566,7 +626,7 @@ timeline.push({
     <div style="color: #e0e0e0;">
     <p>이상으로 실험이 종료되었습니다.</p>
     <p><strong>「데이터 보존」을 클릭 후 보존이 끝날 때까지 잠시 기다려주십시오.</strong></p>
-    <p>협력에 감사드립니다.</p>`,
+    <p>실험에 참가해주셔서 감사드립니다.</p>`,
     choices: ['데이터 보존']
 });
 
@@ -574,6 +634,7 @@ timeline.push(save_data);
 
 
 jsPsych.run(timeline);
+
 
 
 
