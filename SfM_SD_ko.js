@@ -529,7 +529,7 @@ timeline.push({
     <div style="max-width: 800px; margin: 0 auto; font-size: 16px; line-height: 1.6; text-align: left; color: #e0e0e0;">
       <h3>연구에 관한 설명</h3>
       <p>
-        본 연구는、리츠메이칸대학 종합심리학부・Takahashi koskhe lab 장기중이 실시하는 연구입니다.<br>
+        본 연구는, 리츠메이칸대학 종합심리학부・Takahashi koskhe lab 장기중이 실시하는 연구입니다.<br>
         연구의 개요는
         <a href="https://youwillneverwalkalone18.github.io/SfM_SD1" target="_blank">여기</a> 서 확인하실 수 있습니다.<br>
         본 연구에 관한 문의사항은
@@ -634,6 +634,7 @@ timeline.push(save_data);
 
 
 jsPsych.run(timeline);
+
 
 
 
