@@ -373,10 +373,9 @@ function makePracticeBlock() {
       data: { task: 'practice' },
       on_finish: function(data){
         data.chosen_label = image_order[data.response];
-        data.chosen_value = label_map[data.chosen_label];
+        data.chosen_value = Number(label_map[data.chosen_label]);
 
-        // 🔹 デバッグ用ログ
-  console.log(`[Practice] Trial ${jsPsych.data.get().filter({task: 'practice'}).count()} → ${data.chosen_label} (${data.chosen_value})`);
+       console.log(`[DEBUG] Block ${data.block} | Trial ${data.trial_in_block} → Label: ${data.chosen_label}, Value: ${data.chosen_value}`);
       }
     });
 
@@ -455,7 +454,7 @@ function makeBlock(blockIndex) {
       },
       on_finish: function(data) {
   const chosen_label = image_order[data.response];
-  const chosen_value = label_map[chosen_label];
+  const chosen_value = Number(label_map[chosen_label]);
 
   data.chosen_label = chosen_label;
   data.chosen_value = chosen_value;
@@ -465,22 +464,19 @@ function makeBlock(blockIndex) {
 
   // take 'chosen_value' from prev.trial in same block
   if (data.trial_in_block > 0) {
-    const previous_trial = jsPsych.data.get().filter({
-      task: 'response',
-      block: data.block,
-      trial_in_block: data.trial_in_block - 1
-    }).values()[0]; // only first
+  const allResponses = jsPsych.data.get().filter({task: 'response', block: data.block});
+  const prev_trial = allResponses.values().slice(-2, -1)[0]; // 직전 trial만 가져오기
 
-    if (previous_trial) {
-      const prev_value = previous_trial.chosen_value;
-      data.Continue = (prev_value === chosen_value) ? 1 : 0;
-
-    } else {
-      data.Continue = null;
-    }
+  if (prev_trial) {
+    data.Continue = (prev_trial.chosen_value === data.chosen_value) ? 1 : 0;
   } else {
-    data.Continue = null; 
+    data.Continue = null;
   }
+
+  console.log(`[DEBUG] Prev Value: ${prev_trial?.chosen_value}, Current Value: ${data.chosen_value}, Continue = ${data.Continue}`);
+} else {
+  data.Continue = null;
+}
 },
   });
 
@@ -635,6 +631,7 @@ timeline.push(save_data);
 
 
 jsPsych.run(timeline);
+
 
 
 
