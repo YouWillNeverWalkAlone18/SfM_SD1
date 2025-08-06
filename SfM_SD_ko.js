@@ -362,10 +362,10 @@ function makePracticeBlock() {
     practiceTrials.push({
       type: jsPsychHtmlButtonResponse,
       stimulus: '<div style="margin-bottom:10px; font-size: 24px; color: #e0e0e0;">\
-       <p>どちらに回転しているように見えましたか？</p>\
-       <p>回転方向が途中で変わったり、はっきりとわからない場合は、</p>\
-       <p>より強く感じた回転方向を選んでください。</p>\
-       <p>直感的な判断で構いません。</p>\
+       <p>어느 쪽으로 회전하는 것처럼 보였나요?</p>\
+       <p>회전방향이 도중에 바뀌었거나 헷갈릴 때는,</p>\
+       <p>느낌상 더 가까웠던 방향으로 응답하시면 됩니다.</p>\
+       <p>( 정답은 없습니다. )</p>\
 　　　</div>',
       choices: image_order.map(label =>
         `<img src="${label}.png" width="200">`
@@ -388,12 +388,12 @@ function makePracticeBlock() {
     });
   }
 
-  // 練習終了メッセージ
+  // 연습종료 메세지
   practiceTrials.push({
     type: jsPsychHtmlButtonResponse,
-    stimulus: `<div style="margin-bottom:10px; font-size: 24px; color: #e0e0e0;">/
-    練習が終了しました。<br>「次へ」を押すと本試行を開始します。</p>`,
-    choices: ['次へ']
+    stimulus: `<div style="margin-bottom:10px; font-size: 24px; color: #e0e0e0;">
+    연습이 끝났습니다.<br>「계속」버튼을 눌러 본 실험을 진행해주세요.</p>`,
+    choices: ['계속']
   });
 
   return practiceTrials;
@@ -634,6 +634,7 @@ timeline.push(save_data);
 
 
 jsPsych.run(timeline);
+
 
 
 
