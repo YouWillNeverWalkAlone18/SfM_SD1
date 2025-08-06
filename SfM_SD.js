@@ -1,3 +1,55 @@
++ // 🔹 연습 블록 함수 추가
++ function makePracticeBlock() {
++   let practiceTrials = [];
++   for (let i = 0; i < 10; i++) {
++     practiceTrials.push({
++       type: jsPsychHtmlKeyboardResponse,
++       stimulus: `<div style="font-size:32px; color:#e0e0e0;">+</div>`,
++       choices: "NO_KEYS",
++       trial_duration: 1000
++     });
++
++     practiceTrials.push({
++       type: jsPsychP5,
++       sketch: sfm_neutral,
++       trial_duration: 2000
++     });
++
++     practiceTrials.push({
++       type: jsPsychHtmlButtonResponse,
++       stimulus: `
++         <div style="font-size:24px; color:#e0e0e0;">
++           どちらに回転しているように見えましたか？<br>
++           （曖昧な場合は強く感じた方を選んでください）
++         </div>`,
++       choices: image_order.map(label =>
++         `<img src="${label}.png" width="200">`
++       ),
++       data: { task: 'practice' },
++       on_finish: function(data){
++         data.chosen_label = image_order[data.response];
++         data.chosen_value = label_map[data.chosen_label];
++       }
++     });
++
++     practiceTrials.push({
++       type: jsPsychHtmlKeyboardResponse,
++       stimulus: '',
++       choices: "NO_KEYS",
++       trial_duration: 1000
++     });
++   }
++
++   // 練習終了メッセージ
++   practiceTrials.push({
++     type: jsPsychHtmlButtonResponse,
++     stimulus: `<p style="color:#e0e0e0;">練習が終了しました。<br>「次へ」を押すと本試行を開始します。</p>`,
++     choices: ['次へ']
++   });
++
++   return practiceTrials;
++ }
+
 var jsPsych = initJsPsych({
   on_finish: function () {
     jsPsych.data.displayData();
@@ -550,6 +602,8 @@ timeline.push({
   },
   choices: ['次へ']
 });
+
++ timeline.push(...makePracticeBlock());
 
 // making block
 for (let i = 0; i < block_order.length; i++) {
