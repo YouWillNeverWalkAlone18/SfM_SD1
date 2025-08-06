@@ -374,6 +374,9 @@ function makePracticeBlock() {
       on_finish: function(data){
         data.chosen_label = image_order[data.response];
         data.chosen_value = label_map[data.chosen_label];
+
+        // 🔹 デバッグ用ログ
+  console.log(`[Practice] Trial ${jsPsych.data.get().filter({task: 'practice'}).count()} → ${data.chosen_label} (${data.chosen_value})`);
       }
     });
 
