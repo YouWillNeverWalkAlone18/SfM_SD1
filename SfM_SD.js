@@ -131,7 +131,7 @@ p.draw = function() {
 // ========== sfm_cw ==========
 let sfm_cw = function (p) {
   let rects = [];
-  let numRects = 400;
+  let numRects = 450;
   let R = 200 * 1.2;
   let baseSize = 8 * 1.2;
   let baseOmega = 0.028;
@@ -238,7 +238,7 @@ let sfm_cw = function (p) {
 // ========== sfm_ccw ==========
 let sfm_ccw = function (p) {
   let rects = [];
-  let numRects = 400;
+  let numRects = 450;
   let R = 200 * 1.2;
   let baseSize = 8 * 1.2;
   let baseOmega = 0.028;
