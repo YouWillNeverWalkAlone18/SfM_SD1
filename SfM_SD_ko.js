@@ -375,8 +375,12 @@ function makePracticeBlock() {
       ),
       data: { task: 'practice' },
       on_finish: function(data){
-        data.chosen_label = image_order[data.response];
-        data.chosen_value = label_map[chosen_label];
+        const chosen_label = image_order[data.response];
+        const chosen_value = label_map[chosen_label];  // 숫자로 이미 선언되어 있으면 Number() 불필요
+
+        data.chosen_label = chosen_label;
+        data.chosen_value = chosen_value;
+
 
        console.log(`[DEBUG] Block ${data.block} | Trial ${data.trial_in_block} → Label: ${data.chosen_label}, Value: ${data.chosen_value}`);
       }
@@ -634,4 +638,5 @@ timeline.push(save_data);
 
 
 jsPsych.run(timeline);
+
 
