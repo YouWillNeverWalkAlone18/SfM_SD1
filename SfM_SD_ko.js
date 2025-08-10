@@ -1,8 +1,11 @@
+//문제있는버전 수정중 20250810
+
 var jsPsych = initJsPsych({
   on_finish: function () {
     jsPsych.data.displayData();
   }
 });
+
 // イメージ配置順ランダム
 const image_order = jsPsych.randomization.shuffle(["CW_ko", "CCW_ko"]);
 
@@ -350,13 +353,13 @@ function makePracticeBlock() {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<div style="font-size:32px; color:#e0e0e0;">+</div>`,
       choices: "NO_KEYS",
-      trial_duration: 1000
+      trial_duration: 0
     });
 
     practiceTrials.push({
       type: jsPsychP5,
       sketch: sfm_neutral,
-      trial_duration: 2500
+      trial_duration: 100
     });
 
     practiceTrials.push({
@@ -373,7 +376,7 @@ function makePracticeBlock() {
       data: { task: 'practice' },
       on_finish: function(data){
         data.chosen_label = image_order[data.response];
-        data.chosen_value = Number(label_map[data.chosen_label]);
+        data.chosen_value = label_map[chosen_label];
 
        console.log(`[DEBUG] Block ${data.block} | Trial ${data.trial_in_block} → Label: ${data.chosen_label}, Value: ${data.chosen_value}`);
       }
@@ -383,7 +386,7 @@ function makePracticeBlock() {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: '',
       choices: "NO_KEYS",
-      trial_duration: 1000
+      trial_duration: 10
     });
   }
 
@@ -418,13 +421,13 @@ function makeBlock(blockIndex) {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<div style="font-size:32px; color:#e0e0e0; position:relative; top:-15px;">+</div>`,
       choices: "NO_KEYS",
-      trial_duration: 1000,
+      trial_duration: 10,
     });
 
     trials.push({
       type: jsPsychP5,
       sketch: trial_sketch,
-      trial_duration: 2500,
+      trial_duration: 100,
     });
 
     trials.push({
@@ -452,31 +455,31 @@ function makeBlock(blockIndex) {
             ? 'sfm_ccw'
             : 'sfm_neutral',
       },
-      on_finish: function(data) {
+      // 이전 trial 찾는 부분 수정
+on_finish: function(data) {
   const chosen_label = image_order[data.response];
-  const chosen_value = Number(label_map[chosen_label]);
+  const chosen_value = label_map[chosen_label];  // 숫자로 이미 선언되어 있으면 Number() 불필요
 
   data.chosen_label = chosen_label;
   data.chosen_value = chosen_value;
 
-  // 🔹 전체 실험에서 몇 번째 response trial인지 저장 (전체 흐름 분석용)
   data.trial_index_global = jsPsych.data.get().filter({task: 'response'}).count();
 
-  // take 'chosen_value' from prev.trial in same block
   if (data.trial_in_block > 0) {
-  const allResponses = jsPsych.data.get().filter({task: 'response', block: data.block});
-  const prev_trial = allResponses.values().slice(-2, -1)[0]; // 직전 trial만 가져오기
+    const previous_trial = jsPsych.data.get().filter({
+      task: 'response',
+      block: data.block,
+      trial_in_block: data.trial_in_block - 1
+    }).values()[0];
 
-  if (prev_trial) {
-    data.Continue = (prev_trial.chosen_value === data.chosen_value) ? 1 : 0;
+    if (previous_trial) {
+      data.Continue = (previous_trial.chosen_value === chosen_value) ? 1 : 0;
+    } else {
+      data.Continue = null;
+    }
   } else {
     data.Continue = null;
   }
-
-  console.log(`[DEBUG] Prev Value: ${prev_trial?.chosen_value}, Current Value: ${data.chosen_value}, Continue = ${data.Continue}`);
-} else {
-  data.Continue = null;
-}
 },
   });
 
@@ -484,7 +487,7 @@ function makeBlock(blockIndex) {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: '',
       choices: "NO_KEYS",
-      trial_duration: 1000,
+      trial_duration: 10,
     });
   }
 
@@ -631,17 +634,4 @@ timeline.push(save_data);
 
 
 jsPsych.run(timeline);
-
-
-
-
-
-
-
-
-
-
-
-
-
 
