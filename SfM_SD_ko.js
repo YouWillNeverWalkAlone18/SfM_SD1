@@ -437,7 +437,7 @@ function makeBlock(blockIndex) {
 　　　</div>',
       choices: function () {
   return image_order.map(label =>
-    `<img src="${label}.png" alt="${label === 'CW_ko' ? '時計回り' : '反時計回り'}" width="200">`
+    `<img src="${label}.png" alt="${label === 'CW_ko' ? '시계방향' : '반시계방향'}" width="200">`
   );
 },
       margin_vertical: '15px',
@@ -631,6 +631,7 @@ timeline.push(save_data);
 
 
 jsPsych.run(timeline);
+
 
 
 
