@@ -131,12 +131,11 @@ p.draw = function() {
 // ========== sfm_cw ==========
 let sfm_cw = function (p) {
   let rects = [];
-  let numRects = 450;
+  let numRects = 400;
   let R = 200 * 1.2;
   let baseSize = 8 * 1.2;
-  let baseOmega = 0.028;
+  let omega = 0.03;
   let colors = [];
-  let direction = 1; // 시계 방향
 
   p.setup = function () {
     p.createCanvas(800 * 1.2, 600 * 1.2);
@@ -148,19 +147,13 @@ let sfm_cw = function (p) {
       rects.push({
         angle: angle,
         y: y,
+        phase: p.random(p.TWO_PI),
         prevX: R * p.cos(angle),
         currentScale: 1.0
       });
     }
     p.shuffle(colors, true);
     p.noStroke();
-  };
-
-  p.calcOmegaFromCos = function (normX) {
-    let phase = normX * p.PI + 2 * p.PI;
-    let cosVal = p.cos(phase);
-    let normalized = (cosVal + 1) / 2;
-    return 0.6 + 0.4 * normalized;
   };
 
   p.draw = function () {
@@ -172,31 +165,27 @@ let sfm_cw = function (p) {
 
     for (let i = 0; i < numRects; i++) {
       let r = rects[i];
-      let xCurrent = R * p.cos(r.angle);
-      let normX = p.constrain(xCurrent / R, -1, 1);
-      let omegaFactor = p.calcOmegaFromCos(normX);
-
-      r.angle += direction * baseOmega * omegaFactor;
-      r.angle %= p.TWO_PI;
-
-      let x = R * p.cos(r.angle);
+      let angle = r.angle + p.frameCount * omega;
+      let x = R * p.cos(angle);
       let vel = x - r.prevX;
       r.prevX = x;
 
       let y = r.y;
+
       let maxScale = 1.3;
       let minScale = 0.7;
       let distanceRatio = p.abs(x) / R;
 
-      if (vel < 0) {
-        r.currentScale = p.map(distanceRatio, 1, 0, minScale, maxScale) * 1.3;
-      } else {
-        let shrink = p.map(distanceRatio, 1, 0, 1.0, 0.7);
-        r.currentScale *= shrink;
-        r.currentScale = p.constrain(r.currentScale, minScale, maxScale);
-      }
-
-      let alpha = vel < 0 ? 255 : 150;
+       if (vel < 0) {
+      // 왼쪽 방향 → 전면: 더 커짐
+      r.currentScale = p.map(distanceRatio, 1, 0, minScale, maxScale) * 1.3;
+    } else {
+      // 오른쪽 방향 → 후면: 점점 작아짐
+      let shrink = p.map(distanceRatio, 1, 0, 1.0, 0.7);
+      r.currentScale *= shrink;
+      r.currentScale = p.constrain(r.currentScale, minScale, maxScale);
+    }
+      let alpha = vel < 0 ? 255 : 150; // 
       let rectSize = baseSize * r.currentScale;
 
       let distanceFromCenter = p.abs(x);
@@ -233,17 +222,15 @@ let sfm_cw = function (p) {
     }
   };
 };
-
 
 // ========== sfm_ccw ==========
 let sfm_ccw = function (p) {
   let rects = [];
-  let numRects = 450;
+  let numRects = 400;
   let R = 200 * 1.2;
   let baseSize = 8 * 1.2;
-  let baseOmega = 0.028;
+  let omega = 0.03;
   let colors = [];
-  let direction = -1; // 반시계 방향
 
   p.setup = function () {
     p.createCanvas(800 * 1.2, 600 * 1.2);
@@ -255,19 +242,13 @@ let sfm_ccw = function (p) {
       rects.push({
         angle: angle,
         y: y,
+        phase: p.random(p.TWO_PI),
         prevX: R * p.cos(angle),
         currentScale: 1.0
       });
     }
     p.shuffle(colors, true);
     p.noStroke();
-  };
-
-  p.calcOmegaFromCos = function (normX) {
-    let phase = normX * p.PI + 2 * p.PI;
-    let cosVal = p.cos(phase);
-    let normalized = (cosVal + 1) / 2;
-    return 0.6 + 0.4 * normalized;
   };
 
   p.draw = function () {
@@ -279,23 +260,18 @@ let sfm_ccw = function (p) {
 
     for (let i = 0; i < numRects; i++) {
       let r = rects[i];
-      let xCurrent = R * p.cos(r.angle);
-      let normX = p.constrain(xCurrent / R, -1, 1);
-      let omegaFactor = p.calcOmegaFromCos(normX);
-
-      r.angle += direction * baseOmega * omegaFactor;
-      r.angle %= p.TWO_PI;
-
-      let x = R * p.cos(r.angle);
+      let angle = r.angle + p.frameCount * omega;
+      let x = R * p.cos(angle);
       let vel = x - r.prevX;
       r.prevX = x;
 
       let y = r.y;
+
       let maxScale = 1.3;
       let minScale = 0.7;
       let distanceRatio = p.abs(x) / R;
 
-      if (vel < 0) {
+      if (vel > 0) {
         r.currentScale = p.map(distanceRatio, 1, 0, minScale, maxScale) * 1.3;
       } else {
         let shrink = p.map(distanceRatio, 1, 0, 1.0, 0.7);
@@ -303,7 +279,7 @@ let sfm_ccw = function (p) {
         r.currentScale = p.constrain(r.currentScale, minScale, maxScale);
       }
 
-      let alpha = vel < 0 ? 255 : 150;
+      let alpha = vel > 0 ? 255 : 150;
       let rectSize = baseSize * r.currentScale;
 
       let distanceFromCenter = p.abs(x);
@@ -322,7 +298,7 @@ let sfm_ccw = function (p) {
         alpha: alpha
       };
 
-      if (vel < 0) {
+      if (vel > 0) {
         foregroundRects.push(obj);
       } else {
         backgroundRects.push(obj);
@@ -341,66 +317,6 @@ let sfm_ccw = function (p) {
   };
 };
 
-// Practice block
-
-function makePracticeBlock() {
-  let practiceTrials = [];
-  for (let i = 0; i < 10; i++) {
-    practiceTrials.push({
-      type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<div style="font-size:32px; color:#e0e0e0;">+</div>`,
-      choices: "NO_KEYS",
-      trial_duration: 1000
-    });
-
-    practiceTrials.push({
-      type: jsPsychP5,
-      sketch: sfm_neutral,
-      trial_duration: 2500
-    });
-
-    practiceTrials.push({
-      type: jsPsychHtmlButtonResponse,
-      stimulus: '<div style="margin-bottom:10px; font-size: 24px; color: #e0e0e0;">\
-       <p>どちらに回転しているように見えましたか？</p>\
-       <p>回転方向が途中で変わったり、はっきりとわからない場合は、</p>\
-       <p>より強く感じた回転方向を選んでください。</p>\
-       <p>直感的な判断で構いません。</p>\
-　　　</div>',
-      choices: image_order.map(label =>
-        `<img src="${label}.png" width="200">`
-      ),
-      data: { task: 'practice' },
-      on_finish: function(data){
-        data.chosen_label = image_order[data.response];
-        data.chosen_value = label_map[data.chosen_label];
-
-        // 🔹 デバッグ用ログ
-  console.log(`[Practice] Trial ${jsPsych.data.get().filter({task: 'practice'}).count()} → ${data.chosen_label} (${data.chosen_value})`);
-      }
-    });
-
-    practiceTrials.push({
-      type: jsPsychHtmlKeyboardResponse,
-      stimulus: '',
-      choices: "NO_KEYS",
-      trial_duration: 1000
-    });
-  }
-
-  // 練習終了メッセージ
-  practiceTrials.push({
-    type: jsPsychHtmlButtonResponse,
-    stimulus: `<div style="margin-bottom:10px; font-size: 24px; color: #e0e0e0;">/
-    練習が終了しました。<br>「次へ」を押すと本試行を開始します。</p>`,
-    choices: ['次へ']
-  });
-
-  return practiceTrials;
-}
-
-
-// ブロック・試行設定
   
 function makeBlock(blockIndex) {
   let trials = [];
@@ -418,24 +334,23 @@ function makeBlock(blockIndex) {
 
     trials.push({
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<div style="font-size:32px; color:#e0e0e0; position:relative; top:-15px;">+</div>`,
+      stimulus: `<div style="font-size:32px; color: #e0e0e0;">+</div>`,
       choices: "NO_KEYS",
-      trial_duration: 1000,
+      trial_duration: 10,
     });
 
     trials.push({
       type: jsPsychP5,
       sketch: trial_sketch,
-      trial_duration: 2500,
+      trial_duration: 100,
     });
 
     trials.push({
       type: jsPsychHtmlButtonResponse,
-      stimulus: '<div style="margin-bottom:10px; font-size: 24px; color: #e0e0e0;">\
+      stimulus: '<div style="margin-bottom:10px; color: #e0e0e0;">\
        <p>どちらに回転しているように見えましたか？</p>\
        <p>回転方向が途中で変わったり、はっきりとわからない場合は、</p>\
-       <p>より強く感じた回転方向を選んでください。</p>\
-       <p>直感的な判断で構いません。</p>\
+       <p>より強く感じた回転方向を回答してください。</p>\
 　　　</div>',
       choices: function () {
   return image_order.map(label =>
@@ -489,7 +404,7 @@ function makeBlock(blockIndex) {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: '',
       choices: "NO_KEYS",
-      trial_duration: 1000,
+      trial_duration: 10,
     });
   }
 
@@ -545,8 +460,8 @@ timeline.push({
         実験では、画面上に提示される視覚刺激に対して反応していただきます。</p>
         
         <p><strong>実験の手続き</strong><br>
-        所要時間は普通に実施した場合には長くて10分程度の見込みです。 <br>
-       （ゆっくりやっていただいた場合には、もう少し時間がかかる可能性もあります）<br>
+        所要時間は普通に実施した場合には長くて10分程度の見込みです <br>
+       （ゆっくりやっていただいた場合には、もう少し時間がかかる可能性もあります）。<br>
         画面上に画像や動画が提示され、それに対する反応を求めます。一部の試行では曖昧な刺激が表示され、判断が難しいことがあります。</p> 
 
         <p><strong>危険性・不快感について</strong><br>
@@ -573,7 +488,7 @@ timeline.push({
       <h3>この実験に関するご説明</h3>
       <p>
         実験に興味を持っていただきありがとうございます。<br>
-        実験では、画面中央に複数の小さな四角形がランダムに配置され、2.5秒間、左右方向に動きます。<br>
+        実験では、画面中央に複数の小さな四角形がランダムに配置され、2秒間、左右方向に動きます。<br>
         動きを見て、円筒が回転しているように見えた場合は、見えた回転方向をボタンで選択してください。<br>
         時計回りに見えた場合は「時計回り」、反時計回りに見えた場合は「反時計回り」のボタンを押してください。<br>
         回転方向が途中で変わったり、はっきりとわからない場合は、より強く感じた回転方向を回答してください。<br>
@@ -602,15 +517,13 @@ timeline.push({
       <div style="max-width: 800px; margin: 0 auto; font-size: 16px; line-height: 1.6; text-align: left; color: #e0e0e0;">
         <p>回転方向を選択するためのボタンは、以下のように画面に表示されます。</p>
         <p>実験への参加に同意される場合は、下の「次へ」ボタンを押してください。</p>
-        <p>ボタンを押すと、10回の練習試行が始まります。</p>
+        <p>ボタンを押すと、ただちに実験が始まります。</p>
         ${image_html}
       </div>
     `;
   },
   choices: ['次へ']
 });
-
-timeline.push(...makePracticeBlock());
 
 // making block
 for (let i = 0; i < block_order.length; i++) {
