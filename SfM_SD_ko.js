@@ -1,11 +1,10 @@
-//문제있는버전 수정중 20250810
+// 20250811 2연습블록 추가한 버전
 
 var jsPsych = initJsPsych({
   on_finish: function () {
     jsPsych.data.displayData();
   }
 });
-
 // イメージ配置順ランダム
 const image_order = jsPsych.randomization.shuffle(["CW_ko", "CCW_ko"]);
 
@@ -26,7 +25,7 @@ const save_data = {
   data_string: () => jsPsych.data.get().csv()
 };
 
-let completedTrials = 5; // 初期値を5に設定
+let completedTrials = 0; // 初期値を0に設定
 
 // ========== sfm_neutral ==========
 let sfm_neutral = function (p) {
@@ -134,12 +133,11 @@ p.draw = function() {
 // ========== sfm_cw ==========
 let sfm_cw = function (p) {
   let rects = [];
-  let numRects = 450;
+  let numRects = 400;
   let R = 200 * 1.2;
   let baseSize = 8 * 1.2;
-  let baseOmega = 0.028;
+  let omega = 0.03;
   let colors = [];
-  let direction = 1; // 시계 방향
 
   p.setup = function () {
     p.createCanvas(800 * 1.2, 600 * 1.2);
@@ -151,19 +149,13 @@ let sfm_cw = function (p) {
       rects.push({
         angle: angle,
         y: y,
+        phase: p.random(p.TWO_PI),
         prevX: R * p.cos(angle),
         currentScale: 1.0
       });
     }
     p.shuffle(colors, true);
     p.noStroke();
-  };
-
-  p.calcOmegaFromCos = function (normX) {
-    let phase = normX * p.PI + 2 * p.PI;
-    let cosVal = p.cos(phase);
-    let normalized = (cosVal + 1) / 2;
-    return 0.6 + 0.4 * normalized;
   };
 
   p.draw = function () {
@@ -175,31 +167,27 @@ let sfm_cw = function (p) {
 
     for (let i = 0; i < numRects; i++) {
       let r = rects[i];
-      let xCurrent = R * p.cos(r.angle);
-      let normX = p.constrain(xCurrent / R, -1, 1);
-      let omegaFactor = p.calcOmegaFromCos(normX);
-
-      r.angle += direction * baseOmega * omegaFactor;
-      r.angle %= p.TWO_PI;
-
-      let x = R * p.cos(r.angle);
+      let angle = r.angle + p.frameCount * omega;
+      let x = R * p.cos(angle);
       let vel = x - r.prevX;
       r.prevX = x;
 
       let y = r.y;
+
       let maxScale = 1.3;
       let minScale = 0.7;
       let distanceRatio = p.abs(x) / R;
 
-      if (vel < 0) {
-        r.currentScale = p.map(distanceRatio, 1, 0, minScale, maxScale) * 1.3;
-      } else {
-        let shrink = p.map(distanceRatio, 1, 0, 1.0, 0.7);
-        r.currentScale *= shrink;
-        r.currentScale = p.constrain(r.currentScale, minScale, maxScale);
-      }
-
-      let alpha = vel < 0 ? 255 : 150;
+       if (vel < 0) {
+      // 왼쪽 방향 → 전면: 더 커짐
+      r.currentScale = p.map(distanceRatio, 1, 0, minScale, maxScale) * 1.3;
+    } else {
+      // 오른쪽 방향 → 후면: 점점 작아짐
+      let shrink = p.map(distanceRatio, 1, 0, 1.0, 0.7);
+      r.currentScale *= shrink;
+      r.currentScale = p.constrain(r.currentScale, minScale, maxScale);
+    }
+      let alpha = vel < 0 ? 255 : 150; // 
       let rectSize = baseSize * r.currentScale;
 
       let distanceFromCenter = p.abs(x);
@@ -236,17 +224,15 @@ let sfm_cw = function (p) {
     }
   };
 };
-
 
 // ========== sfm_ccw ==========
 let sfm_ccw = function (p) {
   let rects = [];
-  let numRects = 450;
+  let numRects = 400;
   let R = 200 * 1.2;
   let baseSize = 8 * 1.2;
-  let baseOmega = 0.028;
+  let omega = 0.03;
   let colors = [];
-  let direction = -1; // 반시계 방향
 
   p.setup = function () {
     p.createCanvas(800 * 1.2, 600 * 1.2);
@@ -258,19 +244,13 @@ let sfm_ccw = function (p) {
       rects.push({
         angle: angle,
         y: y,
+        phase: p.random(p.TWO_PI),
         prevX: R * p.cos(angle),
         currentScale: 1.0
       });
     }
     p.shuffle(colors, true);
     p.noStroke();
-  };
-
-  p.calcOmegaFromCos = function (normX) {
-    let phase = normX * p.PI + 2 * p.PI;
-    let cosVal = p.cos(phase);
-    let normalized = (cosVal + 1) / 2;
-    return 0.6 + 0.4 * normalized;
   };
 
   p.draw = function () {
@@ -282,23 +262,18 @@ let sfm_ccw = function (p) {
 
     for (let i = 0; i < numRects; i++) {
       let r = rects[i];
-      let xCurrent = R * p.cos(r.angle);
-      let normX = p.constrain(xCurrent / R, -1, 1);
-      let omegaFactor = p.calcOmegaFromCos(normX);
-
-      r.angle += direction * baseOmega * omegaFactor;
-      r.angle %= p.TWO_PI;
-
-      let x = R * p.cos(r.angle);
+      let angle = r.angle + p.frameCount * omega;
+      let x = R * p.cos(angle);
       let vel = x - r.prevX;
       r.prevX = x;
 
       let y = r.y;
+
       let maxScale = 1.3;
       let minScale = 0.7;
       let distanceRatio = p.abs(x) / R;
 
-      if (vel < 0) {
+      if (vel > 0) {
         r.currentScale = p.map(distanceRatio, 1, 0, minScale, maxScale) * 1.3;
       } else {
         let shrink = p.map(distanceRatio, 1, 0, 1.0, 0.7);
@@ -306,7 +281,7 @@ let sfm_ccw = function (p) {
         r.currentScale = p.constrain(r.currentScale, minScale, maxScale);
       }
 
-      let alpha = vel < 0 ? 255 : 150;
+      let alpha = vel > 0 ? 255 : 150;
       let rectSize = baseSize * r.currentScale;
 
       let distanceFromCenter = p.abs(x);
@@ -325,7 +300,7 @@ let sfm_ccw = function (p) {
         alpha: alpha
       };
 
-      if (vel < 0) {
+      if (vel > 0) {
         foregroundRects.push(obj);
       } else {
         backgroundRects.push(obj);
@@ -344,68 +319,6 @@ let sfm_ccw = function (p) {
   };
 };
 
-// Practice block
-
-function makePracticeBlock() {
-  let practiceTrials = [];
-  for (let i = 0; i < 10; i++) {
-    practiceTrials.push({
-      type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<div style="font-size:32px; color:#e0e0e0;">+</div>`,
-      choices: "NO_KEYS",
-      trial_duration: 0
-    });
-
-    practiceTrials.push({
-      type: jsPsychP5,
-      sketch: sfm_neutral,
-      trial_duration: 100
-    });
-
-    practiceTrials.push({
-      type: jsPsychHtmlButtonResponse,
-      stimulus: '<div style="margin-bottom:10px; font-size: 24px; color: #e0e0e0;">\
-       <p>어느 쪽으로 회전하는 것처럼 보였나요?</p>\
-       <p>회전방향이 도중에 바뀌었거나 헷갈릴 때는,</p>\
-       <p>느낌상 더 가까웠던 방향으로 응답하시면 됩니다.</p>\
-       <p>( 정해진 답은 없습니다. )</p>\
-　　　</div>',
-      choices: image_order.map(label =>
-        `<img src="${label}.png" width="200">`
-      ),
-      data: { task: 'practice' },
-      on_finish: function(data){
-        const chosen_label = image_order[data.response];
-        const chosen_value = label_map[chosen_label];  // 숫자로 이미 선언되어 있으면 Number() 불필요
-
-        data.chosen_label = chosen_label;
-        data.chosen_value = chosen_value;
-
-
-       console.log(`[DEBUG] Block ${data.block} | Trial ${data.trial_in_block} → Label: ${data.chosen_label}, Value: ${data.chosen_value}`);
-      }
-    });
-
-    practiceTrials.push({
-      type: jsPsychHtmlKeyboardResponse,
-      stimulus: '',
-      choices: "NO_KEYS",
-      trial_duration: 10
-    });
-  }
-
-  // 연습종료 메세지
-  practiceTrials.push({
-    type: jsPsychHtmlButtonResponse,
-    stimulus: `<div style="margin-bottom:10px; font-size: 24px; color: #e0e0e0;">
-    연습이 끝났습니다.<br>「계속」버튼을 눌러 본 실험을 진행해주세요.</p>`,
-    choices: ['계속']
-  });
-
-  return practiceTrials;
-}
-
-// 블록,시행 설정
   
 function makeBlock(blockIndex) {
   let trials = [];
@@ -413,13 +326,16 @@ function makeBlock(blockIndex) {
   for (let i = 0; i < 5; i++) { // 블럭당 시행 수 10에서 5로 변경
     let trial_sketch;
 
-    if (blockIndex < 4 && i === 0) { // 最初の４ブロックの初期試行：時計回り
-      trial_sketch = sfm_cw;
-    } else if (blockIndex >= 4 && blockIndex < 8 && i === 0) { // 次の４ブロックの初期試行：反時計回り
-      trial_sketch = sfm_ccw;
-    } else {
-      trial_sketch = sfm_neutral;  // 残りのブロックは全て中立刺激
-    }
+    if (blockIndex < 2 && i === 0) {
+     trial_sketch = sfm_neutral; // 1,2번째 블록은 neutral 고정
+   } else if (blockIndex >= 2 && blockIndex < 10 && i === 0) {
+    trial_sketch = sfm_cw;      // 3~10번째 블록은 cw
+   } else if (blockIndex >= 10 && blockIndex < 18 && i === 0) {
+   trial_sketch = sfm_ccw;     // 11~18번째 블록은 ccw
+   } else {
+   trial_sketch = sfm_neutral; // 나머지는 neutral
+  }
+
 
     trials.push({
       type: jsPsychHtmlKeyboardResponse,
@@ -439,8 +355,8 @@ function makeBlock(blockIndex) {
       stimulus: '<div style="margin-bottom:10px; font-size: 24px; color: #e0e0e0;">\
        <p>어느 쪽으로 회전하는 것처럼 보였나요?</p>\
        <p>회전방향이 도중에 바뀌었거나 헷갈릴 때는,</p>\
-       <p>느낌상 더 가까웠던 방향으로 응답하시면 됩니다.</p>\
-       <p>( 정해진 답은 없습니다. )</p>\
+       <p>느낌상 이쪽, 으로 응답하시면 됩니다.</p>\
+       <p>(정해진 답은 없습니다.)</p>\
 　　　</div>',
       choices: function () {
   return image_order.map(label =>
@@ -453,37 +369,44 @@ function makeBlock(blockIndex) {
         block: blockIndex,
         trial_in_block: i,
         stimulus_type:
-          blockIndex < 4 && i === 0
-            ? 'sfm_cw'
-            : blockIndex >= 4 && blockIndex < 8 && i === 0
-            ? 'sfm_ccw'
-            : 'sfm_neutral',
+        blockIndex < 2 && i === 0
+        ? 'sfm_neutral'
+       : blockIndex >= 2 && blockIndex < 10 && i === 0
+       ? 'sfm_cw'
+       : blockIndex >= 10 && blockIndex < 18 && i === 0
+       ? 'sfm_ccw'
+       : 'sfm_neutral',
       },
-      // 이전 trial 찾는 부분 수정
-on_finish: function(data) {
+      on_finish: function(data) {
   const chosen_label = image_order[data.response];
-  const chosen_value = label_map[chosen_label];  // 숫자로 이미 선언되어 있으면 Number() 불필요
+  const chosen_value = label_map[chosen_label];
 
   data.chosen_label = chosen_label;
   data.chosen_value = chosen_value;
 
+  // 🔹 전체 실험에서 몇 번째 response trial인지 저장 (전체 흐름 분석용)
   data.trial_index_global = jsPsych.data.get().filter({task: 'response'}).count();
 
+  // take 'chosen_value' from prev.trial in same block
   if (data.trial_in_block > 0) {
     const previous_trial = jsPsych.data.get().filter({
       task: 'response',
       block: data.block,
       trial_in_block: data.trial_in_block - 1
-    }).values()[0];
+    }).values()[0]; // only first
 
     if (previous_trial) {
-      data.Continue = (previous_trial.chosen_value === chosen_value) ? 1 : 0;
+      const prev_value = previous_trial.chosen_value;
+      data.Continue = (prev_value === chosen_value) ? 1 : 0;
+
     } else {
       data.Continue = null;
     }
   } else {
-    data.Continue = null;
+    data.Continue = null; 
   }
+  console.log(`[DEBUG] Block: ${data.block}, Trial: ${data.trial_in_block}, Choice: ${data.chosen_label} (${data.chosen_value}), Continue: ${data.Continue}`)
+  // 디버그용 로그 출력
 },
   });
 
@@ -499,12 +422,12 @@ on_finish: function(data) {
   trials.push({
     type: jsPsychHtmlButtonResponse,
     stimulus: function () {
-      let progressBarWidth = (completedTrials / 80) * 100;
+      let progressBarWidth = (completedTrials / 90) * 100;
       return `
         <div style="color: #e0e0e0;">
         <p>5시행이 종료되었습니다. 넘어가시기 전에 휴식하셔도 됩니다.</p>
-        <p>준비되셨다면, 버튼을 눌러 실험을 진행해주세요.</p>
-        <p style="margin-top: 20px;">${completedTrials} / 80 회 진행되었습니다.</p>
+        <p>준비되셨다면 버튼을 눌러 실험을 진행해주세요.</p>
+        <p style="margin-top: 20px;">${completedTrials} / 90 회 진행되었습니다.</p>
         <div style="width: 80%; height: 20px; border: 1px solid #000; margin: 10px auto; background-color: #eee;">
           <div style="width: ${progressBarWidth}%; height: 100%; background-color: #4caf50;"></div>
         </div>
@@ -521,7 +444,7 @@ on_finish: function(data) {
 
 // ---------------- timeline ----------------
 
-const block_order = jsPsych.randomization.shuffle([...Array(16).keys()]); // 0-15のブロック順をランダム化
+const block_order = jsPsych.randomization.shuffle([...Array(18).keys()]); // 0-18のブロック順をランダム化
 let timeline = [];
 
 // page1: intro
@@ -583,7 +506,7 @@ timeline.push({
         시계방향으로 보였다면 [시계방향], 반시계방향으로 보였다면 [반시계방향]버튼을 클릭해주세요.<br>
         회전 방향이 도중에 바뀌었거나 방향이 헷갈릴 경우, 느낌상 더 가까웠던 방향을 선택해주세요.<br>
         (회전 자체가 착시이며, 정해진 답은 없습니다.)
-        위와 같은 행위를 연습 10회, 본 실험으로 80회 반복합니다.
+        위와 같은 행위를 90회 반복합니다.
       </p>
 
       <p style="text-align:left; font-weight:bold; margin-top: 30px;">
@@ -606,17 +529,15 @@ timeline.push({
 
     return `
       <div style="max-width: 800px; margin: 0 auto; font-size: 16px; line-height: 1.6; text-align: left; color: #e0e0e0;">
-        <p>회전 방향을 선택하는 버튼은, 아래와 같이 화면에 표시됩니다.</p>
-        <p>본 실험에 앞서 10회의 연습이 시작됩니다.</p>
-        <p>실험 참가에 동의하시는 경우,「계속」버튼을 눌러 연습을 진행해주세요.</p>
+        <p>회전 방향을 선택하는 버튼은 아래와 같이 화면에 표시됩니다.</p>
+        <p>실험 참가에 동의하시는 경우 [계속]버튼을 클릭해주세요.</p>
+        <p>버튼을 누르시면 실험이 시작됩니다.</p>
         ${image_html}
       </div>
     `;
   },
   choices: ['계속']
 });
-
-timeline.push(...makePracticeBlock());
 
 // making block
 for (let i = 0; i < block_order.length; i++) {
@@ -630,13 +551,10 @@ timeline.push({
     <div style="color: #e0e0e0;">
     <p>이상으로 실험이 종료되었습니다.</p>
     <p><strong>「데이터 보존」을 클릭 후 보존이 끝날 때까지 잠시 기다려주십시오.</strong></p>
-    <p>실험에 참가해주셔서 감사드립니다.</p>`,
+    <p>협력에 감사드립니다.</p>`,
     choices: ['데이터 보존']
 });
 
 timeline.push(save_data);
 
-
 jsPsych.run(timeline);
-
-
