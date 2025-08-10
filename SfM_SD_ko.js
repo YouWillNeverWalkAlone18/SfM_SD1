@@ -1,10 +1,9 @@
-// 20250811 2연습블록 추가한 버전
-
 var jsPsych = initJsPsych({
   on_finish: function () {
     jsPsych.data.displayData();
   }
 });
+
 // イメージ配置順ランダム
 const image_order = jsPsych.randomization.shuffle(["CW_ko", "CCW_ko"]);
 
@@ -25,7 +24,7 @@ const save_data = {
   data_string: () => jsPsych.data.get().csv()
 };
 
-let completedTrials = 0; // 初期値を0に設定
+let completedTrials = 5; // 初期値を5に設定
 
 // ========== sfm_neutral ==========
 let sfm_neutral = function (p) {
@@ -326,20 +325,17 @@ function makeBlock(blockIndex) {
   for (let i = 0; i < 5; i++) { // 블럭당 시행 수 10에서 5로 변경
     let trial_sketch;
 
-    if (blockIndex < 2 && i === 0) {
-     trial_sketch = sfm_neutral; // 1,2번째 블록은 neutral 고정
-   } else if (blockIndex >= 2 && blockIndex < 10 && i === 0) {
-    trial_sketch = sfm_cw;      // 3~10번째 블록은 cw
-   } else if (blockIndex >= 10 && blockIndex < 18 && i === 0) {
-   trial_sketch = sfm_ccw;     // 11~18번째 블록은 ccw
-   } else {
-   trial_sketch = sfm_neutral; // 나머지는 neutral
-  }
-
+    if (blockIndex < 4 && i === 0) { // 最初の４ブロックの初期試行：時計回り
+      trial_sketch = sfm_cw;
+    } else if (blockIndex >= 4 && blockIndex < 8 && i === 0) { // 次の４ブロックの初期試行：反時計回り
+      trial_sketch = sfm_ccw;
+    } else {
+      trial_sketch = sfm_neutral;  // 残りのブロックは全て中立刺激
+    }
 
     trials.push({
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<div style="font-size:32px; color:#e0e0e0; position:relative; top:-15px;">+</div>`,
+      stimulus: `<div style="font-size:32px; color: #e0e0e0;">+</div>`,
       choices: "NO_KEYS",
       trial_duration: 10,
     });
@@ -352,15 +348,15 @@ function makeBlock(blockIndex) {
 
     trials.push({
       type: jsPsychHtmlButtonResponse,
-      stimulus: '<div style="margin-bottom:10px; font-size: 24px; color: #e0e0e0;">\
+      stimulus: '<div style="margin-bottom:10px; color: #e0e0e0;">\
        <p>어느 쪽으로 회전하는 것처럼 보였나요?</p>\
        <p>회전방향이 도중에 바뀌었거나 헷갈릴 때는,</p>\
-       <p>느낌상 이쪽, 으로 응답하시면 됩니다.</p>\
+       <p>더 강하게 느껴진 방향으로 응답하시면 됩니다.</p>\
        <p>(정해진 답은 없습니다.)</p>\
 　　　</div>',
       choices: function () {
   return image_order.map(label =>
-    `<img src="${label}.png" alt="${label === 'CW_ko' ? '시계방향' : '반시계방향'}" width="200">`
+    `<img src="${label}.png" alt="${label === 'CW_ko' ? '時計回り' : '反時計回り'}" width="200">`
   );
 },
       margin_vertical: '15px',
@@ -369,13 +365,11 @@ function makeBlock(blockIndex) {
         block: blockIndex,
         trial_in_block: i,
         stimulus_type:
-        blockIndex < 2 && i === 0
-        ? 'sfm_neutral'
-       : blockIndex >= 2 && blockIndex < 10 && i === 0
-       ? 'sfm_cw'
-       : blockIndex >= 10 && blockIndex < 18 && i === 0
-       ? 'sfm_ccw'
-       : 'sfm_neutral',
+          blockIndex < 4 && i === 0
+            ? 'sfm_cw'
+            : blockIndex >= 4 && blockIndex < 8 && i === 0
+            ? 'sfm_ccw'
+            : 'sfm_neutral',
       },
       on_finish: function(data) {
   const chosen_label = image_order[data.response];
@@ -405,8 +399,6 @@ function makeBlock(blockIndex) {
   } else {
     data.Continue = null; 
   }
-  console.log(`[DEBUG] Block: ${data.block}, Trial: ${data.trial_in_block}, Choice: ${data.chosen_label} (${data.chosen_value}), Continue: ${data.Continue}`)
-  // 디버그용 로그 출력
 },
   });
 
@@ -422,18 +414,18 @@ function makeBlock(blockIndex) {
   trials.push({
     type: jsPsychHtmlButtonResponse,
     stimulus: function () {
-      let progressBarWidth = (completedTrials / 90) * 100;
+      let progressBarWidth = (completedTrials / 80) * 100;
       return `
         <div style="color: #e0e0e0;">
         <p>5시행이 종료되었습니다. 넘어가시기 전에 휴식하셔도 됩니다.</p>
-        <p>준비되셨다면 버튼을 눌러 실험을 진행해주세요.</p>
-        <p style="margin-top: 20px;">${completedTrials} / 90 회 진행되었습니다.</p>
+        <p>준비되셨다면, 버튼을 눌러 실험을 진행해주세요.</p>
+        <p style="margin-top: 20px;">${completedTrials} / 80 회 진행되었습니다.</p>
         <div style="width: 80%; height: 20px; border: 1px solid #000; margin: 10px auto; background-color: #eee;">
           <div style="width: ${progressBarWidth}%; height: 100%; background-color: #4caf50;"></div>
         </div>
       `;
     },
-    choices: ['계속'],
+    choices: ['次へ'],
     on_finish: function () {
       completedTrials += 5;
     }
@@ -444,7 +436,7 @@ function makeBlock(blockIndex) {
 
 // ---------------- timeline ----------------
 
-const block_order = jsPsych.randomization.shuffle([...Array(18).keys()]); // 0-18のブロック順をランダム化
+const block_order = jsPsych.randomization.shuffle([...Array(16).keys()]); // 0-15のブロック順をランダム化
 let timeline = [];
 
 // page1: intro
@@ -504,13 +496,13 @@ timeline.push({
         실험에서는 화면 중앙에 복수의 작은 사각형이 배치되어, 2.5초간 좌우 방향으로 움직입니다.<br>
         움직임을 보시고 원통이 회전하는 것처럼 보였을 경우, 느껴진 회전 방향에 해당하는 버튼을 클릭해주세요.<br>
         시계방향으로 보였다면 [시계방향], 반시계방향으로 보였다면 [반시계방향]버튼을 클릭해주세요.<br>
-        회전 방향이 도중에 바뀌었거나 방향이 헷갈릴 경우, 느낌상 더 가까웠던 방향을 선택해주세요.<br>
+        회전 방향이 도중에 바뀌었거나 방향이 헷갈릴 경우, 더 강하게 느껴진 방향을 선택해주세요.<br>
         (회전 자체가 착시이며, 정해진 답은 없습니다.)
-        위와 같은 행위를 90회 반복합니다.
+        위와 같은 행위를 80회 반복합니다.
       </p>
 
       <p style="text-align:left; font-weight:bold; margin-top: 30px;">
-        실험 참가에 동의하신다면, 아래의 「계속」버튼을 클릭해주세요.
+        실험 참가에 동의하신다면, 아래의 [계속]버튼을 클릭해주세요.
       </p>
     </div>
   `;
@@ -529,9 +521,9 @@ timeline.push({
 
     return `
       <div style="max-width: 800px; margin: 0 auto; font-size: 16px; line-height: 1.6; text-align: left; color: #e0e0e0;">
-        <p>회전 방향을 선택하는 버튼은 아래와 같이 화면에 표시됩니다.</p>
-        <p>실험 참가에 동의하시는 경우 [계속]버튼을 클릭해주세요.</p>
-        <p>버튼을 누르시면 실험이 시작됩니다.</p>
+        <p>회전 방향을 선택하는 버튼은, 아래와 같이 화면에 표시됩니다.</p>
+        <p>본 실험에 앞서 10회의 연습이 시작됩니다.</p>
+        <p>실험 참가에 동의하시는 경우, [계속]버튼을 눌러 연습을 진행해주세요.</p>
         ${image_html}
       </div>
     `;
@@ -550,8 +542,8 @@ timeline.push({
   stimulus: `
     <div style="color: #e0e0e0;">
     <p>이상으로 실험이 종료되었습니다.</p>
-    <p><strong>「데이터 보존」을 클릭 후 보존이 끝날 때까지 잠시 기다려주십시오.</strong></p>
-    <p>협력에 감사드립니다.</p>`,
+    <p><strong>[데이터 보존]을 클릭 후 보존이 끝날 때까지 잠시 기다려주십시오.</strong></p>
+    <p>실험에 참가해주셔서 감사드립니다.</p>`,
     choices: ['데이터 보존']
 });
 
