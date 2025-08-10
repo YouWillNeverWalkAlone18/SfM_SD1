@@ -356,7 +356,7 @@ function makePracticeBlock() {
     practiceTrials.push({
       type: jsPsychP5,
       sketch: sfm_neutral,
-      trial_duration: 2000
+      trial_duration: 2500
     });
 
     practiceTrials.push({
@@ -571,7 +571,7 @@ timeline.push({
       <h3>실험에 관한 설명</h3>
       <p>
         실험에 관심을 가져주셔서 감사합니다.<br>
-        실험에서는, 화면 중앙에 복수의 작은 사각형이 넓게 배치되어, 2초간, 좌우 방향으로 움직입니다.<br>
+        실험에서는, 화면 중앙에 복수의 작은 사각형이 배치되어, 2초간 좌우 방향으로 움직입니다.<br>
         움직임을 보시고 원통이 회전하는 것처럼 보였을 경우, 느껴진 회전 방향에 해당하는 버튼을 클릭해주세요.<br>
         시계방향으로 보였다면「시계방향」、반시계방향으로 보였다면「반시계방향」의 버튼을 클릭해주세요.<br>
         회전 방향이 도중에 바뀌었거나, 방향이 헷갈릴 경우, 느낌상 더 가까웠던 방향을 선택해주세요.<br>
@@ -631,6 +631,7 @@ timeline.push(save_data);
 
 
 jsPsych.run(timeline);
+
 
 
 
