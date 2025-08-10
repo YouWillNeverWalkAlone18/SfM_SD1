@@ -356,7 +356,7 @@ function makePracticeBlock() {
     practiceTrials.push({
       type: jsPsychP5,
       sketch: sfm_neutral,
-      trial_duration: 2000
+      trial_duration: 2500
     });
 
     practiceTrials.push({
@@ -426,7 +426,7 @@ function makeBlock(blockIndex) {
     trials.push({
       type: jsPsychP5,
       sketch: trial_sketch,
-      trial_duration: 2000,
+      trial_duration: 2500,
     });
 
     trials.push({
@@ -573,7 +573,7 @@ timeline.push({
       <h3>この実験に関するご説明</h3>
       <p>
         実験に興味を持っていただきありがとうございます。<br>
-        実験では、画面中央に複数の小さな四角形がランダムに配置され、2秒間、左右方向に動きます。<br>
+        実験では、画面中央に複数の小さな四角形がランダムに配置され、2.5秒間、左右方向に動きます。<br>
         動きを見て、円筒が回転しているように見えた場合は、見えた回転方向をボタンで選択してください。<br>
         時計回りに見えた場合は「時計回り」、反時計回りに見えた場合は「反時計回り」のボタンを押してください。<br>
         回転方向が途中で変わったり、はっきりとわからない場合は、より強く感じた回転方向を回答してください。<br>
