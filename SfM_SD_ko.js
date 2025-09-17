@@ -132,10 +132,10 @@ p.draw = function() {
 // ========== sfm_cw ==========
 let sfm_cw = function (p) {
   let rects = [];
-  let numRects = 400;
+  let numRects = 450;
   let R = 200 * 1.2;
   let baseSize = 8 * 1.2;
-  let omega = 0.03;
+  let omega = 0.028;
   let colors = [];
 
   p.setup = function () {
@@ -227,10 +227,10 @@ let sfm_cw = function (p) {
 // ========== sfm_ccw ==========
 let sfm_ccw = function (p) {
   let rects = [];
-  let numRects = 400;
+  let numRects = 450;
   let R = 200 * 1.2;
   let baseSize = 8 * 1.2;
-  let omega = 0.03;
+  let omega = 0.028;
   let colors = [];
 
   p.setup = function () {
@@ -425,7 +425,7 @@ function makeBlock(blockIndex) {
         </div>
       `;
     },
-    choices: ['次へ'],
+    choices: ['계속'],
     on_finish: function () {
       completedTrials += 5;
     }
@@ -550,4 +550,5 @@ timeline.push({
 timeline.push(save_data);
 
 jsPsych.run(timeline);
+
 
