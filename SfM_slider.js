@@ -1,6 +1,17 @@
 var jsPsych = initJsPsych({
   on_finish: function () {
-    document.body.innerHTML = "<h2>データ保存に成功しました。実験に参加していただきありがとうございます。</h2>";
+    document.body.innerHTML = '<div style="
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        font-size: 24px;
+      ">
+        データ保存に成功しました。<br>
+        実験に参加していただきありがとうございます。
+      </div>
+    `;
   }
 });
 // イメージ配置順ランダム
@@ -561,6 +572,7 @@ timeline.push({
 timeline.push(save_data);
 
 jsPsych.run(timeline);
+
 
 
 
