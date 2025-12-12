@@ -348,10 +348,6 @@ function makeBlock(blockIndex) {
     trials.push({
   type: jsPsychHtmlSliderResponse,
   stimulus: `
-    <div style="margin-bottom:15px; color:#e0e0e0; text-align:center;">
-      <p>回転方向が途中で変わったり、はっきりとわからない場合は、</p>
-      <p>より強く感じた回転方向を回答してください。</p>
-    </div>
 
     <!-- 좌/우 이미지 (슬라이더보다 위쪽에 배치) -->
     <div style="
@@ -565,3 +561,4 @@ timeline.push({
 timeline.push(save_data);
 
 jsPsych.run(timeline);
+
