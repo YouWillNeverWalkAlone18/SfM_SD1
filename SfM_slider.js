@@ -345,7 +345,7 @@ function makeBlock(blockIndex) {
       trial_duration: 2500,
     });
 
-    trials.push({{
+    trials.push({
   type: jsPsychHtmlSliderResponse,
   stimulus: `
     <div style="margin-bottom:15px; color:#e0e0e0; text-align:center;">
@@ -367,7 +367,7 @@ function makeBlock(blockIndex) {
     </div>
   `,
   
-  labels: ["", ""],  // 아래 텍스트 라벨 미사용 (이미지를 대신 사용)
+  labels: [],  // 아래 텍스트 라벨 미사용 (이미지를 대신 사용)
   slider_width: 500,
   require_movement: true,
   prompt: `
@@ -395,7 +395,7 @@ function makeBlock(blockIndex) {
     // 어떤 이미지가 왼쪽/오른쪽에 배치되었는지도 기록
     left_label: image_order[0],
     right_label: image_order[1]
-  },},
+  },
       on_finish: function(data) {
         data.raw_slider = data.response;  // 0~100
 
@@ -418,8 +418,8 @@ function makeBlock(blockIndex) {
   }
   // 🔹 전체 실험에서 몇 번째 response trial인지 저장 (전체 흐름 분석용)
   data.trial_index_global = jsPsych.data.get().filter({task: 'response'}).count();
-},
-  });
+}
+    });
 
     trials.push({
       type: jsPsychHtmlKeyboardResponse,
