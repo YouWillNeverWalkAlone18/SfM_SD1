@@ -470,9 +470,21 @@ function makeBlock(blockIndex) {
 const block_order = jsPsych.randomization.shuffle([...Array(16).keys()]); // 0-15のブロック順をランダム化
 let timeline = [];
 
-timeline.push({type: jsPsychFullscreen,
+let runFullscreen = {
+    type: jsPsychFullscreen,
     message: "<div style='width: 600px; text-align:left;'><p style='color: red; font-weight:bold;'>実験中に画面に点滅（フラッシュ）が表示されますので、苦手な方は参加をご遠慮ください。</p><b>この実験はスマートフォンやタブレットでは実施できません。パソコンでのみ実施していただけます。</b><br/><br/>下のボタンを押すと、フルスクリーンで実験が始まります。<br/>" + "ESCキーを押すとフルスクリーンが終了します。<br/>実験中はESCキーを押さないでください。<br/><br/>",
-    fullscreen_mode: true,});
+    fullscreen_mode: true,
+};
+let exit_fullscreen = {
+    type: jsPsychFullscreen,
+    fullscreen_mode: false,
+    delay_after: 0,
+    on_finish: function() {
+        jsPsych.endExperiment();
+    },
+};
+
+timeline.push(runFullscreen);
 
 // page1: intro
 timeline.push({
@@ -580,16 +592,10 @@ timeline.push({
 
 timeline.push(save_data);
 
-timeline.push({
-    type: jsPsychFullscreen,
-    fullscreen_mode: false,
-    delay_after: 0,
-    on_finish: function() {
-        jsPsych.endExperiment();
-    },
-});
+timeline.push(exit_fullscreen);
 
 jsPsych.run(timeline);
+
 
 
 
