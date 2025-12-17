@@ -1,15 +1,20 @@
 var jsPsych = initJsPsych({
   on_finish: function () {
-    document.body.innerHTML = '<div style="
+    document.body.innerHTML = `
+      <div style="
         height: 100vh;
         display: flex;
         justify-content: center;
         align-items: center;
         text-align: center;
         font-size: 24px;
+        color: #e0e0e0;
+        background-color: #646464;
       ">
-        データ保存に成功しました。<br>
-        実験に参加していただきありがとうございます。
+        <div>
+          データ保存に成功しました。<br>
+          実験に参加していただきありがとうございます。
+        </div>
       </div>
     `;
   }
@@ -572,6 +577,7 @@ timeline.push({
 timeline.push(save_data);
 
 jsPsych.run(timeline);
+
 
 
 
