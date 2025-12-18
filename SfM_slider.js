@@ -383,7 +383,7 @@ function makeBlock(blockIndex) {
   slider_width: 500,
   require_movement: true,
   prompt: `
-    <div style="text-align:center; margin-top:30px; color:#e0e0e0;">
+    <div style="text-align:center; margin-top:-40px; color:#e0e0e0;">
       <p>どちらに回転しているように見えましたか？</p>
       <p>どれだけはっきりその方向が見えたかについて、</p>
       <p>方向のイメージにスライダーを移動させて表現してください。</p>
@@ -595,6 +595,7 @@ timeline.push(save_data);
 timeline.push(exit_fullscreen);
 
 jsPsych.run(timeline);
+
 
 
 
