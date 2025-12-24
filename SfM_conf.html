@@ -44,11 +44,11 @@
         color: #e0e0e0 !important;
       }
       /* --- 추가된 부분: 상위 컨테이너의 제한 해제 --- */
-    .jspsych-survey-likert-question,
-    .jspsych-survey-likert-opts {
+    .jspsych-survey-likert-statement,
+    .jspsych-survey-likert-opts,
+    .jspsych-survey-likert-opt,
+    .jspsych-survey-likert-question {
       overflow: visible !important;
-      max-width: none !important; /* jsPsych 기본 너비 제한 해제 */
-      width: 100% !important;
     }
 
     /* Likert 라벨 텍스트 */
@@ -67,15 +67,17 @@
     /* Likert 전체 폭 */
     .jspsych-survey-likert ul {
       position: relative;
-      width: 700px; /* 900px보다 약간 줄여야 양옆 텍스트 공간이 확보됩니다 */
-      margin: 60px auto; /* 위아래 여백을 줘서 다른 요소와 겹침 방지 */
+      width: 800px;
+      /* 900px보다 약간 줄여야 양옆 텍스트 공간이 확보됩니다 */
+      margin: 50px auto;
+      /* 위아래 여백을 줘서 다른 요소와 겹침 방지 */
       display: flex !important;
       justify-content: space-between;
       list-style: none;
       padding: 0;
       overflow: visible !important;
     }
-
+      
     /* 왼쪽 극단 설명 (양옆 배치를 위해 수정) */
     .jspsych-survey-likert ul::before {
       content: "（両方の方向が見えた）";
@@ -112,6 +114,7 @@
   </head>
   <body></body>
 </html>
+
 
 
 
