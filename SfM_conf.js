@@ -402,10 +402,18 @@ function makeBlock(blockIndex) {
 
    trials.push({
       type: jsPsychSurveyLikert,
-      questions: [　　　　　　　　　　　　　　　　　　　// その試行の間の知覚状態(perceptual state)を聞いて、知覚の時間的持続性を暗示したかった　→　見えていましたか？
+      questions: [ // その試行の間の知覚状態(perceptual state)を聞いて、知覚の時間的持続性を暗示したかった　→　見えていましたか？
         {prompt: '<div style="color: #e0e0e0;">今の刺激では、回転方向が迷いなく一方向に見えていましたか？</div>', 
           name: 'conf_dir', 
-          labels: ['全くそう思わない（両方の方向が見えた）','あまりそう思わない','ややそう思う','かなりそう思う','非常にそう思う（1方向だけが見えていた）'], required: true, horizontal: true}
+          labels: [
+           '<span style="color: #e0e0e0;">全くそう思わない<br>（両方の方向が見えた）</span>',
+           '<span style="color: #e0e0e0;">あまりそう思わない</span>',
+           '<span style="color: #e0e0e0;">ややそう思う</span>',
+           '<span style="color: #e0e0e0;">かなりそう思う</span>',
+           '<span style="color: #e0e0e0;">非常にそう思う<br>（1方向だけが見えていた）</span>'], 
+           required: true, 
+           horizontal: true
+          }
       ]      // まだ終わってない
    })
 
@@ -553,3 +561,4 @@ timeline.push({
 timeline.push(save_data);
 
 jsPsych.run(timeline);
+
