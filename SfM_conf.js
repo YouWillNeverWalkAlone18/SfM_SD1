@@ -422,11 +422,11 @@ function makeBlock(blockIndex) {
         {prompt: '<div style="color: #e0e0e0; font-size : 26px; line-height : 1.4; margin-bottom: 40px;">今の刺激では、回転方向が迷いなく一方向に見えていましたか？</div>', 
           name: 'conf_dir', 
           labels: [
-           '<span style="color: #e0e0e0;">全くそう思わない<br>（両方の方向が見えた）</span>',
+           '<span style="color: #e0e0e0;">全くそう思わない</span><span class="left-hint">（両方の方向が見えた）</span>', // classはabsolute配置のため
            '<span style="color: #e0e0e0;">あまりそう思わない</span>',
            '<span style="color: #e0e0e0;">ややそう思う</span>',
            '<span style="color: #e0e0e0;">かなりそう思う</span>',
-           '<span style="color: #e0e0e0;">非常にそう思う<br>（1方向だけが見えていた）</span>'], 
+           '<span style="color: #e0e0e0;">非常にそう思う</span><span class="right-hint">（1方向だけが見えていた）</span>'], // classはabsolute配置のため 
            required: true, 
            horizontal: true
           }
@@ -595,4 +595,5 @@ timeline.push(save_data);
 timeline.push(exit_fullscreen);
 
 jsPsych.run(timeline);
+
 
