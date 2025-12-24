@@ -420,10 +420,10 @@ function makeBlock(blockIndex) {
       type: jsPsychSurveyLikert,
       questions: [// その試行の間の知覚状態(perceptual state)を聞いて、知覚の時間的持続性を暗示したかった　→　見えていましたか？
         {
-          prompt: '<div style="color: #e0e0e0; font-size : 26px; line-height : 1.4; margin-bottom: 60px;">今の刺激では、回転方向が迷いなく一方向に見えていましたか？</div>',
-          name: 'conf_dir',
-          labels: [
-            // 첫 번째 라벨 안에 왼쪽 설명을 넣고 absolute로 밀어냄
+      prompt: '<div style="color: #e0e0e0; font-size : 26px; line-height : 1.4; margin-bottom: 60px;">今の刺激では、回転方向가迷いなく一方向に見えていましたか？</div>',
+      name: 'conf_dir',
+      labels: [
+        // 첫 번째 라벨 안에 왼쪽 설명을 넣고 absolute로 밀어냄
         `<span style="position: relative; color: #e0e0e0;">
           <span style="position: absolute; left: -220px; top: 0; width: 200px; text-align: right; color: #aaa; font-size: 16px;">（両方の方向が見えた）</span>
           全くそう思わない
@@ -436,9 +436,10 @@ function makeBlock(blockIndex) {
           非常にそう思う
           <span style="position: absolute; right: -240px; top: 0; width: 220px; text-align: left; color: #aaa; font-size: 16px;">（1方向だけが見えていた）</span>
         </span>`
-          required: true,
-          horizontal: true
-        }
+      ],
+      required: true,
+      horizontal: true
+    }
       ]      // まだ終わってない
     })
 
@@ -604,6 +605,7 @@ timeline.push(save_data);
 timeline.push(exit_fullscreen);
 
 jsPsych.run(timeline);
+
 
 
 
