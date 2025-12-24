@@ -1,6 +1,22 @@
 var jsPsych = initJsPsych({
   on_finish: function () {
-    jsPsych.data.displayData();
+    document.body.innerHTML = `
+      <div style="
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        font-size: 24px;
+        color: #e0e0e0;
+        background-color: #646464;
+      ">
+        <div>
+          データ保存に成功しました。<br>
+          実験に参加していただきありがとうございます。
+        </div>
+      </div>
+    `;
   }
 });
 // イメージ配置順ランダム
@@ -402,8 +418,8 @@ function makeBlock(blockIndex) {
 
    trials.push({
       type: jsPsychSurveyLikert,
-      questions: [ // その試行の間の知覚状態(perceptual state)を聞いて、知覚の時間的持続性を暗示したかった　→　見えていましたか？
-        {prompt: '<div style="color: #e0e0e0;">今の刺激では、回転方向が迷いなく一方向に見えていましたか？</div>', 
+      questions: [// その試行の間の知覚状態(perceptual state)を聞いて、知覚の時間的持続性を暗示したかった　→　見えていましたか？
+        {prompt: '<div style="color: #e0e0e0; font-size : 26px; line-height : 1.4;">今の刺激では、回転方向が迷いなく一方向に見えていましたか？</div>', 
           name: 'conf_dir', 
           labels: [
            '<span style="color: #e0e0e0;">全くそう思わない<br>（両方の方向が見えた）</span>',
@@ -453,6 +469,22 @@ function makeBlock(blockIndex) {
 
 const block_order = jsPsych.randomization.shuffle([...Array(16).keys()]); // 0-15のブロック順をランダム化
 let timeline = [];
+
+let runFullscreen = {
+    type: jsPsychFullscreen,
+    message: "<div style='width: 600px; text-align:left;'><p style='color: red; font-weight:bold;'>実験中には回転するものが見られますので、苦手な方は参加をご遠慮ください。</p><b>この実験はスマートフォンやタブレットでは実施できません。パソコンでのみ実施していただけます。</b><br/><br/>下のボタンを押すと、フルスクリーンで実験が始まります。<br/>" + "ESCキーを押すとフルスクリーンが終了します。<br/>実験中はESCキーを押さないでください。<br/><br/>",
+    fullscreen_mode: true,
+};
+let exit_fullscreen = {
+    type: jsPsychFullscreen,
+    fullscreen_mode: false,
+    delay_after: 0,
+    on_finish: function() {
+        jsPsych.endExperiment();
+    },
+};
+
+timeline.push(runFullscreen);
 
 // page1: intro
 timeline.push({
@@ -560,5 +592,6 @@ timeline.push({
 
 timeline.push(save_data);
 
-jsPsych.run(timeline);
+timeline.push(exit_fullscreen);
 
+jsPsych.run(timeline);
