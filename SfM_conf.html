@@ -54,34 +54,35 @@
         position : relative;
         display : inline-block; /* 위치 계산이 정확해지도록 설정 */
       }
-      /* Likert 전체 폭 */
-     .jspsych-survey-likert ul {
-      width: 600px;
+     /* Likert 전체 폭 */
+    .jspsych-survey-likert ul {
+      position: relative;
+      width: 900px;
       /* 기본값보다 훨씬 김 */
-      margin: 30px auto;
+      margin: 40px auto;
       /* 중앙 정렬 */
       overflow: visible !important;
     }
 
-      /* 왼쪽 보조 설명 */              /* left / right 값은 화면 크기에 따라-200 ~ -280px 사이에서 미세 조정 */
-    .left-hint {
+    /* 왼쪽 극단 설명 */
+    .jspsych-survey-likert ul::before {
+      content: "（両方の方向が見えた）";
       position: absolute;
-      left: -20px;                  /* 라벨 시작점(0)보다 왼쪽으로 */
-      /* 슬라이더 바깥 */
-      transform: translateX(-100%); /* 자기 자신의 너비만큼 왼쪽으로 100% 이동 */
-      top: 0;                       /* 라벨과 높이 맞춤 */
-      color: #e0e0e0; 
-      font-size: 16px;              /* 힌트니까 조금 작게 조절 가능 */
-      white-space: nowrap; 
+      left: -260px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #e0e0e0;
+      font-size: 16px;
+      white-space: nowrap;
     }
 
-    /* 오른쪽 보조 설명 */
-    .right-hint {
+    /* 오른쪽 극단 설명 */
+    .jspsych-survey-likert ul::after {
+      content: "（1方向だけが見えていた）";
       position: absolute;
-      right: -20px;                 /* 라벨 끝점(0)보다 오른쪽으로 */
-      /* 슬라이더 바깥 */
-      transform: translateX(100%); /* 자기 자신의 너비만큼 오른쪽으로 100% 이동 */
-      top: 0;                      /* 라벨과 높이 맞춤 */
+      right: -300px;
+      top: 50%;
+      transform: translateY(-50%);
       color: #e0e0e0;
       font-size: 16px;
       white-space: nowrap;
@@ -93,6 +94,7 @@
   </head>
   <body></body>
 </html>
+
 
 
 
