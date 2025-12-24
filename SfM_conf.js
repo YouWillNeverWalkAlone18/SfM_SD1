@@ -420,7 +420,7 @@ function makeBlock(blockIndex) {
       type: jsPsychSurveyLikert,
       questions: [// その試行の間の知覚状態(perceptual state)を聞いて、知覚の時間的持続性を暗示したかった　→　見えていましたか？
         {
-          prompt: '<div style="color: #e0e0e0; font-size : 26px; line-height : 1.4; margin-bottom: 40px;">今の刺激では、回転方向が迷いなく一方向に見えていましたか？</div>',
+          prompt: '<div style="color: #e0e0e0; font-size : 26px; line-height : 1.4; margin-bottom: 60px;">今の刺激では、回転方向が迷いなく一方向に見えていましたか？</div>',
           name: 'conf_dir',
           labels: [
             '<span class="left-anchor" style="color: #e0e0e0;">全くそう思わない</span>', // classはabsolute配置のため
@@ -596,6 +596,7 @@ timeline.push(save_data);
 timeline.push(exit_fullscreen);
 
 jsPsych.run(timeline);
+
 
 
 
