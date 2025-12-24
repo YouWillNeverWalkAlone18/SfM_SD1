@@ -57,6 +57,27 @@
         width: 900px;        /* 기본값보다 훨씬 김 */
         margin: 30px auto;  /* 중앙 정렬 */
       }
+      /* 왼쪽 보조 설명 */              /* left / right 값은 화면 크기에 따라-200 ~ -280px 사이에서 미세 조정 */
+    .left-hint {
+      position: absolute;
+      left: -220px;
+      /* 슬라이더 바깥 */
+      top: 40px;
+      color: #e0e0e0;
+      font-size: 18px;
+      white-space: nowrap;
+    }
+
+    /* 오른쪽 보조 설명 */
+    .right-hint {
+      position: absolute;
+      right: -260px;
+      /* 슬라이더 바깥 */
+      top: 40px;
+      color: #e0e0e0;
+      font-size: 18px;
+      white-space: nowrap;
+    }
     </style>
 
     <!-- 実験スクリプト -->
@@ -64,3 +85,4 @@
   </head>
   <body></body>
 </html>
+
