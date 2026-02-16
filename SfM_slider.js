@@ -333,7 +333,100 @@ let sfm_ccw = function (p) {
   };
 };
 
-  
+// -----------------練習試行 --------------------
+
+function makePracticeBlock() {
+
+  let trials = [];
+
+  // -----------------------------
+  // 1. 자극 구성 (neutral 4, cw 3, ccw 3)
+  // -----------------------------
+  let stim_list = [
+    ...Array(4).fill("neutral"),
+    ...Array(3).fill("cw"),
+    ...Array(3).fill("ccw")
+  ];
+
+  // 랜덤 셔플
+  stim_list = jsPsych.randomization.shuffle(stim_list);
+
+  // -----------------------------
+  // 2. 10회 반복
+  // -----------------------------
+  for (let i = 0; i < stim_list.length; i++) {
+
+    let stim_type = stim_list[i];
+    let trial_sketch;
+
+    if (stim_type === "cw") {
+      trial_sketch = sfm_cw;
+    } else if (stim_type === "ccw") {
+      trial_sketch = sfm_ccw;
+    } else {
+      trial_sketch = sfm_neutral;
+    }
+
+    // 🔹 fixation
+    trials.push({
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<div style="font-size:32px; color:#e0e0e0;">+</div>`,
+      choices: "NO_KEYS",
+      trial_duration: 1000,
+      data: { practice: true }   // ✔ 최소 태그
+    });
+
+    // 🔹 stimulus
+    trials.push({
+      type: jsPsychP5,
+      sketch: trial_sketch,
+      trial_duration: 3000,
+      data: { practice: true }
+    });
+
+    // 🔹 response (기록 최소화)
+    trials.push({
+      type: jsPsychHtmlSliderResponse,
+      stimulus: `
+        <div style="
+          width: 520px;
+          margin: 0 auto 10px auto;
+          display: flex;
+          justify-content: space-between;
+        ">
+          <img src="${image_order[0]}.png" width="180">
+          <img src="${image_order[1]}.png" width="180">
+        </div>
+      `,
+      labels: [],
+      slider_width: 500,
+      require_movement: true,
+      prompt: `
+        <div style="text-align:center; margin-top:-40px; color:#e0e0e0;">
+      <p>見えた回転方向のイメージにスライダーを近づけてください。</p>
+      <p>イメージに近いほど、「その方向だけが強く見えた」、</p>
+      <p>中央付近に近いほど、「両方向とも見えた」<br>
+         ことを意味します。</p>
+      
+    </div>
+      `,
+      data: { practice: true },  // ✔ 이것만 남김
+    });
+
+    // 🔹 blank
+    trials.push({
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: '',
+      choices: "NO_KEYS",
+      trial_duration: 1000,
+      data: { practice: true }
+    });
+  }
+
+  return trials;
+}
+
+// ----------------- 本実験 ---------------------
 function makeBlock(blockIndex) {
   let trials = [];
 
@@ -352,13 +445,13 @@ function makeBlock(blockIndex) {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<div style="font-size:32px; color: #e0e0e0;">+</div>`,
       choices: "NO_KEYS",
-      trial_duration: 100,  // 1000
+      trial_duration: 1000,  // 1000
     });
 
     trials.push({
       type: jsPsychP5,
       sketch: trial_sketch,
-      trial_duration: 2000, // 2500
+      trial_duration: 3000, // 2500
     });
 
     trials.push({
@@ -437,7 +530,7 @@ function makeBlock(blockIndex) {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: '',
       choices: "NO_KEYS",
-      trial_duration: 100, // 1000
+      trial_duration: 4000, // 1000
     });
   }
 
@@ -564,10 +657,25 @@ timeline.push({
 
     return `
       <div style="max-width: 800px; margin: 0 auto; font-size: 16px; line-height: 1.6; text-align: left; color: #e0e0e0;">
-        <p>回転方向を選択するためのボタンは、以下のように画面に表示されます。</p>
+        <p>以下のような回転方向のイメージが、応答画面に表示されます。</p>
         <p>実験への参加に同意される場合は、下の「次へ」ボタンを押してください。</p>
-        <p>ボタンを押すと、ただちに実験が始まります。</p>
+        <p>ボタンを押すと、練習試行が始まります。</p>
         ${image_html}
+      </div>
+    `;
+  },
+  choices: ['次へ']
+});
+
+timeline.push(...makePracticeBlock);
+
+timeline.push({
+  type: jsPsychHtmlButtonResponse,
+  stimulus: function () {
+    return `
+      <div style="max-width: 800px; margin: 0 auto; font-size: 16px; line-height: 1.6; text-align: left; color: #e0e0e0;">
+        <p>以上で練習試行は終了となります。</p>
+        <p>ボタンを押すと、本実験が始まります。</p>
       </div>
     `;
   },
@@ -595,6 +703,7 @@ timeline.push(save_data);
 timeline.push(exit_fullscreen);
 
 jsPsych.run(timeline);
+
 
 
 
