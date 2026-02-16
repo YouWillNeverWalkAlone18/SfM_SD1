@@ -81,7 +81,7 @@ p.calcOmegaFromCos = function(normX) {
 
 p.draw = function() {
   p.background('#646464');
-  p.translate(p.width / 2, p.height / 2 + 20);
+  p.translate(p.width / 2, p.height / 2 + 10);
   p.stroke('red');  // 임시
   p.line(0, -10, 0, 10); //임시
   p.line(-10, 0, 10, 0); //임시
@@ -706,6 +706,7 @@ timeline.push(save_data);
 timeline.push(exit_fullscreen);
 
 jsPsych.run(timeline);
+
 
 
 
