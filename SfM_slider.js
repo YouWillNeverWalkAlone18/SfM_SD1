@@ -54,7 +54,9 @@ let colors = [];
 
 p.setup = function() {
   p.createCanvas(800 * 1.2, 600);
-
+  p.stroke('red');  // 임시
+  p.line(0, -10, 0, 10); //임시
+  p.line(-10, 0, 10, 0); //임시
   for (let i = 0; i < numRects; i++) {
     let angle = p.random(p.TWO_PI);
     let y = p.random(-200 * 1.2, 200 * 1.2);
@@ -704,6 +706,7 @@ timeline.push(save_data);
 timeline.push(exit_fullscreen);
 
 jsPsych.run(timeline);
+
 
 
 
