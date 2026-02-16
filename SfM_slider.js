@@ -53,7 +53,7 @@ let baseOmega = 0.03;   // 0.028
 let colors = []; 
 
 p.setup = function() {
-  p.createCanvas(800 * 1.2, 600 * 1.2);
+  p.createCanvas(800 * 1.2, 600);
 
   for (let i = 0; i < numRects; i++) {
     let angle = p.random(p.TWO_PI);
@@ -704,6 +704,7 @@ timeline.push(save_data);
 timeline.push(exit_fullscreen);
 
 jsPsych.run(timeline);
+
 
 
 
