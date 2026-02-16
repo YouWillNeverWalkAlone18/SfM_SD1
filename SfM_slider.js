@@ -667,7 +667,7 @@ timeline.push({
   choices: ['次へ']
 });
 
-timeline.push(...makePracticeBlock);
+timeline.push(...makePracticeBlock());
 
 timeline.push({
   type: jsPsychHtmlButtonResponse,
@@ -703,6 +703,7 @@ timeline.push(save_data);
 timeline.push(exit_fullscreen);
 
 jsPsych.run(timeline);
+
 
 
 
