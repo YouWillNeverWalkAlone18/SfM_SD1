@@ -82,9 +82,7 @@ p.calcOmegaFromCos = function(normX) {
 p.draw = function() {
   p.background('#646464');
   p.translate(p.width / 2, p.height / 2 + 10);
-  p.stroke('red');  // 임시
-  p.line(0, -10, 0, 10); //임시
-  p.line(-10, 0, 10, 0); //임시
+
   let renderedRects = [];
 
   for (let i = 0; i < numRects; i++) {
@@ -176,7 +174,7 @@ let sfm_cw = function (p) {
 
   p.draw = function () {
     p.background('#646464');
-    p.translate(p.width / 2, p.height / 2);
+    p.translate(p.width / 2, p.height / 2 + 10);
 
     let backgroundRects = [];
     let foregroundRects = [];
@@ -271,7 +269,7 @@ let sfm_ccw = function (p) {
 
   p.draw = function () {
     p.background('#646464');
-    p.translate(p.width / 2, p.height / 2);
+    p.translate(p.width / 2, p.height / 2 + 10);
 
     let backgroundRects = [];
     let foregroundRects = [];
@@ -480,11 +478,11 @@ function makeBlock(blockIndex) {
   require_movement: true,
   prompt: `
     <div style="text-align:center; margin-top:-40px; color:#e0e0e0;">
-      <p>どちらに回転しているように見えましたか？</p>
-      <p>どれだけはっきりその方向が見えたかについて、</p>
-      <p>方向のイメージにスライダーを移動させて表現してください。</p>
-      <p>（例：間違いなく一方向だけ見えた => スライダーを端に移動、<br>
-          両方とも見えた => スライダーを中央付近に移動）</p>
+      <p>見えた回転方向のイメージにスライダーを近づけてください。</p>
+      <p>イメージに近いほど、「その方向だけが強く見えた」、</p>
+      <p>イメージから遠いほど、「反対方向も同時に見えた」</p>
+      <p>中央付近は、「両方向とも同じ程度に見えた」</p>
+      <p>ことを意味します。</p>
       
     </div>
   `,
@@ -706,6 +704,7 @@ timeline.push(save_data);
 timeline.push(exit_fullscreen);
 
 jsPsych.run(timeline);
+
 
 
 
