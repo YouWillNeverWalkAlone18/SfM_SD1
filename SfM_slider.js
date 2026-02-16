@@ -405,8 +405,8 @@ function makePracticeBlock() {
         <div style="text-align:center; margin-top:-40px; color:#e0e0e0;">
       <p>見えた回転方向のイメージにスライダーを近づけてください。</p>
       <p>イメージに近いほど、「その方向だけが強く見えた」、</p>
-      <p>中央付近に近いほど、「両方向とも見えた」<br>
-         ことを意味します。</p>
+      <p>中央付近に近いほど、「両方向とも見えた」</p>
+      <p>ことを意味します。</p>
       
     </div>
       `,
@@ -703,6 +703,7 @@ timeline.push(save_data);
 timeline.push(exit_fullscreen);
 
 jsPsych.run(timeline);
+
 
 
 
