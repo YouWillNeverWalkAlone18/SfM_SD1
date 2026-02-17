@@ -13,7 +13,7 @@ var jsPsych = initJsPsych({
       ">
         <div>
           데이터 보존에 성공했습니다.<br>
-          실험에 참가해주셔서 감사합니다.<br>
+          실험에 참가해 주셔서 감사합니다.<br>
           페이지를 닫으셔도 됩니다.
         </div>
       </div>
@@ -491,10 +491,8 @@ function makeBlock(blockIndex) {
     <div style="text-align:center; margin-top:-40px; color:#e0e0e0;">
       <p>느껴진 회전 방향에 가깝게 슬라이더를 움직여 주세요.</p>
       <p>한 방향만이 보였다면 해당 이미지 끝 쪽으로,</p>
-      <p>도중에 방향이 바뀌거나 반대 방향이 함께 보였다면 <br>
-      그 정도만큼 가운데 쪽으로 움직여 주세요.</p>
-      <p>슬라이더 가운데 = [양 방향이 같은 정도로 보임]</p>
-      <p>길게 고민하지 않고 최대한 직감적으로 판단해 주세요.</p>
+      <p>도중에 방향이 바뀌거나 반대 방향이 함께 보였다면 </p>
+      <p>길게 고민하지 않고 최대한 직감적으로 움직여 주세요.</p>
       
     </div>
   `,
@@ -548,14 +546,14 @@ function makeBlock(blockIndex) {
       return `
         <div style="color: #e0e0e0;">
         <p>5시행이 종료되었습니다. 넘어가시기 전에 휴식하셔도 됩니다.</p>
-        <p>준비되셨다면, 버튼을 눌러 실험을 진행해주세요.</p>
+        <p>준비되셨다면, 버튼을 눌러 실험을 진행해 주세요.</p>
         <p style="margin-top: 20px;">${completedTrials} / 80 회 진행되었습니다.</p>
         <div style="width: 80%; height: 20px; border: 1px solid #000; margin: 10px auto; background-color: #eee;">
           <div style="width: ${progressBarWidth}%; height: 100%; background-color: #4caf50;"></div>
         </div>
       `;
     },
-    choices: ['次へ'],
+    choices: ['계속'],
     on_finish: function () {
       completedTrials += 5;
     }
@@ -683,7 +681,7 @@ timeline.push({
     return `
       <div style="max-width: 800px; margin: 0 auto; font-size: 16px; line-height: 1.6; text-align: left; color: #e0e0e0;">
         <p>이상으로 연습 시행을 마칩니다.</p>
-        <p>본 실험에서는 공백 시간이 길어지는 점 양해 바랍니다.</p>
+        <p>본 실험에서는 이미지 로딩이 길어지는 점 양해 바랍니다.</p>
         <p>하단 버튼을 누르시면 본 실험을 진행합니다.</p>
       </div>
     `;
@@ -712,6 +710,7 @@ timeline.push(save_data);
 timeline.push(exit_fullscreen);
 
 jsPsych.run(timeline);
+
 
 
 
