@@ -387,6 +387,7 @@ function makePracticeBlock() {
     // 🔹 response (기록 최소화)
     trials.push({
       type: jsPsychHtmlSliderResponse,
+      css_clases: ['center-marker-slider'],  
       stimulus: `
         <div style="
           width: 520px;
@@ -464,6 +465,7 @@ function makeBlock(blockIndex) {
 
     trials.push({
   type: jsPsychHtmlSliderResponse,
+  css_clases: ['center-marker-slider'],      
   stimulus: `
 
     <!-- 좌/우 이미지 (슬라이더보다 위쪽에 배치) -->
@@ -704,6 +706,7 @@ timeline.push(save_data);
 timeline.push(exit_fullscreen);
 
 jsPsych.run(timeline);
+
 
 
 
