@@ -441,7 +441,14 @@ function makeBlock(blockIndex) {
     } else {
       trial_sketch = sfm_neutral;  // 残りのブロックは全て中立刺激
     }
-
+    
+    trials.push({
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: '',
+      choices: "NO_KEYS",
+      trial_duration: 4000, // 1000
+    });
+    
     trials.push({
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<div style="font-size:32px; color: #e0e0e0;">+</div>`,
@@ -525,13 +532,6 @@ function makeBlock(blockIndex) {
   // 🔹 전체 실험에서 몇 번째 response trial인지 저장 (전체 흐름 분석용)
   data.trial_index_global = jsPsych.data.get().filter({task: 'response'}).count();
 }
-    });
-
-    trials.push({
-      type: jsPsychHtmlKeyboardResponse,
-      stimulus: '',
-      choices: "NO_KEYS",
-      trial_duration: 4000, // 1000
     });
   }
 
@@ -704,6 +704,7 @@ timeline.push(save_data);
 timeline.push(exit_fullscreen);
 
 jsPsych.run(timeline);
+
 
 
 
