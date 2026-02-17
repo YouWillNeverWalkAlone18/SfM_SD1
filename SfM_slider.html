@@ -57,6 +57,23 @@
         width: 900px;        /* 기본값보다 훨씬 김 */
         margin: 30px auto;  /* 중앙 정렬 */
       }
+      
+      .center-marker-slider .jspsych-slider {
+  position: relative;
+}
+
+.center-marker-slider .jspsych-slider::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  height: 14px;      /* 세로선 길이 */
+  width: 2px;        /* 두께 */
+  background: #e0e0e0; /* 색 (지금 배경에 맞춤) */
+  pointer-events: none;
+}
+
     </style>
 
     <!-- 実験スクリプト -->
@@ -64,5 +81,6 @@
   </head>
   <body></body>
 </html>
+
 
 
