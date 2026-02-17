@@ -12,8 +12,8 @@ var jsPsych = initJsPsych({
         background-color: #646464;
       ">
         <div>
-          データ保存に成功しました。<br>
-          実験に参加していただきありがとうございます。
+          데이터 보존에 성공했습니다.<br>
+          실험에 참가해주셔서 감사합니다.
         </div>
       </div>
     `;
@@ -568,7 +568,7 @@ let timeline = [];
 
 let runFullscreen = {
     type: jsPsychFullscreen,
-    message: "<div style='width: 600px; text-align:left;'><p style='color: red; font-weight:bold;'>実験中に画面に点滅（フラッシュ）が表示されますので、苦手な方は参加をご遠慮ください。</p><b>この実験はスマートフォンやタブレットでは実施できません。パソコンでのみ実施していただけます。</b><br/><br/>下のボタンを押すと、フルスクリーンで実験が始まります。<br/>" + "ESCキーを押すとフルスクリーンが終了します。<br/>実験中はESCキーを押さないでください。<br/><br/>",
+    message: "<div style='width: 600px; text-align:left;'><p style='color: red; font-weight:bold;'>실험 중에 지속적으로 회전하는 구조를 보셔야 하므로, 멀미 등 불쾌감이 우려되는 경우 참가를 권장하지 않습니다. </p><b>실험은 되도록 컴퓨터로 참가해주십시오.</b><br/><br/>하단 버튼을 누르시면, 전체화면으로 실험이 시작됩니다.<br/>" + "ESC키를 누르시면 전체화면이 종료됩니다.<br/>실험 중에는 ESC키를 누르지 않도록 해주십시오.<br/><br/>",
     fullscreen_mode: true,
 };
 let exit_fullscreen = {
@@ -590,7 +590,7 @@ timeline.push({
     <div style="max-width: 800px; margin: 0 auto; font-size: 16px; line-height: 1.6; text-align: left; color: #e0e0e0;">
       <h3>연구에 관한 설명</h3>
       <p>
-        본 연구는 리츠메이칸대학 종합심리학부・Takahashi kohske lab. 장기중이 실시하는 연구입니다.<br>
+        본 연구는 리츠메이칸대학 종합심리학부・Takahashi Kohske 연구실의 장기중이 실시하는 연구입니다.<br>
         연구의 개요는
         <a href="https://youwillneverwalkalone18.github.io/SfM_SD1" target="_blank">여기</a> 에서 확인하실 수 있습니다.<br>
         본 연구에 관한 문의사항은
@@ -709,6 +709,7 @@ timeline.push(save_data);
 timeline.push(exit_fullscreen);
 
 jsPsych.run(timeline);
+
 
 
 
