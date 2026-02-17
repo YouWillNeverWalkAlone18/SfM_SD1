@@ -13,7 +13,8 @@ var jsPsych = initJsPsych({
       ">
         <div>
           데이터 보존에 성공했습니다.<br>
-          실험에 참가해주셔서 감사합니다.
+          실험에 참가해주셔서 감사합니다.<br>
+          페이지를 닫으셔도 됩니다.
         </div>
       </div>
     `;
@@ -372,7 +373,7 @@ function makePracticeBlock() {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<div style="font-size:32px; color:#e0e0e0;">+</div>`,
       choices: "NO_KEYS",
-      trial_duration: 10,
+      trial_duration: 1000,
       data: { practice: true }   // ✔ 최소 태그
     });
 
@@ -380,7 +381,7 @@ function makePracticeBlock() {
     trials.push({
       type: jsPsychP5,
       sketch: trial_sketch,
-      trial_duration: 30,
+      trial_duration: 3000,
       data: { practice: true }
     });
 
@@ -404,11 +405,12 @@ function makePracticeBlock() {
       require_movement: true,
       prompt: `
         <div style="text-align:center; margin-top:-40px; color:#e0e0e0;">
-      <p>슬라이더를 움직여 회전방향을 알려주세요.</p>
+      <p>느껴진 회전 방향에 가깝게 슬라이더를 움직여 주세요.</p>
       <p>한 방향만이 보였다면 해당 이미지 끝 쪽으로,</p>
-      <p>다른 방향도 보였다면 그 정도만큼 가운데 쪽으로 움직여주세요.</p>
+      <p>도중에 방향이 바뀌거나 반대 방향이 함께 보였다면 <br>
+      그 정도만큼 가운데 쪽으로 움직여 주세요.</p>
       <p>슬라이더 가운데 = [양 방향이 같은 정도로 보임]</p>
-      <p>길게 고민하지 말고 최대한 직감적으로 판단해주세요.</p>
+      <p>길게 고민하지 않고 최대한 직감적으로 판단해 주세요.</p>
       
     </div>
       `,
@@ -420,7 +422,7 @@ function makePracticeBlock() {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: '',
       choices: "NO_KEYS",
-      trial_duration: 10,
+      trial_duration: 1000,
       data: { practice: true }
     });
   }
@@ -447,20 +449,20 @@ function makeBlock(blockIndex) {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: '',
       choices: "NO_KEYS",
-      trial_duration: 40, // 4000
+      trial_duration: 4000, // 4000
     });
     
     trials.push({
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<div style="font-size:32px; color: #e0e0e0;">+</div>`,
       choices: "NO_KEYS",
-      trial_duration: 10,  // 1000
+      trial_duration: 1000,  // 1000
     });
 
     trials.push({
       type: jsPsychP5,
       sketch: trial_sketch,
-      trial_duration: 30, // 3000
+      trial_duration: 3000, // 3000
     });
 
     trials.push({
@@ -487,11 +489,12 @@ function makeBlock(blockIndex) {
   require_movement: true,
   prompt: `
     <div style="text-align:center; margin-top:-40px; color:#e0e0e0;">
-      <p>슬라이더를 움직여 회전방향을 알려주세요.</p>
+      <p>느껴진 회전 방향에 가깝게 슬라이더를 움직여 주세요.</p>
       <p>한 방향만이 보였다면 해당 이미지 끝 쪽으로,</p>
-      <p>다른 방향도 보였다면 그 정도만큼 가운데 쪽으로 움직여주세요.</p>
+      <p>도중에 방향이 바뀌거나 반대 방향이 함께 보였다면 <br>
+      그 정도만큼 가운데 쪽으로 움직여 주세요.</p>
       <p>슬라이더 가운데 = [양 방향이 같은 정도로 보임]</p>
-      <p>길게 고민하지 말고 최대한 직감적으로 판단해주세요.</p>
+      <p>길게 고민하지 않고 최대한 직감적으로 판단해 주세요.</p>
       
     </div>
   `,
@@ -606,15 +609,15 @@ timeline.push({
         
         <p><strong>실험 개요</strong><br>
         실험에서는 지시에 따라 화면에 제시되는 시각 자극에 대한 관찰과 응답이 요구됩니다.</p>
-        소요시간은 10분 전후로 예상됩니다.<br>
+        소요 시간은 15분 전후로 예상됩니다.<br>
         (천천히 하시면 그만큼 늦어집니다.)<br>
-        화면에 이미지의 움직임이 반복 제시되며, 제시되는 대부분의 자극은 정확한 판단이 어려운, 애매한 자극입니다.</p> 
+        화면에 이미지의 움직임이 반복 제시되며, 제시되는 대부분의 자극은 정확한 판단이 어려운 애매한 자극입니다.</p> 
 
         <p><strong>위험성 / 불쾌감에 관한 설명</strong><br>
         개인에 따라 피로감이나 불쾌감을 느낄 수는 있으나 치명적인 신체적 위험은 없습니다.<br>
         단, 본 실험에서는 3D 회전 착시를 일으키는 자극이 사용됩니다.<br>
         따라서 반복 회전하는 물체에 거부감을 느끼시거나, 현기증 혹은 멀미가 걱정되시는 경우,<br>
-        또한 실험 중에 상태가 나빠졌다 느끼신 경우, 언제든지 실험을 중단해주시길 바랍니다.</p>
+        또한 실험 중에 상태가 나빠졌다고 느끼신 경우, 언제든지 실험을 중단해 주시길 바랍니다.</p>
 
         <p><strong>조사 내용에 관한 설명</strong><br>
         본 실험에서는 화면에 텍스트와 이미지, 이미지의 동작이 제시됩니다.<br>
@@ -636,16 +639,15 @@ timeline.push({
       <h3>실험에 관한 설명</h3>
       <p>
         실험에 관심을 가져주셔서 감사합니다.<br>
-        실험에서는 화면 중앙에 복수의 작은 사각형이 배치되어, 2.5초간 좌우 방향으로 움직입니다.<br>
-        움직임을 보시고 원통이 회전하는 것처럼 보였을 경우, 느껴진 회전 방향에 해당하는 버튼을 클릭해주세요.<br>
-        시계방향으로 보였다면 [시계방향], 반시계방향으로 보였다면 [반시계방향]버튼을 클릭해주세요.<br>
-        회전 방향이 도중에 바뀌었거나 방향이 헷갈릴 경우, 더 강하게 느껴진 방향을 선택해주세요.<br>
+        실험에서는 화면 중앙에 복수의 작은 사각형이 배치되어, 3초간 좌우 방향으로 움직입니다.<br>
+        움직임을 보시고 원통이 회전하는 것처럼 보였을 경우, 느껴진 회전 방향에 가깝게 슬라이더를 움직여 주세요.<br>
+        도중에 회전 방향이 바뀌었거나 양 방향이 동시에 보였다면, 더 강하게 느껴진 만큼 해당 방향 쪽으로 움직여 주세요.<br>
         (회전 자체가 착시이며, 정해진 답은 없습니다.)
-        위와 같은 행위를 80회 반복합니다.
+        위와 같은 행위를 10회 연습한 후, 본 실험에서 80회 반복합니다.
       </p>
 
       <p style="text-align:left; font-weight:bold; margin-top: 30px;">
-        실험 참가에 동의하신다면, 아래의 [계속]버튼을 클릭해주세요.
+        실험 참가에 동의하신다면, 아래의 [계속] 버튼을 클릭해 주세요.
       </p>
     </div>
   `;
@@ -664,8 +666,8 @@ timeline.push({
 
     return `
       <div style="max-width: 800px; margin: 0 auto; font-size: 16px; line-height: 1.6; text-align: left; color: #e0e0e0;">
-        <p>회전 방향을 선택하는 버튼은 아래와 같이 화면에 표시됩니다.</p>
-        <p>실험 참가에 동의하신다면, [계속]버튼을 눌러 실험을 진행해주세요.</p>
+        <p>응답 화면에 아래와 같이 회전 방향의 이미지가 표시됩니다.</p>
+        <p>실험 참가에 동의하신다면, [계속] 버튼을 눌러 연습 시행을 진행해 주세요.</p>
         ${image_html}
       </div>
     `;
@@ -681,6 +683,7 @@ timeline.push({
     return `
       <div style="max-width: 800px; margin: 0 auto; font-size: 16px; line-height: 1.6; text-align: left; color: #e0e0e0;">
         <p>이상으로 연습 시행을 마칩니다.</p>
+        <p>본 실험에서는 공백 시간이 길어지는 점 양해 바랍니다.</p>
         <p>하단 버튼을 누르시면 본 실험을 진행합니다.</p>
       </div>
     `;
@@ -699,8 +702,8 @@ timeline.push({
   stimulus: `
     <div style="color: #e0e0e0;">
     <p>이상으로 실험이 종료되었습니다.</p>
-    <p><strong>[데이터 보존]을 클릭 후 보존이 끝날 때까지 잠시 기다려주십시오.</strong></p>
-    <p>실험에 참가해주셔서 감사드립니다.</p>`,
+    <p><strong>[데이터 보존]을 클릭한 후 보존이 끝날 때까지 잠시 기다려주십시오.</strong></p>
+    <p>실험에 참가해 주셔서 감사드립니다.</p>`,
     choices: ['데이터 보존']
 });
 
@@ -709,6 +712,7 @@ timeline.push(save_data);
 timeline.push(exit_fullscreen);
 
 jsPsych.run(timeline);
+
 
 
 
