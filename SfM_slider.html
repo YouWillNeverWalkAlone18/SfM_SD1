@@ -68,22 +68,19 @@
       /* 중앙 정렬 */
     }
 
-    .center-marker-slider .jspsych-slider {
+    .center-marker-slider input[type="range"] {
       position: relative;
     }
 
-    .center-marker-slider .jspsych-slider::after {
+    .center-marker-slider input[type="range"]::after {
       content: "";
       position: absolute;
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
       height: 14px;
-      /* 세로선 길이 */
       width: 2px;
-      /* 두께 */
       background: #e0e0e0;
-      /* 색 (지금 배경에 맞춤) */
       pointer-events: none;
     }
   </style>
