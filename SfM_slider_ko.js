@@ -372,7 +372,7 @@ function makePracticeBlock() {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<div style="font-size:32px; color:#e0e0e0;">+</div>`,
       choices: "NO_KEYS",
-      trial_duration: 1000,
+      trial_duration: 10,
       data: { practice: true }   // ✔ 최소 태그
     });
 
@@ -380,7 +380,7 @@ function makePracticeBlock() {
     trials.push({
       type: jsPsychP5,
       sketch: trial_sketch,
-      trial_duration: 3000,
+      trial_duration: 30,
       data: { practice: true }
     });
 
@@ -420,7 +420,7 @@ function makePracticeBlock() {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: '',
       choices: "NO_KEYS",
-      trial_duration: 1000,
+      trial_duration: 10,
       data: { practice: true }
     });
   }
@@ -447,20 +447,20 @@ function makeBlock(blockIndex) {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: '',
       choices: "NO_KEYS",
-      trial_duration: 4000, // 1000
+      trial_duration: 40, // 4000
     });
     
     trials.push({
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<div style="font-size:32px; color: #e0e0e0;">+</div>`,
       choices: "NO_KEYS",
-      trial_duration: 1000,  // 1000
+      trial_duration: 10,  // 1000
     });
 
     trials.push({
       type: jsPsychP5,
       sketch: trial_sketch,
-      trial_duration: 3000, // 2500
+      trial_duration: 30, // 3000
     });
 
     trials.push({
@@ -709,6 +709,7 @@ timeline.push(save_data);
 timeline.push(exit_fullscreen);
 
 jsPsych.run(timeline);
+
 
 
 
