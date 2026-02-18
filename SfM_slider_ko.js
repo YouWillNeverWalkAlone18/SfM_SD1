@@ -373,7 +373,7 @@ function makePracticeBlock() {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<div style="font-size:32px; color:#e0e0e0;">+</div>`,
       choices: "NO_KEYS",
-      trial_duration: 1000,
+      trial_duration: 10,
       data: { practice: true }   // ✔ 최소 태그
     });
 
@@ -381,7 +381,7 @@ function makePracticeBlock() {
     trials.push({
       type: jsPsychP5,
       sketch: trial_sketch,
-      trial_duration: 3000,
+      trial_duration: 30,
       data: { practice: true }
     });
 
@@ -422,7 +422,7 @@ function makePracticeBlock() {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: '',
       choices: "NO_KEYS",
-      trial_duration: 1000,
+      trial_duration: 10,
       data: { practice: true }
     });
   }
@@ -449,20 +449,20 @@ function makeBlock(blockIndex) {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: '',
       choices: "NO_KEYS",
-      trial_duration: 4000, // 4000
+      trial_duration: 40, // 4000
     });
     
     trials.push({
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<div style="font-size:32px; color: #e0e0e0;">+</div>`,
       choices: "NO_KEYS",
-      trial_duration: 1000,  // 1000
+      trial_duration: 10,  // 1000
     });
 
     trials.push({
       type: jsPsychP5,
       sketch: trial_sketch,
-      trial_duration: 3000, // 3000
+      trial_duration: 30, // 3000
     });
 
     trials.push({
@@ -569,7 +569,7 @@ let timeline = [];
 
 let runFullscreen = {
     type: jsPsychFullscreen,
-    message: "<div style='width: 600px; text-align:left;'><p style='color: red; font-weight:bold;'>실험 중에 지속적으로 회전하는 구조를 보셔야 하므로, 멀미 등 불쾌감이 우려되는 경우 참가를 권장하지 않습니다. </p><b>실험은 되도록 컴퓨터로 참가해주십시오.</b><br/><br/>하단 버튼을 누르시면, 전체화면으로 실험이 시작됩니다.<br/>" + "ESC키를 누르시면 전체화면이 종료됩니다.<br/>실험 중에는 ESC키를 누르지 않도록 해주십시오.<br/><br/>",
+    message: "<div style='width: 600px; text-align:left;'><p style='color: red; font-weight:bold;'>실험 중에 지속적으로 회전하는 구조를 보셔야 하므로, 멀미 등 불쾌감이 우려되는 경우 참가를 권장하지 않습니다. </p><b>실험은 되도록 컴퓨터로 참가해 주십시오.</b><br/><br/>하단 버튼을 누르시면, 전체 화면으로 실험이 시작됩니다.<br/>" + "ESC 키를 누르시면 전체 화면이 종료됩니다.<br/>실험 중에는 ESC 키를 누르지 않도록 해주십시오.<br/><br/>",
     fullscreen_mode: true,
 };
 let exit_fullscreen = {
@@ -709,7 +709,17 @@ timeline.push(save_data);
 
 timeline.push(exit_fullscreen);
 
+timeline.push({
+  type: jsPsychHtmlButtonResponse,
+  stimulus: "테스트 저장",
+  choices: ["저장"],
+  on_finish: function() {
+    console.log(jsPsych.data.get().csv());
+  }
+});   // 디버깅용
+
 jsPsych.run(timeline);
+
 
 
 
