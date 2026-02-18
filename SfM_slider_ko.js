@@ -32,6 +32,13 @@ const label_map = {
 const subject_id = jsPsych.randomization.randomID(10);
 const filename = `${subject_id}.csv`;
 
+jsPsych.data.addProperties({
+  subject_id: subject_id,
+  left_image_global: image_order[0],
+  right_image_global: image_order[1],
+  block_order: block_order.join("-")
+});  // 修正中
+
 const save_data = {
   type: jsPsychPipe,
   action: "save",
@@ -374,7 +381,10 @@ function makePracticeBlock() {
       stimulus: `<div style="font-size:32px; color:#e0e0e0;">+</div>`,
       choices: "NO_KEYS",
       trial_duration: 10,
-      data: { practice: true }   // ✔ 최소 태그
+      data: {
+        phase: 'practice',  // practice: true였음
+        task: 'fixation'
+      }   // ✔ 최소 태그
     });
 
     // 🔹 stimulus
@@ -382,7 +392,11 @@ function makePracticeBlock() {
       type: jsPsychP5,
       sketch: trial_sketch,
       trial_duration: 30,
-      data: { practice: true }
+      data: {
+        phase: 'practice',  // practice: true였음
+        task: 'stimulus',
+        stimulus_type: stim_type
+      }
     });
 
     // 🔹 response (기록 최소화)
@@ -414,7 +428,11 @@ function makePracticeBlock() {
       
     </div>
       `,
-      data: { practice: true },  // ✔ 이것만 남김
+      data: {
+        phase: 'practice',
+        task: 'response',
+        stimulus_type: stim_type
+      },  // ✔ 이것만 남김
     });
 
     // 🔹 blank
@@ -423,7 +441,10 @@ function makePracticeBlock() {
       stimulus: '',
       choices: "NO_KEYS",
       trial_duration: 10,
-      data: { practice: true }
+      data: {
+        phase: 'practice',
+        task: 'blank'
+      }
     });
   }
 
@@ -444,25 +465,43 @@ function makeBlock(blockIndex) {
     } else {
       trial_sketch = sfm_neutral;  // 残りのブロックは全て中立刺激
     }
-    
+// Blanck
     trials.push({
       type: jsPsychHtmlKeyboardResponse,
       stimulus: '',
       choices: "NO_KEYS",
       trial_duration: 40, // 4000
+      data: {
+        phase: 'main',
+        task: 'pre_blank',
+        block: blockIndex
+      }
     });
     
+ // fixation
     trials.push({
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<div style="font-size:32px; color: #e0e0e0;">+</div>`,
       choices: "NO_KEYS",
       trial_duration: 10,  // 1000
+      data: {
+        phase: 'main',
+        task: 'fixation',
+        block: blockIndex
+      }
     });
 
+// 
     trials.push({
       type: jsPsychP5,
       sketch: trial_sketch,
       trial_duration: 30, // 3000
+      data: {
+        phase: 'main',
+        task: 'stimulus',
+        block: blockIndex,
+        trial_in_block: i
+      }
     });
 
     trials.push({
@@ -498,6 +537,7 @@ function makeBlock(blockIndex) {
   `,
 
   data: {
+    phase: 'main',   // 🔥 여기 추가
     task: 'response',
     block: blockIndex,
     trial_in_block: i,
@@ -572,13 +612,18 @@ let runFullscreen = {
     message: "<div style='width: 600px; text-align:left;'><p style='color: red; font-weight:bold;'>실험 중에 지속적으로 회전하는 구조를 보셔야 하므로, 멀미 등 불쾌감이 우려되는 경우 참가를 권장하지 않습니다. </p><b>실험은 되도록 컴퓨터로 참가해 주십시오.</b><br/><br/>하단 버튼을 누르시면, 전체 화면으로 실험이 시작됩니다.<br/>" + "ESC 키를 누르시면 전체 화면이 종료됩니다.<br/>실험 중에는 ESC 키를 누르지 않도록 해주십시오.<br/><br/>",
     fullscreen_mode: true,
 };
+
 let exit_fullscreen = {
-    type: jsPsychFullscreen,
-    fullscreen_mode: false,
-    delay_after: 0,
-    on_finish: function() {
-        jsPsych.endExperiment();
-    },
+  type: jsPsychFullscreen,
+  fullscreen_mode: false,
+  delay_after: 0,
+  on_finish: function() {
+
+    // 로컬 저장
+    jsPsych.data.get().localSave('csv', filename);
+
+    jsPsych.endExperiment();
+  },
 };
 
 timeline.push(runFullscreen);
@@ -719,6 +764,7 @@ timeline.push({
 });   // 디버깅용
 
 jsPsych.run(timeline);
+
 
 
 
