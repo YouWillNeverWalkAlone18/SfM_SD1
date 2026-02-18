@@ -32,16 +32,6 @@ const label_map = {
 const subject_id = jsPsych.randomization.randomID(10);
 const filename = `${subject_id}.csv`;
 
-jsPsych.data.addProperties({
-  subject_id: subject_id,
-  left_image: image_order[0],
-  right_image: image_order[1],
-  cw_label_value: label_map["CW"],
-  ccw_label_value: label_map["CCW"],
-  total_blocks: block_order.length
-});                                        // 修正中
-
-
 const save_data = {
   type: jsPsychPipe,
   action: "save",
@@ -608,6 +598,16 @@ function makeBlock(blockIndex) {
 // ---------------- timeline ----------------
 
 const block_order = jsPsych.randomization.shuffle([...Array(16).keys()]); // 0-15のブロック順をランダム化
+
+jsPsych.data.addProperties({
+  subject_id: subject_id,
+  left_image: image_order[0],
+  right_image: image_order[1],
+  cw_label_value: label_map["CW"],
+  ccw_label_value: label_map["CCW"],
+  total_blocks: block_order.length
+});                                        // 修正中
+
 let timeline = [];
 
 let runFullscreen = {
@@ -767,6 +767,7 @@ timeline.push({
 });   // 디버깅용
 
 jsPsych.run(timeline);
+
 
 
 
