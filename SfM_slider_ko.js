@@ -34,10 +34,13 @@ const filename = `${subject_id}.csv`;
 
 jsPsych.data.addProperties({
   subject_id: subject_id,
-  left_image_global: image_order[0],
-  right_image_global: image_order[1],
-  block_order: block_order.join("-")
-});  // 修正中
+  left_image: image_order[0],
+  right_image: image_order[1],
+  cw_label_value: label_map["CW"],
+  ccw_label_value: label_map["CCW"],
+  total_blocks: block_order.length
+});                                        // 修正中
+
 
 const save_data = {
   type: jsPsychPipe,
@@ -764,6 +767,7 @@ timeline.push({
 });   // 디버깅용
 
 jsPsych.run(timeline);
+
 
 
 
