@@ -404,11 +404,10 @@ function makePracticeBlock() {
       require_movement: true,
       prompt: `
         <div style="text-align:center; margin-top:-40px; color:#e0e0e0;">
-      <p>見えた回転方向のイメージにスライダーを近づけてください。</p>
-      <p>イメージに近いほど、「その方向だけが強く見えた」、</p>
-      <p>イメージから遠いほど、「反対方向も同時に見えた」</p>
-      <p>中央付近は、「両方向とも同じ程度に見えた」</p>
-      <p>ことを意味します。</p>
+      <p>感じた回転方向のイメージにスライダーを近づけてください。</p>
+      <p>その方向だけが感じられたほどイメージに近く、</p>
+      <p>反対方向も感じられたほどイメージから遠ざけます</p>
+      <p>直感的な判断でいいです。</p>
       
     </div>
       `,
@@ -487,11 +486,10 @@ function makeBlock(blockIndex) {
   require_movement: true,
   prompt: `
     <div style="text-align:center; margin-top:-40px; color:#e0e0e0;">
-      <p>見えた回転方向のイメージにスライダーを近づけてください。</p>
-      <p>イメージに近いほど、「その方向だけが強く見えた」、</p>
-      <p>イメージから遠いほど、「反対方向も同時に見えた」</p>
-      <p>中央付近は、「両方向とも同じ程度に見えた」</p>
-      <p>ことを意味します。</p>
+      <p>感じた回転方向のイメージにスライダーを近づけてください。</p>
+      <p>その方向だけが感じられたほどイメージに近く、</p>
+      <p>反対方向も感じられたほどイメージから遠ざけます</p>
+      <p>直感的な判断でいいです。</p>
       
     </div>
   `,
@@ -706,6 +704,7 @@ timeline.push(save_data);
 timeline.push(exit_fullscreen);
 
 jsPsych.run(timeline);
+
 
 
 
